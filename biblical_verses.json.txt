@@ -1,0 +1,572 @@
+[
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "WESTMINSTER LENINGRAD CODEX WITH 1231 FOOTNOTES Version 4.5 Bibles.org.uk, London."
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "LATEX 2ε source and typesetting © 2004–2005 Tigran Aivazian. Typeset by Tigran Aivazian with pdfLATEX and Tiqwah under Linux. PDF ﬁle built: 17 Oct, 2006 The Westminster Leningrad Codex is provided courtesy of the Westminster Hebrew Institute (http://whi.wts.edu/WHI) and reﬂects the latest corrections as of 1st December 2005."
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "PREFACE The text of Westminster Leningrad Codex (WLC) in Michigan encoding format was kindly provided to me by Dr Kirk Lowery. I have written the scripts to convert this text to the encoding used by the Tiqwah system and typeset into PDF format using Bibles.org.uk package based on the pdfLATEX Documentation System. The only changes compared to the original WLC e-text were as follows: • The Raphe stroke over the silent ’ in the middle of the word and silent h in the middle and the end of the word as found in all massoretic manuscripts (including B19A) but missing from the WLC text was restored. • The Raphe stroke over the letters t,p,k,d,g,b whenever they have no dagesh was restored as this is also found in all the massoretic MSS, including B19A. • Footnotes (in addition to those for Kethiv/Keri variants) have been added for big, small and suspended letters. • Final Mem (M) in the ﬁrst word of Isa 9.6 was rendered as in the actual Leningrad Codex. Apart from the above changes this edition faithfully represents the Westminster Leningrad Codex as produced and maintained by the Westminster Hebrew Institute. Tigran Aivazian London, England."
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hrwt 107 . . . . . . . rbdmb 1 . . . . . . . . tyV’rb 145 . . . . . . . . Myrbd 44 . . . . . . . . . twmV 81 . . . . . . . . . ’rqyw My’ybn 472 . . . . . . . . swm‘ 177 . . . . . . . . ‘Vwhy 477 . . . . . . . . hydb‘ 200 . . . . . . . MyTpV 478 . . . . . . . . . hnwy 223 . . . . . . ’ l’wmV 479 . . . . . . . . hkym 252 . . . . . . b l’wmV 482 . . . . . . . . . Mwxn 278 . . . . . . ’ Myklm 484 . . . . . . . . qwqbx 306 . . . . . . b Myklm 485 . . . . . . . . hynpY 335 . . . . . . . . hy‘Vy 487 . . . . . . . . . ygx 373 . . . . . . . . hymry 489 . . . . . . . . hyrkz 422 . . . . . . . l’qzxy 496 . . . . . . . . yk’lm 465 . . . . . . . . ‘Vwh 470 . . . . . . . . . l’wy Mybwtk 732 . . . . . . . . tlhq 499 . . . . ’ Mymyh yrbd 739 . . . . . . . . hky’ 524 . . . . b Mymyh yrbd 743 . . . . . . . . rts’ 556 . . . . . . . . Mylht 750 . . . . . . . . l’ynd 690 . . . . . . . . . bwy’ 764 . . . . . . . . ’rz‘ 709 . . . . . . . . ylVm 773 . . . . . . . . hymxn 726 . . . . . . . . . twr 729 . . . . MyryVh ryV"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tyV’rb ynăĄjĘ =l‘Č ëŇSĆ x¡Ł wĘ ChbŔŁ wĎ ÉChtÄŁ hŇ t¿ĎŇ yĘhĎ ZrĆ’Ďę hĎ wĘ :ZrĆ’ĲĎ hĎ tŇ ’¿ĄwĘ MyĂm¡ČèĎ hČ tŇ ’¿Ą MyhĳĂŁl’Ĺ ’răĎBĎ tŇ yS¡Ă ’Ň rĄBĘ ’, 2 ’rĘIÌČwČ :ro’Ĳ =yhĂ yĘwĲČ ro’ĳ yhăĂ yĘ Myh¡ĂŁl’Ĺ rmĆ ’Ň I¿ŁwČ :MyĂUĲĎ hČ yn¿ĄjĘ =l‘Č tŇ pĆŇ x¡ĆrČmĘ MyhĂŔŁl’Ĺ xČ CrăwĘ Mohĳ tĘŇ 3, 4 Éro’lĎ űMyhąĂŁl’Ĺ ’rĎÄ qĘ IĂwČ :ëŇSĆ xĲŁ hČ Nyb¿ĄŇ C ro’¡ hĎ NyB¿Ą MyhĂŔŁl’Ĺ lDăĄbĘŇ IČwČ bŇ oTĳ =yJĂ ro’¡ hĎ =tŇ ’Ć MyhËĂŁl’Ĺ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":dŇxĲĎ ’Ć Moy¿ rqĆb¡ŇŁ =yhĂ yĘwĲČ bŇ rĆ‘¿Ć=yhĂ yĘwĲČ hŇ lĎ yĘlĳĎ ’rĎqăĎ ëŇSĆ x¡Ł lČ wĘ MoyŔ ÈMyhĂŁl’Ĺ W‘ČIăČwČ :MyĂmĲĎ lĎ MyĂm¡Č NyB¿Ą lyDĂŔ bĘŇ mČ yhăĂ ywĂ MyĂUĳĎhČ ëŇotăŇ BĘ ‘Čyq¡ĂrĎ yh¿Ă yĘ MyhĂŔŁl’Ĺ rmĆ ’Ň IăŁwČ 6, 7 ‘ČyqĳĂrĎlĎ l‘ăČmĄ rS¡Ć ’Ğ MyĂUČŔ hČ NybăĄŇ C ‘ČyqĂŔ rĎlĎ tŇ xČ êăČmĂ ÉrSĆ ’Ğ ÉMyĂUČÄ hČ NyBąĄ lDĄę bĘŇ IČwČ ů‘ČyqĂ rĎhĎ =tŇ ’Ć :ynĲĂSĄ Moy¿ rqĆb¡ŇŁ =yhĂ yĘwĲČ bŇ rĆ‘¿Ć=yhĂ yĘwĲČ MyĂmĳĎSĎ ‘Čyq¡ĂrĎlĲĎ MyhËĂŁl’Ĺ ’rÌĎqĘ IĂwČ :NkĲĄŇ =yhĂ yĘwČĲ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":NkĲĄŇ =yhĂ yĘwĲČ hŇ SĳĎ BĎ IČhČ hŇ ’¡ĆrĎtĄŇ wĘ dŇxĎŔ ’Ć MoqămĎ =l’Ć ÉMyĂmČÄ èĎ hČ tŇ xČ êąČmĂ MyĂUČÁ hČ CwÄuĎyĂ MyhĂęŁl’Ĺ rmĆ ’Ň IăŁwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "rmĆ ’Ň IăŁwČ :bŇ oTĲ =yJĂ Myh¡ĂŁl’Ĺ ’rĘI¿ČwČ MyUĳĂ yČ ’răĎqĎ MyĂU¡ČhČ hŇ w¿ĄqĘ mĂ lĘ C ZrĆ’ĆŔ ÉhSĎ BĎ IČlČ űMyhąĂŁl’Ĺ ’rĎÄ qĘ IĂwČ 10, 11 ob¡Ň =o‘rĘzČ rS¿Ć ’Ğ onŔymĂ lĘ ÉyrĂjĘ hŇ WĆ ‘ąŁ yrĂÂjĘ Z‘ăĄ ‘rČzĆŔ ‘ČyrăĂzĘmČ bŇ WĆ ‘Ąť ’SĆ DĆŔ ÉZrĆ’ĎÄ hĎ ’SąĄ dĘŇêĲČ MyhĂęŁl’Ĺ yrËĂjĘ =hŇ WĆ ‘ĲŁ Z‘ÌĄwĘ ChnĄŔymĂ lĘ É‘rČzĆÄ ‘ČyrąĂzĘmČ bŇ WĆ ‘ăĄ ’SĆ DĆţ ZrĆ’ĎÁ hĎ ’YĄÄoêwČ :NkĲĄŇ =yhĂ yĘwĲČ ZrĆ’ĳĎhĎ =l‘Č"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":ySĲĂ ylĂ SĘ Moy¿ rqĆb¡ŇŁ =yhĂ yĘwČĲ bŇ rĆ‘¿Ć=yhĂ yĘwČĲ :bŇ oTĲ =yJĂ Myh¡ĂŁl’Ĺ ’rĘI¿ČwČ ChnĳĄymĂ lĘ ob¡Ň =o‘rĘzČ rS¿Ć ’Ğ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ÉttŇŁ ’Ł lĘ CyąhĎ wĘ hŇ lĎ yĘQĳĎhČ NybăĄŇ C MoI¡hČ NyB¿Ą lyDĂěbĘŇ hČ lĘ MyĂmČŔ èĎ hČ ‘ČyqăĂrĘBĂ ÉtrŁ ’Ł mĘ yhąĂ yĘ MyhĂęŁl’Ĺ rmĆ ’Ň IăŁwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":NkĲĄŇ =yhĂ yĘwČĲ ZrĆ’ĳĎhĎ =l‘Č ry’¡Ă hĎ lĘ MyĂmČŔ èĎ hČ ‘ČyqăĂrĘBĂ ÉtrŁ o’mĘ lĂ CyąhĎ wĘ :MynĲĂSĎ wĘ Mym¡Ă yĎlĘ C MydĂŔ ‘Ğomă lĘ C"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ro’ąUĎ hČ =tŇ ’ĆwĘ MoIŔhČ tŇ lĆ SăĆ mĘ mĆ lĘ ÉldŇŁ GĎhČ ro’ąUĎ hČ =tŇ ’Ć MylĳĂ dŇŁ GĘhČ tŇ r¡Ł ’Ł UĘ hČ yn¿ĄSĘ =tŇ ’Ć MyhĂŔŁl’Ĺ W‘ČIăČwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ry’¡Ă hĎ lĘ MyĂmĳĎèĎ hČ ‘ČyqăĂrĘBĂ Myh¡ĂŁl’Ĺ MtËĎŇ ’Ł Nê¿ĄIĂwČ :MybĲĂŇ kĎŇ oJhČ tŇ ’¡ĄwĘ hŇ lĎ yĘQČŔhČ tŇ lĆ SăĆ mĘ mĆ lĘ ÉNTŁ uĎhČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":bŇ oTĲ =yJĂ Myh¡ĂŁl’Ĺ ’rĘI¿ČwČ ëŇSĆ xĳŁ hČ NybăĄŇ C ro’¡ hĎ NyB¿Ą lyDĂŔ bĘŇ hČ lĞ CĲ hŇ lĎ yĘQČŔbČŇ C MoIăBČ ÉlSŁ mĘ lĂ wĘ :ZrĆ’ĲĎ hĎ =l‘Č"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":y‘ĲĂybĂŇ rĘ Moy¿ rqĆb¡ŇŁ =yhĂ yĘwĲČ bŇ rĆ‘¿Ć=yhĂ yĘwĲČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "‘Čyq¿ĂrĘ yn¡ĄjĘ =l‘Č ZrĆ’ĎŔ hĎ =l‘Č PŇ păĄŇ o‘yĘ ÉPo‘wĘ hŇ IĳĎxČ SpĆŇ năĆ ZrĆS¡Ć MyĂUČŔ hČ CYărĘSĘ yĂ MyhĂŔŁl’Ĺ rmĆ ’Ň IăŁwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "CYÄrĘSĎ žrSĆ ’Ğ tŇ WĆ mĆÃ rŁ hĲĎ űhŇ IăĎxČ hČĲ SpĆŇ năĆ=lJĎ tŇ ’ăĄwĘ MylĳĂ dŇŁ GĘhČ Mn¡ĂyeĂêČhČ =tŇ ’Ć MyhĂŔŁl’Ĺ ’răĎbĘŇ IĂwČ :MyĂmĲĎ èĎ hČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "Myh¡ĂŁl’Ĺ MtËĎŇ ’Ł ëŇrĆbÌĎŇ yĘwČ :bŇ oTĲ =yJĂ Myh¡ĂŁl’Ĺ ’rĘI¿ČwČ ChnĄŔymĂ lĘ ÉPnĎJĎ PŇ o‘ą=lJĎ tŇ ’ĄÄ wĘ MhĆę nĄymĲĂ lĘ MyĂUČÁ hČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "Moy¿ rqĆb¡ŇŁ =yhĂ yĘwĲČ bŇ rĆ‘¿Ć=yhĂ yĘwĲČ :ZrĆ’ĲĎ BĎ bŇ rĆy¿Ă PŇ o‘¡hĎ wĘ MyUĂŔ IČBČ ÉMyĂUČÄ hČ =tŇ ’Ć C’ąlĘ mĂ C Cbę rĘC CrăjĘ rmĳŁ ’Ň lĄ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":ySĲĂ ymĂ xĞ :NkĲĄŇ =yhĂ yĘwĲČ HnĳĎymĂ lĘ ZrĆ’¡Ć=otŇ yĘxĲČ wĘ WmĆ rËĆwĎ hŇ m¿Ď hĄ BĘ HnĎŔymĂ lĘ ÉhIĎxČ SpĆŇ nąĆ ZrĆ’ĎÁ hĎ ’YĄÄoê MyhĂęŁl’Ĺ rmĆ ’Ň IăŁwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hŇ m¡Ď dĎŇ’ĞhĲĎ WmĆ r¿Ć=lJĎ tŇ ’ËĄwĘ HnĎŔymĂ lĘ ÉhmĎ hĄ BĘ hČ =tŇ ’ĆwĘ HnĎęymĂ lĘ ZrĆ’ĎÁ hĎ tŇ IČÄxČ =tŇ ’Ć žMyhĂŁl’Ĺ W‘ČIăČwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "žCDrĘyĂwĘ CntĳĄŇ CmdĘŇJĂ Cnm¡Ą lĘ YČBĘ MdËĎŇ’Ď hŇ W¿Ć ‘ĞnĲČ MyhĂŔŁl’Ĺ rmĆ ’Ň IăŁwČ :bŇ oTĲ =yJĂ Myh¡ĂŁl’Ĺ ’rĘI¿ČwČ ChnĳĄymĂ lĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":ZrĆ’ĲĎ hĎ =l‘Č Wm¿Ą rŁ hĎĲ WmĆ r¡ĆhĎ =lkĎ bĘŇ C ZrĆ’ĎŔ hĎ =lkĎ bĘŇ C ÉhmĎ hĄ BĘ bČŇ C MyĂmČę èĎ hČ PŇ o‘ăbĘŇ C MIĎÁhČ tŇ gČÄdĘbĂŇ :MtĲĎŇ ’Ł ’r¿ĎBĎ hŇ b¡ĎŇ qĄnĘC rk¿ĎŇ zĎ otĳŇ ’Ł ’răĎBĎ Myh¡ĂŁl’Ĺ MlĆ Y¿ĆBĘ omŔ lĘ YČBĘ ÉMdĎŇ’Ď hĎĲ=tŇ ’Ć űMyhąĂŁl’Ĺ ’rĎÄ bĘŇ IĂwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "CdÂrĘC hĎ S ĳĚ bĘ kĂŇ wĘ ZrĆ’¡ĎhĎ =tŇ ’Ć C’¿ lĘ mĂ C CbËŇ rĘC Cr¿jĘ MyhĂęŁl’Ĺ MhĆÁ lĎ rmĆ ’ŇŁIÄwČ ůMyhĂŁl’Ĺ ÈMtĎŇ ’Ł ëŇrĆbăĎŇ yĘwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "yêĂ tČÄ nĎ žheĄhĂ MyhĂęŁl’Ĺ rmĆ ’Ň IăŁwČ :ZrĆ’ĲĎ hĎ =l‘Č tŇ WĆ m¿Ć rŁ hĎĲ hŇ I¡ĎxČ =lkĎ bĘŇ C MyĂmČŔ èĎ hČ PŇ o‘ăbĘŇ C ÉMIĎhČ tŇ gąČŇdĘŇBĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "Z‘¡Ą=yrĂpĘŇ oB¿ =rSĆ ’Ğ Z‘ËĄhĎ =lJĎ =tŇ ’ĆwĘ ZrĆ’ĎŔ hĎ =lkĎŇ ynăĄjĘ =l‘Č ÉrSĆ ’Ğ ‘rČzĆę ‘ČrăĄzŁ űbŇ WĆ ‘ăĄ=lJĎ =tŇ ’Ć MkĆÁ lĎ WmăĄ or űlkăŇŁ lĘ C MyĂmČÁ èĎ hČ PŇ o‘Ä=lkĎŇ lĘ C ZrĆ’Ď hĎ ţ tŇ IăČxČ =lkĎŇ lĘ CĲ :hŇ lĲĎ kĘŇ ’Ď lĘ hŇ y¡ĆhĘ yĲĂ Mk¿ĆŇ lĎ ‘rČzĳĎ ‘ČrăĄzŁ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tyV’rb 1. 31–3. 8 ÉMyhĂŁl’Ĺ ’rĘIąČwČ :NkĲĄŇ =yhĂ yĘwĲČ hŇ lĳĎ kĘŇ ’Ď lĘ bŇ WĆ ‘¡Ą qrĆy¿Ć=lJĎ =tŇ ’Ć hŇ IĎŔxČ SpĆŇ năĆ ÉoB=rSĆ ’Ğ ZrĆ’Ďę hĎ =l‘Č"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":yèĲĂ èĂ hČ Moy¿ rqĆb¡ŇŁ =yhĂ yĘwČĲ bŇ rĆ‘¿Ć=yhĂ yĘwČĲ dŇ’ĳŁ mĘ bŇ oT¡ =hŇ eĄhĂ wĘ hŇ WĎŔ ‘Ď rSăĆ ’Ğ=lJĎ =tŇ ’Ć hŇ WĳĎ ‘Ď rSăĆ ’Ğ oê¡kĘŇ ’Ň lČ mĘ y‘ĂŔ ybĂŇ èĘ hČ MoIăBČ ÉMyhĂŁl’Ĺ lkąČŇ yĘwČ :M’ĲĎ bĎŇ YĘ =lkĎŇ wĘ ZrĆ’¡ĎhĎ wĘ MyĂm¿ČèĎ hČ CQË kĚŇ yĘwČ b, 2 y‘ĂŔ ybĂŇ èĘ hČ Moyă=tŇ ’Ć ÉMyhĂŁl’Ĺ ëŇrĆbąĎŇ yĘwČ :hŇ WĲĎ ‘Ď rS¿Ć ’Ğ oê¡kĘŇ ’Ň lČ mĘ =lJĎ mĂ y‘ĂŔ ybĂŇ èĘ hČ MoIăBČ ÉtBŁ SĘ IĂwČ 3 :tŇ oWĲ ‘ĞlČ Myh¡ĂŁl’Ĺ ’r¿ĎBĎ =rSĆ ’Ğ oêŔ kĘŇ ’Ň lČ mĘ =lJĎ mĂ ÉtbČŇ SĎ obąŇ yJăĂ otĳŇ ’Ł SD¡ĄqČyĘwČ :MyĂmĲĎ SĎ wĘ ZrĆ’¿Ć Myh¡ĂŁl’Ĺ hw¿ĎhyĘ tŇ oWË ‘Ğ MoyęBĘ M’ĳĎ rĘBĲĎ hĂ BĘ ZrĆ’¡ĎhĎ wĘ MyĂmËČèĎ hČ tŇ odÌŇlĘ otŇ hŇ QĆ ’ăĄ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ryTĂÁ mĘ hĂ âlÄ žyJĂ xmĳĎ YĘ yĂ MrĆTăĆ hŇ d¡ĆŇvĎ hČ bŇ WĆ ‘¿Ą=lkĎŇ wĘ ZrĆ’ĎŔ bĎŇ hŇ yăĆhĘ yĲĂ MrĆTĆ ť hŇ dĆę vĎ hČ xČ yWăĂ űlkăŇŁ wĘ 5 hŇ q¡ĎSĘ hĂ wĘ ZrĆ’ĳĎhĎ =NmĂ hŇ lăĆ ‘ĞyĲČ dŇ’¡ĄwĘ :hŇ mĲĎ dĎŇ’ĞhĲĎ =tŇ ’Ć dŇb¡ŇŁ ‘ĞlĲČ NyĂ’ČŔ MdăĎŇ’Ď wĘ ZrĆ’ĎŔ hĎ =l‘Č ÉMyhĂŁl’Ĺ hwąĎhyĘ 6 wyj¡Ď’Č BĘ xj¿Č IĂwČ hŇ mĎŔ dĎŇ’ĞhăĎ =NmĂ ÉrpĎŇ ‘Ď MdĎę ’Ď hĲĎ =tŇ ’Ć MyhĂÁŁl’Ĺ hwĎÄhyĘ žrYĆyIĂwČ :hŇ mĲĎ dĎŇ’ĞhĲĎ =ynĲĄjĘ =lJĎ =tŇ ’ĲĆ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MSĎŔ MWĆ IăĎwČ MdĆŇ uĳĆmĂ NdĆŇ ‘¡ĄbĘŇ =NGČ MyhËĂŁl’Ĺ hwÌĎhyĘ ‘FČÂIĂwČ :hŇ IĲĎxČ SpĆŇ n¿ĆlĘ Md¡ĎŇ’Ď hĲĎ yh¿Ă yĘwĲČ MyIĳĂxČ tŇ măČ SĘ nĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "bŇ oTă wĘ hŇ ’¡ĆrĘmČ lĘ dŇm¿Ď xĘ nĆ Z‘ËĄ=lJĎ hŇ mĎŔ dĎŇ’ĞhăĎ =NmĂ ÉMyhĂŁl’Ĺ hwąĎhyĘ xmČÂYĘ IČwČ :rYĲĎyĎ rS¿Ć ’Ğ Md¡ĎŇ’Ď hĲĎ =tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tŇ oq¡SĘ hČ lĘ NdĆŇ ‘ĄŔ mĄ ’YăĄyŁ ÉïhĎ nĎwĘ :‘rĲĎwĎ bŇ oT¿ tŇ ‘ČD¡ČhČ Z‘ĄěwĘ NGĎŔhČ ëŇotăŇ BĘ ÉMyIĂxČ hĲČ Z‘ąĄwĘ lkĳĎŇ ’ĞmČ lĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tŇ ’Ąť bŇ bĄę iŁ hČ ’Chă NoSĳ yjĂ dŇx¡Ď ’ĆhĲĎ MS¿Ą :MySĲĂ ’Ň rĎ hŇ ‘¿ĎBĎ rĘ’Č lĘ hŇ y¡ĎhĎ wĘ dŇrĄŔ jĎ yĂ ÉMèĎ mĂ C NGĳĎhČ =tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":MhČ èĲŁ hČ NbĆŇ ’¿ĆwĘ xlČ d¡ŇŁ BĘ hČ MS¿Ď bŇ oTĳ ’wh¡Ă hČ ZrĆ’¿ĎhĎ bŇ hËČ zĞCĲ :bŇ hĲĎ EĎhČ MS¡Ď =rSĆ ’Ğ hŇ lĎŔywĂxĞhĲČ ZrĆ’ăĆ=lJĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "lqĆDĆŔ xĂ ÉySĂ ylĂ èĘ hČ rhąĎ eĎhČ MSĄÄ wĘ :SCJĲ ZrĆ’¿Ć=lJĎ tŇ ’¡Ą bŇ bĄŔ oihČ ’Chă NoxĳyGĂ yn¡ĂèĄ hČ rh¿Ď eĎhČ =MSĲĄ wĘ 13, 14 MdĳĎŇ’Ď hĲĎ =tŇ ’Ć Myh¡ĂŁl’Ĺ hw¿ĎhyĘ xuËČIĂwČ :tŇ rĲĎpĘŇ ’Ch¿ y‘¡ĂybĂŇ rĘhĲĎ rh¿Ď eĎhČ wĘ rCèĳ ’Č tŇ măČ dĘŇqĂ ëŇ¡ĄlhŁ hĲČ ’Ch¿"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "NG¡ĎhČ =Z‘ĲĄ lJ¿Ł mĂ rmĳŁ ’Ň lĄ Md¡ĎŇ’Ď hĲĎ =l‘Č MyhĂŔŁl’Ĺ hwăĎhyĘ ÉwYČyĘwČ :HrĲĎmĘ SĎ lĘ C Hd¡ĎŇbĘŇ ‘ĎlĘ NdĆŇ ‘ĄŔ =NgČbĘŇ ChxăĄeĂIČwČ 16 :tŇ CmĲ êĎ tŇ om¿ CeU¡Ć mĂ ì¿ŇlĘ kĎŇ ’Ğ MoyËBĘ yJĂę CeUĳĆ mĂ lk¡ČŇ ’Ň tŇŁ âl¿ ‘rĎŔ wĎ bŇ oTă Ét‘ČDČÄhČ Z‘Ąę mĄ C :lkĲĄŇ ’Ň êŁ lk¿ŇŁ ’Ď"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hwĎÄhyĘ žrYĆIĂwČ :oDĲgĘŇnĆJĘ rzĆ‘¡Ą oQ¿ =HWĆ ‘Ĺ’ĲĆ oDĳbČŇ lĘ Md¡ĎŇ’Ď hĲĎ tŇ oy¿hĹ bŇ oTË =âl MyhĂŔŁl’Ĺ hwăĎhyĘ ÉrmĆ ’ŇŁIÄwČ 18, 19 tŇ o’¡ rĘlĂ MdĎŔ ’Ď hăĎ =l’Ć É’bĄŇ IĎwČ MyĂmČŔ èĎ hČ PŇ o‘ă=lJĎ Ét’ĄwĘ ÉhdĆŇvĎ hČ tŇ IąČxČ =lJĎ hŇ mĎę dĎŇ’ĞhĲĎ =NmĂ MyhĂÁŁl’Ĺ tŇ omę SĄ MdĎÁ’Ď hĲĎ ’rĎÄ qĘ IĂwČ :omĲ SĘ ’Ch¿ hŇ I¡ĎxČ SpĆŇ n¿Ć MdËĎŇ’Ď hĲĎ olÌ =’rĎqĘ yĂ rSĆÄ ’Ğ žlkŇŁ wĘ olĳ =’rĎqĘ IĂ=hŇ mČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hwĎÄhyĘžljĄ IČwČ :oDĲgĘŇnĆJĘ rzĆ‘¡Ą ’Y¿ĎmĎ =âlĲ MdĎě’Ď lĘ C hŇ dĳĆŇvĎ hČ tŇ IăČxČ lk¡ŇŁ lĘ C MyĂmČŔ èĎ hČ PŇ o‘ălĘ C ÉhmĎ hĄ BĘ hČ =lkĎŇ lĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hwĎÄhyĘ žNbĆŇ IĂwČ :hŇ eĎêĲĆxĘ êČ rW¡Ď BĎ rG¿Ł sĘ IĂwČ wytĎŔ ‘Ł lĘ ~ČmĂ ÉtxČ ’Č xuČę IĂwČ NSĳĎ yIĂwČ Md¡ĎŇ’Ď hĎ =l‘Č hŇ mËĎ DĄrĘêČ űMyhÌĂŁl’Ĺ 22 tŇ ’Ň zăŁ ůMdĎŇ’Ď hĎĲ ÈrmĆ ’Ň IŁwČ :MdĲĎŇ’Ď hĲĎ =l’Ć hĎ ’¡ĆbĂŇ yĘwČ hŇ èĳĎ ’Ă lĘ Md¡ĎŇ’Ď hĲĎ =NmĂ xq¿ČlĎ =rSĆ ’Ğ ‘lËĎ ~ĄhČ =tŇ ’ĲĆ űMyhÌĂŁl’Ĺ 23 ÉNJĄ =l‘Č :tŇ ’Ň EĲŁ =hŇ xĎ qĽlĲĚ Sy’¡Ă mĄ yJ¿Ă hŇ èĎŔ ’Ă ’răĄuĎyĂ Ét’Ň zŁlĘ yrĳĂWĎ BĘ mĂ rW¡Ď bĎŇ C ymČŔ YĎ‘ĞmĲĄ MYĆ‘Ćť M‘ČjČę hČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MyUĂŔ Cr‘Ğ ÉMhĆ ynĄSĘ CyąhĘ IĲĂwČ :dŇxĲĎ ’Ć rW¿Ď bĎŇ lĘ Cy¡hĎ wĘ oêŔ SĘ ’Ă BĘ qbăČŇ dĎŇwĘ oUĳ ’Ă =tŇ ’ĆwĘ wyb¡ĂŇ ’Ď =tŇ ’Ć Sy’ĂŔ =bŇ zĎ‘ĞyČĲ 25 hwăĎhyĘ hŇ W¡Ď ‘Ď rS¿Ć ’Ğ hŇ dĆŔ vĎ hČ tŇ IăČxČ ÉlJŁ mĂ MCrŔ ‘Ď hŇ yăĎhĎ ÉSxĎ eĎhČ wĘ :CSSĲĎ BŁ tĘŇ yĂ âl¡ wĘ oêĳSĘ ’Ă wĘ Md¡ĎŇ’Ď hĲĎ g rmĆ ’Ň ê¿Ł wČ :NGĲĎhČ Z‘¿Ą lJ¡Ł mĂ ClŔkĘŇ ’Ň tĲŇŁ âlă MyhĂŔŁl’Ĺ rmăČ ’Ď =yJĲĂ PŇ ’Č ť hŇ èĎŔ ’Ă hăĎ =l’Ć ÉrmĆ ’ŇŁIÄwČ MyhĳĂŁl’Ĺ 2 âlą MyhĂęŁl’Ĺ rmăČ ’Ď ůNGĎhČ =ëŇotŇ BĘ rSăĆ ’Ğ ÈZ‘ĄhĎ yrăĂjĘ mĂ C :lkĲĄŇ ’Ň nŁ NG¡ĎhČ =Z‘ĲĄ yr¿ĂjĘ mĂ SxĳĎ eĎhČ =l’Ć hŇ è¡Ď ’Ă hĲĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "yJĂ ť :NCtĲŇ mĚêĘ tŇ om¡ =âlĲ hŇ èĳĎ ’Ă hĲĎ =l’Ć Sx¡Ď eĎhČ rmĆ ’Ň I¿ŁwČ :NCtĲŇ mĚêĘ =NjĆ oBĳ C‘¡GĘtĂŇ âl¿ wĘ CeUĆŔ mĂ ÉClkĘŇ ’Ň tĲŇŁ 4, 5 :‘rĲĎwĎ bŇ oT¿ y‘¡ĄdĘŇyŁ MyhĂŔŁl’Ň JĲĄ ÉMtĆŇ yyĂhĘ wĂ MkĳĆŇ ynĄy‘ĲĄ Cx¡ qĘ pĘŇ nĂwĘ CeUĆŔ mĂ MkăĆŇ lĘ kĎŇ ’Ğ ÉMoyBĘ yJĂę MyhĂŔŁl’Ĺ ‘ČdăĄŇyŁ xu¿ČêĂ wČ lyJĂŔ WĘ hČ lĘ ÉZ‘ĄhĎ dŇmąĎ xĘ nĆwĘ MyĂnČęy‘ĄlĎ ’Chă =hŇ wĎ’ĞtĲČŇ ykÌĂŇ wĘ lkĎÁ ’ĞmČ lĘ Z‘ĄÄhĎ žboT yJăĂ hŇ èĎÃ ’Ă hĲĎ ’rĆêăĄwČ 6 MU¡Ă rĚy‘ĲĄ yJ¿Ă C‘Ŕ dĘŇIăĄwČ MhĆŔ ynĄSĘ ynăĄy‘Ą ÉhnĎxĘ qČÄ jĎ êĂ wČ :lkĲČŇ ’Ň IŁwČ HU¡Ď ‘Ă HSËĎ y’Ă lĘ =MGČ NêÌĄêĂ wČ lkĳČŇ ’Ň êŁ wČ oy¡rĘjĂ mĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "NG¡ĎBČ ëŇQ¿Ą hČ tĘŇ mĂ MyhËĂŁl’Ĺ hwÌĎhyĘ loqÄ =tŇ ’Ć C‘ÂmĘ SĘ IĂwĲČ :tŇ rĲŁ gŇŁ xĞ Mh¡Ć lĎ CW¿ ‘ĞIČwČ hŇ nĎŔ’ĄtĘŇ hŇ lăĄ ‘Ğ ÉCrjĘ tĘŇ IĂwĲČ MhĳĄ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hw¿ĎhyĘ ’rËĎqĘ IĂwČ :NGĲĎhČ Z‘¿Ą ëŇot¡Ň BĘ MyhĂŔŁl’Ĺ hwăĎhyĘ ÉynĄjĘ mĂ oêę SĘ ’Ă wĘ MdĎÁ’Ď hĲĎ ’BĄÄ xČ tĘŇ IĂwČ MoIĳhČ xČ CrălĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ykĂŇ n¡Ł ’Ď Mr¿Ł y‘Ą=yJĲĂ ’rËĎy’Ă wĎ NGĳĎBČ yêĂ ‘Ęm¡Č SĎ ì¿ŇlĘ qŁ =tŇ ’Ć rmĆ ’ŇŁIěwČ :hŇ JĎ IĲĆ’Č ol¡ rmĆ ’Ň I¿ŁwČ MdĳĎŇ’Ď hĲĎ =l’Ć Myh¡ĂŁl’Ĺ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "CeU¡Ć mĂ =lkĎŇ ’Ğ yê¿Ă lĘ bĂŇ lĘ ìŇytËĂŇ yCĂYĂ rSÌĆ ’Ğ Z‘Ąę hĎ =NmĂ hĞ hŇ êĎ’ĳĎ Mr¡Ł y‘Ą yJ¿Ă ìŔ lĘ dŇyGăĂhĂ ymĂ ť rmĆ ’ŇŁIěwČ :’bĲĄŇ xĎ ’ĄwĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "rmĆ ’ŇŁIÄwČ :lkĲĄŇ ’Ł wĎ Z‘¡ĄhĎ =NmĂ yQ¿Ă =hŇ nĎtĘŇ nĲĎ ’whËĂ ydĂŔ UĎ ‘Ă hŇ êĎtăČŇ nĎ rSăĆ ’Ğ ÉhèĎ ’Ă hĲĎ MdĳĎŇ’Ď hĲĎ rmĆ ’Ň I¡ŁwČ :êĎlĘ kĲĎŇ ’Ď 12, 13 žrmĆ ’Ň IŁwČ :lkĲĄŇ ’Ł wĎ ynĂ’¡Č yèĂ hĂ Sx¿Ď eĎhČ hŇ èĎŔ ’Ă hĲĎ ÉrmĆ ’Ň êÄŁ wČ tŇ yWĳĂ ‘Ď tŇ ’Ň EăŁ =hŇ mČ hŇ è¡Ď ’Ă lĎ MyhËĂŁl’Ĺ hwÌĎhyĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hŇ dĳĆŇvĎ hČ tŇ IăČxČ lJ¡Ł mĂ C hŇ mĎŔ hĄ BĘ hČ =lJĎ mĂ ÉhêĎ’Č rCrą’Ď ůt’Ň EŁ tĎŇ yWăĂ ‘Ď yJăĂ ÈSxĎ eĎhČ =l’ĲĆ űMyh¿ĂŁl’Ĺ hŇ oĎÄhyĘ Nyb¿ĄŇ C hŇ èĎŔ ’Ă hĲĎ NybăĄŇ C ÉìnĘyBĲĄ tŇ ySĂę ’Ď űhŇ băĎŇ y’ĄwĘ :ìŇyIĲĆxČ ym¿Ą yĘ=lJĎ lk¡ČŇ ’Ň êŁ rp¿ĎŇ ‘ĎwĘ ëŇlĄŔtĄŇ ìăŇnĘxŁ GĘ=l‘Č"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "rmČę ’Ď hŇ èăĎ ’Ă hĎ =l’ĲĆ :bŇ qĲĄ‘Ď Cep¿ĆŇ CSêĘ hŇ ê¡Ď’Č wĘ S’Ň rŔŁ ìăŇpĘŇ CSyĘ ’Chť H‘ĳĎrĘzČ NybăĄŇ C ì¡Ň‘ĞrĘzČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":ëŇBĲĎ =lSĎ mĘ yĂ ’Ch¡ wĘ ëŇtĄŔ qĎCSă êĘ ÉëSĄ y’Ă =l’ĆwĘ MynĳĂbĎŇ ydăĂŇlĘ êĲĄ bŇ YĆ‘¡ĆBĘ ëŇnĄŔrŁ hĲĄ wĘ ëŇnăĄobŇ ~Ę ‘Ă ÉhBĆ rĘ’Č hŇ BąĎ rĘhČ ÉìytĂÄ yCĂYĂ rSąĆ ’Ğ Z‘ĄŔ hĎ =NmĂ ÉlkČŇ ’Ň êÄŁ wČ ůìêĆSĘ ’Ă loqălĘ ÈêĎ‘ĘmČ SĎ =yJĲĂ rmČę ’Ď MdăĎŇ’Ď lĘ C"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "Zoq¿wĘ :ìŇyIĲĆxČ ym¿Ą yĘ lJ¡Ł hŇ eĎlĆŔkĞŇ ’Ň êĲŁ ÉNobŇ ~Ď‘ĂBĘ ìŇrĆŔ CbŇ ‘ĞBĲČ ÉhmĎ dĎŇ’ĞhĲĎ hŇ rąĎCr’Ğ CeUĳĆ mĂ lk¡ČŇ ’Ň tŇŁ âl¿ rmŔŁ ’Ň lĄ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ÉìbĘŇ CSĲ dŇ‘ąČ MxĆlĆŔ lkČŇ ’Ň êăŁ ÉìyjĆÄ ’Č tŇ ‘ąČzĄBĘ :hŇ dĲĆŇvĎ hČ bŇ WĆ ‘¿Ą=tŇ ’Ć ê¡ĎlĘ kČŇ ’Ď wĘ ëŇĳĎl xĲČ ymăĂ YĘ êČ rD¡ČrĘdČŇwĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "oê¡SĘ ’Ă MS¿Ą MdËĎŇ’Ď hĲĎ ’rÌĎqĘ IĂwČ :bŇ CSĲ êĎ rp¡ĎŇ ‘Ď=l’ĆwĘ hŇ êĎ’ČŔ rpăĎŇ ‘Ď=yJĲĂ êĎxĘ uĳĎlĚ hŇ eĎU¡Ć mĂ yJ¿Ă hŇ mĎŔ dĎŇ’ĞhăĎ =l’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":MSĲĄ BĂ lĘ IČwČ ro‘¡ tŇ on¿tĘŇ JĎ oêËSĘ ’Ă lĘ C MdÌĎŇ’Ď lĘ MyhĂÁŁl’Ĺ hwĎÄhyĘ žW‘ČIČwČ :yxĲĎ =lJĎ M’¿Ą hŇ t¡ĎŇ yĘhĲĎ ’wh¿Ă yJËĂ hŇ CĳĎxČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "xlăČ SĘ yĂ=NjĆ űhŇ êăĎ‘ČwĘ ‘rĳĎwĎ bŇ oTă tŇ ‘Čd¡ČŇlĎ CeUĆŔ mĂ dŇxăČ ’Č JĘ ÉhyĎhĎ ÉMdĎŇ’Ď hĲĎ NhąĄ MyhĂęŁl’Ĺ hwăĎhyĘ űrmĆ ’Ň IăŁwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "NdĆŇ ‘ĳĄ=NGČmĂ Myh¡ĂŁl’Ĺ hw¿ĎhyĘ ChxËĄQĘ SČ yĘwĲČ :MlĲĎ ‘Ł lĘ yx¿Č wĎ lk¡ČŇ ’Ď wĘ MyIĂŔxČ hĲČ Z‘ăĄmĄ MGČť ÉxqČlĎ wĘ odę yĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "NdĆŇ ‘ĄÁ=NgČŇlĘ MdĆŇ uĆÄ mĂ žNJĄ SĘ IČwČ MdĳĎŇ’Ď hĲĎ =tŇ ’Ć SrĆg¡ĎŇyĘwČ :MèĲĎ mĂ xu¡ČlĚ rS¿Ć ’Ğ hŇ mĎŔ dĎŇ’ĞhăĎ =tŇ ’Ć ÉdbŇŁ ‘ĞlĲČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":MyIĲĂxČ hĲČ Z‘¿Ą ëŇrĆD¡Ć=tŇ ’Ć rměŁ SĘ lĂ tŇ kĆŇ jĆŔ hČ tĘŇ UĂ hČ ÉbrĆxĆÄ hČ ThČ ląČ tŇ ’ĄÄ wĘ MybĂę rĚJĘ hČ =tŇ ’Ć :hwĲĎhyĘ=tŇ ’Ć Sy’¡Ă ytĂŇ yn¿ĂqĎ rmĆ ’Ň êěŁ wČ NyĂqČŔ =tŇ ’Ć dŇlĆ êăĄwČ ÉrhČ êČÄ wČ oêĳSĘ ’Ă hŇ CăĎxČ =tŇ ’Ć ‘d¡ČŇyĎ MdĎŔ ’Ď hăĎ wĘ d yh¡Ă yĘwČĲ :hŇ mĲĎ dĎŇ’Ğ dŇb¿ĄŇ ‘Ł hŇ y¡ĎhĎ NyĂqČě wĘ N’Ň YŔŁ hŇ ‘ĄrăŁ ÉlbĆŇ hĆÄ =yhĂ yĘwĲČ lbĆŇ hĳĎ =tŇ ’Ć wyx¡Ă ’Ď =tŇ ’Ć tŇ dĆŇlĆŔlĎ PŇ sĆêăŁ wČ 2, 3 tŇ or¿kŇŁ BĘ mĂ ’ChË =MgČŇ ’yb¿ĂŇ hĄ lbĆŇ hĆÄ wĘ :hwĲĎhylĲČ hŇ x¡Ď nĘmĂ hŇ mËĎ dĎŇ’ĞhĎĲ yrÌĂjĘ mĂ NyĂqČÁ ’bĄÄ IĎwČ MymĳĂ yĎ ZuăĄmĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "rxČ IąĂwČ hŇ ‘ĳĎSĎ âlă ot¡Ň xĎ nĘmĂ =l’ĆwĘ NyĂq¿Č=l’ĆwĘ :otĲŇ xĎ nĘmĂ =l’ĆwĘ lbĆŇ h¡Ć =l’Ć hwĎŔhyĘ ‘SČ IăĂwČ NhĳĆ bĄŇ lĘ xĆmĲĄ C on¡’Ň YŁ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "’olą hĞ :ìŇynĲĆpĎŇ Cl¿ pĘŇ nĎ hŇ UĎ l¡Ď wĘ ëŇlĎŔ hŇ rĎxăĎ hŇ UĎ lĎ ť NyĂqĳĎ=l’Ć hw¡ĎhyĘ rmĆ ’Ň I¿ŁwČ :wynĲĎjĎ Cl¡ jĘ IĂwĲČ dŇ’ŔŁ mĘ ÉNyĂqČÄ lĘ 6, 7 :oBĲ =lSĎ mĘ êĂ hŇ ê¡Ď’Č wĘ otŔ qĎCSă êĘ ÉìylĆÄ’ĄwĘ ZbĳĄŇ rŁ tŇ ’Ň FăĎ xČ xtČŇ j¡Ć lČ bŇ yTĂŔ ytĄŇ âlă ÉM’Ă wĘ tŇ ’ĄŔ WĘ ÉbyTĂ yêĄ=M’Ă rmĆ ’Ň IąŁwČ :ChgĲĄŇrĘhČ IČwČ wyx¡Ă ’Ď lbĆŇ h¿Ć =l’Ć NyĂqËČ MqĎI¿ĎwČ hŇ dĆŔ vĎ BČ MtăĎŇ oyhĘ BĂ ÉyhĂ yĘwČĲ wyxĳĂ ’Ď lbĆŇ hăĆ =l’Ć NyĂq¡Č rmĆ ’Ň I¿ŁwČ 8, 9 tĎŇ yWĳĂ ‘Ď hŇ măĆ rmĆ ’Ň I¡ŁwČ :ykĂŇ nĲŁ ’Ď yx¡Ă ’Ď rm¿Ą SŁ hĞ yêĂ ‘ĘdČŔ yĎ âlă ÉrmĆ ’ŇŁIÄwČ ìŇyxĳĂ ’Ď lbĆŇ hăĆ y’¡Ą NyĂqČŔ =l’Ć ÉhwĎhyĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hŇ tăĎŇ YĘ jĎ rSăĆ ’Ğ ÉhmĎ dĎŇ’ĞhĲĎ =NmĂ hŇ êĎ’ĳĎ rCră’Ď hŇ ê¡Ď‘ČwĘ :hŇ mĲĎ dĎŇ’ĞhĲĎ =NmĂ yl¡Č’Ą Myq¿Ă‘ĞYŁ ìŇyxĂŔ ’Ď ymăĄ DĘ loqť"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "‘n¿Ď ëŇĳĎl Hx¡Ď JŁ =tŇ êĄ PŇ ¿ĄstŇŁ =âlĲ hŇ mĎŔ dĎŇ’ĞhăĎ =tŇ ’Ć ÉdbŇŁ ‘ĞtĲČŇ yJąĂ :ìŇdĲĆŇIĎmĂ ìŇyx¡Ă ’Ď ym¿Ą DĘ=tŇ ’Ć tŇ xČ qËČlĎ hĎ yjĂŔ =tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ynăĄjĘ Él‘ČmĄ MoIęhČ ytĂÁ ’Ł êĎSĘ rČÄ GĄ žNhĄ :’ŁWĲ eĘmĂ yn¡ĂwŁ‘Ğ lod¿ŇGĎ hwĳĎhyĘ=l’Ć NyĂq¡Č rmĆ ’Ň I¿ŁwČ :ZrĆ’ĲĎ bĎŇ hŇ y¿ĆhĘ êĲĂ dŇn¡ĎwĎ 13, 14 hwĎęhyĘ olă rmĆ ’Ň IÌŁwČ :ynĂgĲĄŇrĘhČ yČĲ y’¡Ă YĘ mŁ =lkĎŇ hŇ y¿ĎhĎ wĘ ZrĆ’ĎŔ BĎ ÉdnĎwĎ ‘nąĎ ytĂŇ yyĂÁhĎ wĘ rtĳĄŇ iĎ ’Ć ìŇyn¡ĆjĎ mĂ C hŇ mĎŔ dĎŇ’ĞhĎĲ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":o’Ĳ YĘ mŁ =lJĎ ot¡Ň ’Ł =tŇ oJhČ yê¿Ă lĘ bĂŇ lĘ tŇ o’Ŕ ÉNyĂqČÄ lĘ hwąĎhyĘ MWĆ IĎÄwČ MuĳĎyĚ MyĂt¡ČŇ ‘ĎbĘŇ SĂ NyĂqČŔ gŇrăĄhŁ =lJĎ ÉNkĄŇ lĎ dŇlĆ êăĄwČ rhČ ê¡ČwČ oêŔ SĘ ’Ă =tŇ ’Ć ÉNyĂqČÄ ‘dČŇ IąĄwČ :NdĆŇ ‘ĲĄ=tŇ mČ dĘŇqĂ dŇon¡=ZrĆ’ĲĆBĘ bŇ SĆ I¿ĄwČ hwĳĎhyĘ ynăĄpĘŇ QĂ mĂ NyĂq¡Č ’YĄI¿ĄwČ 16, 17 dŇrĎě y‘ĂwĘ dŇrĎŔ y‘Ă=tŇ ’Ć ÉëonxĞlĲČ dŇląĄCĎIĂwČ :ëŇonĲ xĞ on¿BĘ MS¡Ą JĘ ry‘ĂŔ hĎ MSăĄ É’rĎqĘ IĂwČ ry‘ĂŔ hŇ nĆBăŁ ÉyhĂ yĘwĲČ ëŇonĳxĞ=tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ëŇmĆ l¡Ć ol¿ =xuĲČIĲĂwČ :ëŇmĆ lĲĎ =tŇ ’Ć dŇl¿ČyĎ l’¡ĄSĎ CtŇ mĘ C l’ĄŔ SĎ CtăŇ mĘ =tŇ ’Ć ÉdlČ yĎ l’Ąę yĎIxĂ mĘ C l’ĳĄyĎCxĲ mĘ =tŇ ’Ć dŇl¡ČyĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "bŇ S¿Ą yŁ ybĂě ’Ğ hŇ yĎŔhĎ ’Chă lbĳĎŇ yĎ=tŇ ’Ć hŇ d¡ĎŇ ‘Ď dŇlĆ ê¿ĄwČ :hŇ QĲĎ YĂ tŇ yn¡ĂèĄ hČ MS¿Ą wĘ hŇ dĎŔ ‘Ď ÉtxČ ’Č hĲĎ MSąĄ MySĳĂ nĎ yêăĄSĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tyV’rb 4. 21–5. 31 ’whĂę =MgČŇ hŇ QăĎ YĂ wĘ :bŇ gĲĎŇC‘wĘ roe¡JĂ Wp¿ĄŇ êŁ =lJĎ ybĂě ’Ğ hŇ yĎŔhĎ ’Chă lbĳĎŇ Cy wyx¡Ă ’Ď MS¿Ą wĘ :hŇ nĲĆqĘ mĂ C lhĆ ’¡Ł 21, 22 ëŇmĆ lĆÁ rmĆ ’ŇŁIÄwČ :hŇ mĲĎ ‘ĞnĲČ NyĂq¡Č=lbČŇ CêĲ tŇ ox¿ ’ĞwĲČ lzĳĆrĘbČŇ C tŇ SĆ x¡Ł nĘ Sr¿ĄxŁ =lJĎ STĄěŁl NyĂqČŔ lbČŇ Cêă=tŇ ’Ć ÉhdĎŇlĘ yĲĎ 23 dŇlĆ y¡ĆwĘ y‘ĂŔ YĘ pĂŇ lĘ ÉyêĂ gĘŇrČÄ hĎ Sy’ąĂ yJăĂ ytĳĂŇ rĎmĘ ’Ă hŇ eĎz¡Ą’Ę hČ ëŇmĆ lĆŔ ySăĄ nĘ ylĂŔoq N‘ČmăČ SĘ ÉhQĎ YĂ wĘ hŇ dąĎŇ ‘Ď wySĎę nĎlĘ dŇlĆ êăĄwČ oêŔ SĘ ’Ă =tŇ ’Ć Édo‘ Md¿ĎŇ’Ď ‘dČŇIĄÄwČ :hŇ ‘ĲĎbĘŇ SĂ wĘ My‘¿ĂbĘŇ SĂ ëŇmĆ l¡Ć wĘ NyĂqĳĎ=MuČyĚ MyĂt¡ČŇ ‘ĎbĘŇ SĂ yJ¿Ă :ytĲĂŇ rĎBĚ xČ lĘ 24, 25 tŇ SąĄ lĘ C :NyĂqĲĎ og¡ŇrĎhĞ yJ¿Ă lbĆŇ hĆŔ tŇ xČ êăČ rxĄŔ ’Č ‘rČzăĆ ÉMyhĂŁl’Ĺ yląĂ =tŇ SĲĎ yJăĂ tŇ S ĳĄ om¡ SĘ =tŇ ’Ć ’r¿ĎqĘ êĂ wČ NBĄŔ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":hwĲĎhyĘ MS¿Ą BĘ ’r¡Ł qĘ lĂ lxČŔ Ch z’ăĎ Sonĳ’Ĺ om¡ SĘ =tŇ ’Ć ’r¿ĎqĘ IĂwČ NBĄŔ =dŇQČ yĚ É’Ch=MGČ hŇ b¡ĎŇ qĄnĘC rk¿ĎŇ zĎ :otĲŇ ’Ł hŇ W¿Ď ‘Ď Myh¡ĂŁl’Ĺ tŇ Cm¿ dĘŇBĂ MdĎŔ ’Ď ÉMyhĂŁl’Ĺ ’rąŁ BĘ MoyęBĘ MdĳĎŇ’Ď tŇ d¡ŇŁ lĘ oê rpĆŇ sĄŔ hŇ zăĆ h, 2 MdĎę ’Ď yxăĂ yĘwČĲ :M’ĲĎ rĘBĲĎ hĂ Moy¡BĘ MdĎŔ ’Ď ÉMmĎ SĘ =tŇ ’Ć ’rąĎqĘ IĂwČ MtĎę ’Ł ëŇrĆbăĎŇ yĘwČ M’ĳĎ rĎBĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ÉyrĄxĞ’ČĲ MdĎę ’Ď =ymĄ yĘ CyăhĘ IĲĂwČ :tŇ SĲĄ om¡ SĘ =tŇ ’Ć ’r¿ĎqĘ IĂwČ omĳ lĘ YČJĘ ot¡Ň CmdĘŇBĂ dŇlĆ oI¿wČ hŇ nĎŔSĎ Ét’Č mĘ C MySąĂ ŁlSĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "‘SąČ êĘ yxČŔ =rSĆ ’Ğ ÉMdĎŇ’Ď ymąĄyĘ=lJĎ CyÂhĘ IĲĂwČ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ ’¡Ł mĄ hŇ n¿ĆmŁ SĘ tŇ SĄŔ =tŇ ’Ć odăŇylĂ oh 5 dŇlĆ oI¡wČ hŇ nĳĎSĎ tŇ ’ăČ mĘ C Myn¡ĂSĎ Sm¿Ą xĎ tŇ SĄě =yxĂ yĘwČĲ :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ MyS¡Ă ŁlSĘ C hŇ nĎŔSĎ Éto’mĄ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ C MynĂŔSĎ ‘bČŇ SăĆ SonŔ’Ĺ=tŇ ’Ć odăŇylĂ oh ÉyrĄxĞ’ČĲ tŇ SĄę =yxĂ yĘwČĲ :SonĲ ’Ĺ=tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘S¿Č tĘŇ C hŇ nĎŔSĎ ÉhrĄWĘ ‘Ć MyêąĄSĘ tŇ SĄŔ =ymĄ yĘ=lJĎ ÉCyhĘ IĲĂwČ :tŇ onĲ bĎŇ C 8 SmąĄ xĞ NnĎŔyqĄ=tŇ ’Ć odăŇylĂ oh ÉyrĄxĞ’ČĲ Sonę’Ĺ yxăĂ yĘwČĲ :NnĲĎyqĄ=tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ My‘ăĂSĘ êĂ Son¡’Ĺ yx¿Ă yĘwČĲ 9, 10 MynĂŔSĎ SmăĄ xĎ SonŔ’Ĺ ymăĄ yĘ=lJĎ ÉCyhĘ IĲĂwČ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ C hŇ nĎŔSĎ ÉhrĄWĘ ‘Ć 11 :l’ĲĄlĘ lČ hĞmČĲ=tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ My‘ăĂbĘŇ SĂ N¡ĎnyqĄ yx¿Ă yĘwČĲ :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘S¿Č tĘŇ C 12 Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ C hŇ nĎŔSĎ My‘ăĂBĎ rĘ’Č l’ĄŔ lĘ lČ hĞmČĲ=tŇ ’Ć odăŇylĂ oh ÉyrĄxĞ’Č NnĎęyqĄ yxăĂ yĘwČ 13 :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘S¿Č tĘŇ C MynĂŔSĎ rWĆ ‘ăĆ NnĎŔyqĄ ymăĄ yĘ=lJĎ ÉCyhĘ IĲĂwČ :tŇ onĲ bĎŇ C 14 ÉyrĄxĞ’ČĲ l’Ąę lĘ lČ hĞmČĲ yxăĂ yĘwČĲ :dŇrĆyĲĎ=tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ MyèăĂ SĂ wĘ Myn¡ĂSĎ Sm¿Ą xĎ l’ĄŔ lĘ lČ hĞmČĲ yxăĂ yĘwČĲ 15, 16 ymăĄ yĘ=lJĎ ÉCyhĘ IĂwČ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ C hŇ nĎŔSĎ MySăĂ ŁlSĘ dŇrĆyĆŔ=tŇ ’Ć odăŇylĂ oh 17 MyĂêÌČSĘ dŇrĆyĆě=yxĂ yĘwČĲ :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ C hŇ nĎŔSĎ ÉMy‘ĂSĘ tĂŇ wĘ SmąĄ xĎ l’ĄŔ lĘ lČ hĞmČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tŇ o’¡ mĄ hŇ n¿ĆmŁ SĘ ëŇonŔxĞ=tŇ ’Ć odăŇylĂ oh ÉyrĄxĞ’ČĲ dŇrĆyĆę=yxĂ yĘwČĲ :ëŇonĲ xĞ=tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ tŇ ’ăČ mĘ C hŇ n¡ĎSĎ MyèËĂ SĂ wĘ 19 :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘S¿Č tĘŇ C hŇ nĎŔSĎ ÉMyèĂ SĂ wĘ MyĂêąČSĘ dŇrĆyĆŔ=ymĄ yĘ=lJĎ ÉCyhĘ IĲĂwČ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ÉyrĄxĞ’ČĲ MyhĂęŁl’ĹhĎĲ=tŇ ’Ć ëŇonÁxĞ ëŇQĄÄhČ tĘŇ IĂwČ :xlČ SĲĎ CtŇ mĘ =tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ Myè¡Ă SĂ wĘ Sm¿Ą xĎ ëŇonŔxĞ yxăĂ yĘwČĲ 21, 22 SmąĄ xĎ ëŇonĳxĞ ymăĄ yĘ=lJĎ yh¡Ă yĘwČ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ SŁl¿ SĘ xlČ SĆŔ CtŇ mĘ =tŇ ’Ć odăŇylĂ oh 23 ot¡Ň ’Ł xq¿ČlĎ =yJĲĂ CenĆěy’ĄwĘ MyhĳĂŁl’ĹhĎĲ=tŇ ’Ć ëŇon¡xĞ ëŇQ¿Ą hČ tĘŇ IĂwČ :hŇ nĲĎSĎ tŇ o’¡ mĄ SŁl¿ SĘ C hŇ nĎŔSĎ ÉMyèĂ SĂ wĘ 24 :MyhĲĂŁl’Ĺ xlČ SĆę CtŇ mĘ yxăĂ yĘwČĲ :ëŇmĆ lĲĎ =tŇ ’Ć dŇlĆ oI¡wČ hŇ nĳĎSĎ tŇ ’ăČ mĘ C hŇ n¡ĎSĎ MynËĂmŁ SĘ C ‘bČŇ S ÌĆ xlČ SĆŔ CtŇ mĘ yxăĂ yĘwČ 25, 26 :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘b¿ČŇ SĘ C hŇ nĎŔSĎ ÉMynĂomSĘ C MyĂêąČSĘ ëŇmĆ lĆŔ=tŇ ’Ć odăŇylĂ oh ÉyrĄxĞ’ČĲ :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘S¿Č tĘŇ C hŇ nĎŔSĎ ÉMyèĂ SĂ wĘ ‘SČ êąĄ xlČ SĆŔ CtŇ mĘ ymăĄ yĘ=lJĎ ÉCyhĘ IĂwČ 27 hŇţzĆÂ rmĳŁ ’Ň lĄ xČ n¡Ł omË SĘ =tŇ ’Ć ’rÌĎqĘ IĂwČ :NBĲĄ dŇlĆ oI¡wČ hŇ nĳĎSĎ tŇ ’ăČ mĘ C hŇ n¡ĎSĎ MynËĂmŁ SĘ C MyĂêÌČSĘ ëŇmĆ lĆě=yxĂ yĘwČĲ 28, 29 odăŇylĂ oh ÉyrĄxĞ’ČĲ ëŇmĆ lĆę=yxĂ yĘwČĲ :hwĲĎhyĘ Hr¡ĎrĘ’ĄĲ rS¿Ć ’Ğ hŇ mĎŔ dĎŇ’ĞhăĎ =NmĂ CnydĄŔ yĎ NobăŇ ~Ę ‘ĂmĄ C ÉCnWĄÄ ‘ĞUČ mĲĂ CnmąĄ xĞnČyĘ 30 ëŇmĆ lĆŔ=ymĄ yĘ=lJĎ ÉyhĂ yĘwČĲ :tŇ onĲ bĎŇ C Myn¡ĂBĎ dŇlĆ oI¿wČ hŇ nĳĎSĎ tŇ ’¡Ł mĄ Sm¿Ą xĞwČ hŇ nĎŔSĎ ÉMy‘ĂSĘ tĂŇ wĘ SmąĄ xĎ xČ nŔŁ =tŇ ’Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tŇ o’¡ mĄ Sm¿Ą xĞ=NBĆ xČŁně=yhĂ yĘwČĲ :tŇ mĲŁ IĎwČ hŇ nĳĎSĎ tŇ o’¡ mĄ ‘b¿ČŇ SĘ C hŇ nĎŔSĎ ÉMy‘ĂbĘŇ SĂ wĘ ‘bČŇ SąĆ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hŇ mĳĎ dĎŇ’ĞhĎĲ ynăĄjĘ =l‘Č bŇ r¡Ł lĎ MdĎŔ ’Ď hĎĲ lxăĄhĄ =yJĲĂ ÉyhĂ yĘwĲČ :tŇ pĆŇ yĲĎ=tŇ ’ĆwĘ Mx¿Ď =tŇ ’Ć MS¡Ą =tŇ ’Ć xČ nŔŁ dŇlĆ oIăwČ hŇ nĳĎSĎ w MySĂŔ nĎ ÉMhĆ lĎ Cxą qĘ IĂwČ hŇ eĎhĳĄ tŇ b¡ŇŁ TŁ yJ¿Ă MdĎŔ ’Ď hĲĎ tŇ onăBĘ =tŇ ’Ć ÉMyhĂŁl’ĹhĲĎ =ynĄbĘŇ C’ąrĘIĂwČ :MhĲĆ lĎ Cd¿ŇQĘ yĚ tŇ on¡bĎŇ C"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "CyăhĎ wĘ rWĳĎ bĎŇ ’Chă MG¡ČSČ BĘ MlĎŔ‘Ł lĘ ÉMdĎŇ’Ď bĲĎŇ yxąĂ Cr NodÄyĎ=âlĲ hwĎęhyĘ rmĆ ’Ň IăŁwČ :CrxĲĎ BĎ rS¿Ć ’Ğ lJ¡Ł mĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "C’bÁŁ yĎ rSĆÄ ’Ğ NkĄę =yrĄxĞ’ĲČ MgăČŇwĘ ůMhĄ hĎ MymăĂ IĎBČ ÈZrĆ’Ď bĎŇ CyăhĎ MylĂÂpĂŇ eĘhČ :hŇ nĲĎSĎ Myr¡ĂWĘ ‘ĆwĘ hŇ ’¿Ď mĄ wymĎŔ yĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":MèĲĄ hČ yS¿Ą nĘ’Č Ml¡Ď o‘mĄ rS¿Ć ’Ğ MyrËĂBŁ GĂhČ hŇ UĎ hÌĄ MhĳĆ lĎ Cd¡ŇlĘ yĎwĘ MdĎŔ ’Ď hĎĲ tŇ onăBĘ =l’Ć ÉMyhĂŁl’ĹhĲĎ ynąĄBĘ :MoIĲhČ =lJĎ ‘r¡Č qr¿Č oBŔ lĂ tŇ băŇŁ SĘ xĘ mČ ÉrYĆyĄÄ=lkĎŇ wĘ ZrĆ’ĳĎBĎ Md¡ĎŇ’Ď hĎ tŇ ‘¿ČrĎ hŇ BËĎ rČ yJ¿Ă hwĎŔhyĘ ’rĘIăČwČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MdąĎŇ’Ď hĎ =tŇ ’Ć hŇ xĆÄ mĘ ’Ć hwĎęhyĘ rmĆ ’Ň IăŁwČ :oBĲ lĂ =l’Ć bŇ ~¡Ą‘ČtĘŇ IĂwČ ZrĆ’ĳĎBĎ Md¡ĎŇ’Ď hĎĲ=tŇ ’Ć hŇ W¿Ď ‘Ď=yJĲĂ hwĎŔhyĘ MxĆeăĎIĂwČ 6, 7 yJ¿Ă MyĂmĳĎèĎ hČ PŇ o‘ă=dŇ‘ČwĘ WmĆ r¡Ć=dŇ‘Č hŇ mĎŔ hĄ BĘ =dŇ‘Č ÉMdĎŇ’Ď mĄĲ hŇ mĎŔ dĎŇ’ĞhĎĲ ynăĄjĘ Él‘ČmĄ ÉytĂŇ ’Ň rĎÄ BĎ =rSĆ ’Ğ :hwĲĎhyĘ yn¿Ąy‘ĄBĘ Nx¡Ą ’YĎm¿Ď xČŁněwĘ :MtĲĂŇ yWĂ ‘Ğ yJ¿Ă yêĂ mĘ x¡Č nĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "dŇlĆ oI¿wČ :xČ nĲŁ =ëŇQĆ hČ tĘŇ hĲĂ Myh¡ĂŁl’ĹhĎĲ=tŇ ’Ć wytĳĎŇ rŁ dĲŇŁ BĘ hŇ y¡ĎhĎ Mym¿Ă êĎ qyDËĂYČ Sy’¿Ă xČŁnę xČ nŔŁ tŇ dăŇŁ lĘ oê hŇ QĆ ’Ąť 9, 10 ’l¿Ą UĎ êĂ wČ MyhĳĂŁl’ĹhĎĲ ynăĄpĘŇ lĂ ZrĆ’¡ĎhĎ tŇ x¿ĄèĎ êĂ wČ :tŇ pĆŇ yĲĎ=tŇ ’ĆwĘ Mx¿Ď =tŇ ’Ć MS¡Ą =tŇ ’Ć MynĳĂbĎŇ hŇ SăĎ ŁlSĘ xČ n¡Ł"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "oJ¡ rĘDČ=tŇ ’Ć rWËĎ BĎ =lJĎ tŇ yxÌĂ SĘ hĂ =yJĲĂ hŇ tĎŇ xĳĎ SĘ nĂ hŇ eăĄhĂ wĘ ZrĆ’¡ĎhĎ =tŇ ’Ć MyhËĂŁl’Ĺ ’rĘIÌČwČ :smĲĎ xĎ ZrĆ’¡ĎhĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ZrĆ’ËĎhĎ hŇ ’¿Ď lĘ mĎ =yJĲĂ ynČŔpĎŇ lĘ ’BăĎ ÉrWĎ BĎ =lJĎ ZqąĄ xČŁnęlĘ MyhĂÁŁl’Ĺ rmĆ ’ŇŁIÄwČ :ZrĆ’ĲĎ hĎ =l‘Č"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "=tŇ ’Ć hŇ WăĆ ‘ĞĲČê Mye¡ĂqĂ rpĆŇ gŔŁ =yYĄ‘Ğ tŇ băČŇ êĄ ÉìlĘ hŇ WąĄ ‘Ğ :ZrĆ’ĲĎ hĎ =tŇ ’Ć Mt¡ĎŇ yxĂ SĘ mČ yn¿ĂnĘhĂ wĘ MhĳĆ ynĄjĘ mĂ sm¡Ď xĎ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ëŇrĆ’Ł ť hŇ UĎę ’Č tŇ o’ă mĄ SŁlÌ SĘ HtĳĎŇ ’Ł hŇ W¡Ć ‘ĞêĲČ rS¿Ć ’Ğ hŇ zĆěwĘ :rpĆŇ JĲŁ BČ ZCx¡ mĂ C tŇ yĂB¿ČmĂ HtËĎŇ ’Ł ê¿ĎrĘpČŇ kĲĎŇ wĘ hŇ bĳĎŇ êĄhČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "ÉhUĎ ’Č =l’ĆwĘ hŇ bĎę êĄlČ hŇ WăĆ ‘ĞêČ űrhČ YăŁ :HtĲĎŇ mĎ oq hŇ U¡Ď ’Č MyS¿Ă ŁlSĘ C HBĎŔ xĘ rĎ ÉhUĎ ’Č MyèąĂ mĂ xĞ hŇ bĎŔ êĄhČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "žynĂnĘhĂ ynĂę’ĞwČ :hĎ WĲĆ ‘ĞĲČê MyS¡Ă lĂ SĘ C MI¿ĂnĂSĘ MIËĂêĂ xĘ êČ MyWĳĂ êĎ HDăĎYĂ BĘ hŇ b¡ĎŇ êĄhČ xtČŇ p¿ĆŇ C hŇ lĎ ‘ĘmČŔ lĘ mĂ hŇ eĎlăĆkČŇ êĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MyĂmĳĎèĎ hČ tŇ xČ ê¡ČmĂ MyIĂŔxČ xČ Cră ÉoB=rSĆ ’Ğ rWĎę BĎ =lJĎ tŇ xăĄSČ lĘ ZrĆ’ĎŔ hĎ =l‘Č ÉMyĂmČÄ lCB¿ UČ hČ =tŇ ’Ć ’ybĂÄ mĄ ì¿ŇêĘ SĘ ’Ă wĘ ìŇynËĆbĎŇ C hŇ êĎě ’Č hŇ bĎŔ êĄhČ =l’Ć ÉtĎ’Ň bĎŇ C ëŇêĳĎ’Ă yt¡ĂŇ yrĂBĘ =tŇ ’Ć yt¿ĂŇ mŁ qĂ hĞwČ :‘wĲĎgĘŇyĂ ZrĆ’¡ĎBĎ =rSĆ ’Ğ lJ¿Ł"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "rk¿ĎŇ zĎ ëŇêĳĎ’Ă tŇ yăŁxĞhČ lĘ hŇ b¡ĎŇ êĄhČ =l’Ć ’yb¿ĂŇ êĎ lJËŁ mĂ MyĂnÌČSĘ rWĎÂ BĎ =lJĎ mĲĂ yxČ hĎ ţ=lJĎ mĂ C :ëŇêĲĎ’Ă ìŇyn¡ĆbĎŇ =ySĲĄ nĘC"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MyĂnÌČSĘ ChnĳĄymĂ lĘ hŇ m¡Ď dĎŇ’ĞhĎĲ WmĆ r¿Ć lJËŁ mĂ HnĎŔymĂ lĘ ÉhmĎ hĄ BĘ hČ =NmĂ C ChnĄęymĂ lĘ PŇ o‘ăhĎ mĄ :CyĲhĘ yĲĂ hŇ b¡ĎŇ qĄnĘC"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "hŇ y¿ĎhĎ wĘ ìŇylĳĆ’Ą ê¡ĎpĘŇ sČ ’Ď wĘ lkĄŔ ’Ď yĄĲ rSăĆ ’Ğ ÉlkĎŇ ’ĞmČĲ=lJĎ mĂ ìę lĘ =xqČ hŇ êăĎ’Č wĘ :tŇ oyĲxĞhČĲlĘ ìŇyl¡Ć’Ą C’b¿ŇŁ yĎ lJËŁ mĂ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": ":hŇ WĲĎ ‘Ď NJ¿Ą Myh¡ĂŁl’Ĺ otËŇ ’Ł hŇ C¿ĎYĂ rSĆÄ ’Ğ lkŇŁ JĘ ţ xČ nĳŁ W‘ČI¡ČwČ :hŇ lĲĎ kĘŇ ’Ď lĘ Mh¡Ć lĎ wĘ ìËŇlĘ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "roD¿BČ yn¡ČpĎŇ lĘ qyD¿ĂYČ ytĂŇ y’ËĂ rĎ ì¿ŇtĘŇ ’Ł =yJĲĂ hŇ bĳĎŇ êĄhČ =l’Ć ì¡ŇtĘŇ yBĄ =lkĎŇ wĘ hŇ ê¿Ď’Č =’BĲŁ xČ nŔŁ lĘ ÉhwĎhyĘ rmĆ ’Ň IąŁwČ z rSĆ ’Ğţ hŇ mĎÃ hĄ BĘ hČ =NmĂ C oêĳSĘ ’Ă wĘ Sy’ăĂ hŇ ‘¡ĎbĘŇ SĂ hŇ ‘¿ĎbĘŇ SĂ ìËŇlĘ =xuČêĲĂ hŇ rĎę ohFĘ hČ hŇ măĎ hĄ BĘ hČ űlJăŁ mĂ :hŇ EĲĆhČ"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "tŇ oI¿xČ lĘ hŇ bĳĎŇ qĄnĘC rkăĎŇ zĎ hŇ ‘¡ĎbĘŇ SĂ hŇ ‘¿ĎbĘŇ SĂ MyĂmËČèĎ hČ PŇ o‘ÌmĄ MGăČ :oêĲ SĘ ’Ă wĘ Sy’¿Ă MyĂn¡ČSĘ ’whËĂ hŇ r¿ĎhŁ TĘ âlă"
+  },
+  {
+    "book": "Unknown",
+    "language": "Hebrew",
+    "source_file": "Westminster Leningrad Codex (Hebrew).pdf",
+    "text": "MoyŔ My‘ăĂBĎ rĘ’Č ZrĆ’ĎŔ hĎ =l‘Č ryTăĂ mĘ mČ ÉykĂŇ nŁ ’ĲĎ hŇ ‘Ďę bĘŇ SĂ dŇo‘Á MymĂÄ yĎlĘ žyJĂ :ZrĆ’ĲĎ hĎ =lkĎŇ yn¿ĄjĘ =l‘Č ‘rČz¡Ć"
+  },
+  {
+    "book": "Unknown",
+    "language": "Aramaic",
+    "source_file": "Targum Onkelos (Genesis & Exodus).pdf",
+    "text": "This is a digital copy of a book that was preserved for generations on library shelves before it was carefully scanned by Google as part of a project to make the world’s books discoverable online. It has survived long enough for the copyright to expire and the book to enter the public domain. A public domain book is one that was never subject to copyright or whose legal copyright term has expired. Whether a book is in the public domain may vary country to country. Public domain books are our gateways to the past, representing a wealth of history, culture and knowledge that’s often difﬁcult to discover. Marks, notations and other marginalia present in the original volume will appear in this ﬁle - a reminder of this book’s long journey from the publisher to a library and ﬁnally to you. Usage guidelines Google is proud to partner with libraries to digitize public domain materials and make them widely accessible. Public domain books belong to the public and we are merely their custodians. Nevertheless, this work is expensive, so in order to keep providing this resource, we have taken steps to prevent abuse by commercial parties, including placing technical restrictions on automated querying. We also ask that you: + Make non-commercial use of the ﬁles We designed Google Book Search for use by individuals, and we request that you use these ﬁles for personal, non-commercial purposes. + Refrain from automated querying Do not send automated queries of any sort to Google’s system: If you are conducting research on machine translation, optical character recognition or other areas where access to a large amount of text is helpful, please contact us. We encourage the use of public domain materials for these purposes and may be able to help. + Maintain attribution The Google “watermark” you see on each ﬁle is essential for informing people about this project and helping them ﬁnd additional materials through Google Book Search. Please do not remove it. + Keep it legal Whatever your use, remember that you are responsible for ensuring that what you are doing is legal. Do not assume that just because we believe a book is in the public domain for users in the United States, that the work is also in the public domain for users in other countries. Whether a book is still in copyright varies from country to country, and we can’t offer guidance on whether any speciﬁc use of any speciﬁc book is allowed. Please do not assume that a book’s appearance in Google Book Search means it can be used in any manner anywhere in the world. Copyright infringement liability can be quite severe. About Google Book Search Google’s mission is to organize the world’s information and to make it universally accessible and useful. Google Book Search helps readers discover the world’s books while helping authors and publishers reach new audiences. You can search through the full text of this book on the web at http://books.google.com/"
+  }
+]

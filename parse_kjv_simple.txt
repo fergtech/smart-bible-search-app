@@ -1,0 +1,186 @@
+"""
+Robust KJV parser - extracts full verse text from Project Gutenberg pg10.txt
+Outputs: kjv_chunks.jsonl (one JSON object per line)
+"""
+
+import json
+import re
+from pathlib import Path
+
+def main():
+    input_file = Path("pg10.txt")
+    output_file = Path("kjv_chunks.jsonl")
+
+    text = input_file.read_text(encoding="utf-8")
+
+    # Trim Gutenberg metadata
+    start = text.find("The First Book of Moses: Called Genesis")
+    if start < 0:
+        raise RuntimeError("Genesis header not found in pg10.txt")
+    end = text.find("*** END OF THE PROJECT GUTENBERG EBOOK")
+    if end < 0:
+        end = len(text)
+    text = text[start:end]
+
+    print(f"Processing {len(text):,} characters...")
+
+    # Pre-compute book header positions
+    book_positions = get_book_positions(text)
+    print(f"Found {len(book_positions)} book headers")
+    if len(book_positions) < 66:
+        print("WARNING: Expected 66 books, got", len(book_positions))
+
+    # Regex: capture chapter:verse and all text until the next chapter:verse marker
+    verse_pattern = re.compile(r"(\d+):(\d+)\s+(.*?)(?=\n+\d+:\d+|\Z)", re.MULTILINE | re.DOTALL)
+
+    verses = []
+    for match in verse_pattern.finditer(text):
+        chapter = int(match.group(1))
+        verse = int(match.group(2))
+        verse_text = " ".join(match.group(3).split())
+
+        pos = match.start()
+        book = find_book_at_position(pos, book_positions)
+
+        verses.append({
+            "book": book,
+            "chapter": chapter,
+            "verse": verse,
+            "language": "English",
+            "source_file": "pg10.txt",
+            "text": verse_text
+        })
+
+    print(f"Extracted {len(verses):,} verses")
+
+    # Validation: check book coverage
+    books_seen = sorted(set(v["book"] for v in verses))
+    print(f"Books parsed: {len(books_seen)}")
+    if len(books_seen) != 66:
+        missing = sorted(set(b for _, b in BOOK_MARKERS) - set(books_seen))
+        print("WARNING: Missing books:", missing)
+
+    # Show sample
+    print("\nFirst 10 verses:")
+    for v in verses[:10]:
+        print(f"  {v['book']} {v['chapter']}:{v['verse']} - {v['text'][:60]}...")
+
+    print("\nLast verse:", verses[-1])
+
+    # Save JSONL
+    with output_file.open("w", encoding="utf-8") as f:
+        for v in verses:
+            json.dump(v, f, ensure_ascii=False)
+            f.write("\n")
+
+    print(f"\nSaved to {output_file}")
+    print("✓ KJV verse extraction complete")
+
+# Canonical book markers
+BOOK_MARKERS = [
+    ("The First Book of Moses: Called Genesis", "Genesis"),
+    ("The Second Book of Moses: Called Exodus", "Exodus"),
+    ("The Third Book of Moses: Called Leviticus", "Leviticus"),
+    ("The Fourth Book of Moses: Called Numbers", "Numbers"),
+    ("The Fifth Book of Moses: Called Deuteronomy", "Deuteronomy"),
+    ("The Book of Joshua", "Joshua"),
+    ("The Book of Judges", "Judges"),
+    ("The Book of Ruth", "Ruth"),
+    ("The First Book of Samuel", "1 Samuel"),
+    ("The Second Book of Samuel", "2 Samuel"),
+    ("The First Book of the Kings", "1 Kings"),
+    ("The Second Book of the Kings", "2 Kings"),
+    ("The First Book of the Chronicles", "1 Chronicles"),
+    ("The Second Book of the Chronicles", "2 Chronicles"),
+    ("Ezra", "Ezra"),
+    ("The Book of Nehemiah", "Nehemiah"),
+    ("The Book of Esther", "Esther"),
+    ("The Book of Job", "Job"),
+    ("The Book of Psalms", "Psalms"),
+    ("The Proverbs", "Proverbs"),
+    ("Ecclesiastes", "Ecclesiastes"),
+    ("The Song of Solomon", "Song of Solomon"),
+    ("The Book of the Prophet Isaiah", "Isaiah"),
+    ("The Book of the Prophet Jeremiah", "Jeremiah"),
+    ("The Lamentations of Jeremiah", "Lamentations"),
+    ("The Book of the Prophet Ezekiel", "Ezekiel"),
+    ("The Book of Daniel", "Daniel"),
+    ("Hosea", "Hosea"),
+    ("Joel", "Joel"),
+    ("Amos", "Amos"),
+    ("Obadiah", "Obadiah"),
+    ("Jonah", "Jonah"),
+    ("Micah", "Micah"),
+    ("Nahum", "Nahum"),
+    ("Habakkuk", "Habakkuk"),
+    ("Zephaniah", "Zephaniah"),
+    ("Haggai", "Haggai"),
+    ("Zechariah", "Zechariah"),
+    ("Malachi", "Malachi"),
+    ("The Gospel According to Saint Matthew", "Matthew"),
+    ("The Gospel According to Saint Mark", "Mark"),
+    ("The Gospel According to Saint Luke", "Luke"),
+    ("The Gospel According to Saint John", "John"),
+    ("The Acts of the Apostles", "Acts"),
+    ("The Epistle of Paul the Apostle to the Romans", "Romans"),
+    ("The First Epistle of Paul the Apostle to the Corinthians", "1 Corinthians"),
+    ("The Second Epistle of Paul the Apostle to the Corinthians", "2 Corinthians"),
+    ("The Epistle of Paul the Apostle to the Galatians", "Galatians"),
+    ("The Epistle of Paul the Apostle to the Ephesians", "Ephesians"),
+    ("The Epistle of Paul the Apostle to the Philippians", "Philippians"),
+    ("The Epistle of Paul the Apostle to the Colossians", "Colossians"),
+    ("The First Epistle of Paul the Apostle to the Thessalonians", "1 Thessalonians"),
+    ("The Second Epistle of Paul the Apostle to the Thessalonians", "2 Thessalonians"),
+    ("The First Epistle of Paul the Apostle to Timothy", "1 Timothy"),
+    ("The Second Epistle of Paul the Apostle to Timothy", "2 Timothy"),
+    ("The Epistle of Paul the Apostle to Titus", "Titus"),
+    ("The Epistle of Paul the Apostle to Philemon", "Philemon"),
+    ("The Epistle of Paul the Apostle to the Hebrews", "Hebrews"),
+    ("The General Epistle of James", "James"),
+    ("The First Epistle General of Peter", "1 Peter"),
+    ("The Second General Epistle of Peter", "2 Peter"),
+    ("The First Epistle General of John", "1 John"),
+    ("The Second Epistle General of John", "2 John"),
+    ("The Third Epistle General of John", "3 John"),
+    ("The General Epistle of Jude", "Jude"),
+    ("The Revelation of Saint John the Divine", "Revelation"),
+]
+
+def get_book_positions(text):
+    """Find book headers scattered throughout the text (not TOC)"""
+    positions = []
+    for marker, book_name in BOOK_MARKERS:
+        # Find the LAST occurrence that has verse markers following it
+        pos = 0
+        last_valid_pos = -1
+        while True:
+            idx = text.find(marker, pos)
+            if idx < 0:
+                break
+            # Check if verses follow this occurrence
+            snippet = text[idx:idx+500]
+            if re.search(r"\d+:\d+", snippet):
+                last_valid_pos = idx
+            pos = idx + 1
+        
+        if last_valid_pos >= 0:
+            positions.append((last_valid_pos, book_name))
+    
+    positions.sort(key=lambda x: x[0])
+    if positions:
+        print(f"First book: {positions[0][1]} at position {positions[0][0]}")
+        print(f"Last book: {positions[-1][1]} at position {positions[-1][0]}")
+    return positions
+
+def find_book_at_position(pos, book_positions):
+    """Find nearest preceding book header for a verse position"""
+    current_book = "Unknown"
+    for book_pos, book_name in book_positions:
+        if book_pos <= pos:
+            current_book = book_name
+        else:
+            break
+    return current_book
+
+if __name__ == "__main__":
+    main()

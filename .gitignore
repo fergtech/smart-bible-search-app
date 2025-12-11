@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Data files (large source files)
+pg10.txt
+pg10_cleaned.txt
+pg10_normalized.txt
+*.csv
+lxx_data/
+sblgnt_data/
+strongs_data/
+
+# Generated data files
+kjv_chunks.jsonl
+hebrew_aramaic_verses.json
+biblical_verses*.json
+lexicon_metadata.json
+
+# Embeddings and indexes (will be regenerated)
+*.faiss
+*.npy
+embeddings/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+
+# Temporary files
+*.txt.txt
+notes.txt.txt
+project-status.txt
