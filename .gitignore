@@ -28,6 +28,7 @@ lexicon_metadata.json
 *.faiss
 *.npy
 embeddings/
+cache/
 
 # IDE
 .vscode/

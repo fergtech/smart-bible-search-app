@@ -9,6 +9,7 @@ services:
       - "8000:8000"
     volumes:
       - ./kjv_chunks.jsonl:/app/kjv_chunks.jsonl:ro
+      - ./cache:/app/cache  # Mount cache directory for embeddings
     environment:
       - PYTHONUNBUFFERED=1
     healthcheck:

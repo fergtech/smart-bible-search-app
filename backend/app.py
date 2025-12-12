@@ -65,7 +65,7 @@ async def load_verses():
                     "reference": reference
                 })
         
-        print(f"✓ Loaded {len(verses)} verses")
+        print(f"OK: Loaded {len(verses)} verses")
     except Exception as e:
         print(f"Error loading verses: {e}")
         raise
