@@ -18,6 +18,7 @@ import search_keyword
 import search_semantic
 import explain
 import commentary_summarizer
+import logger as structured_logger
 
 # Setup structured logging
 logging.basicConfig(
@@ -25,6 +26,9 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Get structured logger instance
+app_logger = structured_logger.get_logger()
 
 # Initialize FastAPI
 app = FastAPI(title=config.API_TITLE, version=config.API_VERSION)
@@ -149,16 +153,40 @@ async def search(request: SearchRequest):
     Returns:
         List of matching verses with relevance scores
     """
+    import time
+    start_time = time.time()
+    
     if not request.query or not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     
-    results = search_keyword.search_keyword(
-        verses, 
-        request.query, 
-        request.max_results
-    )
-    
-    return results
+    try:
+        results = search_keyword.search_keyword(
+            verses, 
+            request.query, 
+            request.max_results
+        )
+        
+        # Log the search request
+        response_time = time.time() - start_time
+        app_logger.log_search(
+            query=request.query,
+            query_type='keyword',
+            module='search_keyword',
+            verses_retrieved=results,
+            response_time=response_time,
+            status='success'
+        )
+        
+        return results
+        
+    except Exception as e:
+        response_time = time.time() - start_time
+        app_logger.log_error(
+            error_type='search_error',
+            error_message=str(e),
+            context={'query': request.query, 'module': 'search_keyword'}
+        )
+        raise
 
 
 @app.post("/semantic_search", response_model=List[Verse])
@@ -174,6 +202,9 @@ async def semantic_search(request: SemanticSearchRequest):
     Returns:
         List of semantically similar verses with similarity scores
     """
+    import time
+    start_time = time.time()
+    
     if not request.query or not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     
@@ -192,8 +223,27 @@ async def semantic_search(request: SemanticSearchRequest):
             request.max_results,
             request.min_similarity
         )
+        
+        # Log the search request
+        response_time = time.time() - start_time
+        app_logger.log_search(
+            query=request.query,
+            query_type='semantic',
+            module='search_semantic',
+            verses_retrieved=results,
+            response_time=response_time,
+            status='success'
+        )
+        
         return results
+        
     except Exception as e:
+        response_time = time.time() - start_time
+        app_logger.log_error(
+            error_type='semantic_search_error',
+            error_message=str(e),
+            context={'query': request.query, 'module': 'search_semantic'}
+        )
         raise HTTPException(status_code=500, detail=f"Search error: {str(e)}")
 
 
@@ -211,48 +261,70 @@ async def explain_search(request: ExplainRequest):
     Returns:
         Natural language explanation with relevant verses
     """
+    import time
+    start_time = time.time()
+    
     if not request.query or not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     
-    # Perform search
-    if request.semantic:
-        # Check if semantic search is available
-        embedding_stats = search_semantic.get_embedding_stats()
-        if not embedding_stats['index_exists']:
-            raise HTTPException(
-                status_code=503,
-                detail="Semantic search not available. Run generate_embeddings.py first."
+    try:
+        # Perform search
+        if request.semantic:
+            # Check if semantic search is available
+            embedding_stats = search_semantic.get_embedding_stats()
+            if not embedding_stats['index_exists']:
+                raise HTTPException(
+                    status_code=503,
+                    detail="Semantic search not available. Run generate_embeddings.py first."
+                )
+            
+            results = search_semantic.search_semantic(
+                verses,
+                request.query,
+                request.max_results
+            )
+            explanation = explain.explain_semantic_results(
+                results,
+                request.query,
+                request.max_verses
+            )
+        else:
+            results = search_keyword.search_keyword(
+                verses,
+                request.query,
+                request.max_results
+            )
+            explanation = explain.explain_results(
+                results,
+                request.query,
+                request.max_verses
             )
         
-        results = search_semantic.search_semantic(
-            verses,
-            request.query,
-            request.max_results
+        # Log the explain request
+        response_time = time.time() - start_time
+        app_logger.log_explain(
+            verse_reference=f"{len(results)} verses for '{request.query}'",
+            explanation=explanation,
+            response_time=response_time,
+            status='success'
         )
-        explanation = explain.explain_semantic_results(
-            results,
-            request.query,
-            request.max_verses
+        
+        return {
+            "query": request.query,
+            "search_type": "semantic" if request.semantic else "keyword",
+            "total_results": len(results),
+            "explanation": explanation,
+            "verses": results[:request.max_verses]
+        }
+        
+    except Exception as e:
+        response_time = time.time() - start_time
+        app_logger.log_error(
+            error_type='explain_error',
+            error_message=str(e),
+            context={'query': request.query, 'module': 'explain'}
         )
-    else:
-        results = search_keyword.search_keyword(
-            verses,
-            request.query,
-            request.max_results
-        )
-        explanation = explain.explain_results(
-            results,
-            request.query,
-            request.max_verses
-        )
-    
-    return {
-        "query": request.query,
-        "search_type": "semantic" if request.semantic else "keyword",
-        "total_results": len(results),
-        "explanation": explanation,
-        "verses": results[:request.max_verses]
-    }
+        raise
 
 
 @app.post("/commentary")
@@ -271,6 +343,9 @@ async def generate_commentary(request: CommentaryRequest):
     Returns:
         Commentary text, verses used, and model metadata
     """
+    import time
+    start_time = time.time()
+    
     if not request.query or not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     
@@ -294,6 +369,16 @@ async def generate_commentary(request: CommentaryRequest):
         )
         
         if not results:
+            response_time = time.time() - start_time
+            app_logger.log_commentary(
+                query=request.query,
+                verses_used=[],
+                commentary="No relevant verses found for this query.",
+                commentary_mode='missing',
+                response_time=response_time,
+                status='no_results'
+            )
+            
             return {
                 "query": request.query,
                 "commentary": "No relevant verses found for this query.",
@@ -308,13 +393,17 @@ async def generate_commentary(request: CommentaryRequest):
             use_cache=request.use_cache
         )
         
-        # Log the interaction
-        _log_commentary_request(
+        response_time = time.time() - start_time
+        
+        # Log the commentary request with structured logger
+        app_logger.log_commentary(
             query=request.query,
-            verses=results[:10],
+            verses_used=results[:10],
             commentary=commentary_result['commentary'],
             commentary_mode=commentary_result.get('commentary_mode', 'full'),
-            model_info=commentary_result.get('model_info', {})
+            response_time=response_time,
+            model_info=commentary_result.get('model_info', {}),
+            status='success'
         )
         
         return {
@@ -330,40 +419,19 @@ async def generate_commentary(request: CommentaryRequest):
         }
         
     except Exception as e:
+        response_time = time.time() - start_time
         logger.error(f"Commentary generation error: {e}")
+        
+        app_logger.log_error(
+            error_type='commentary_error',
+            error_message=str(e),
+            context={'query': request.query, 'module': 'commentary_summarizer'}
+        )
+        
         raise HTTPException(
             status_code=500, 
             detail=f"Commentary generation failed: {str(e)}"
         )
-
-
-def _log_commentary_request(query: str, verses: List, commentary: str, commentary_mode: str, model_info: dict):
-    """Log commentary request to structured JSON log"""
-    log_dir = Path(__file__).parent.parent / "logs"
-    log_dir.mkdir(exist_ok=True)
-    
-    log_file = log_dir / "commentary_log.jsonl"
-    
-    log_entry = {
-        "timestamp": datetime.utcnow().isoformat(),
-        "query": query,
-        "verses_retrieved": [
-            {
-                "reference": v['reference'],
-                "similarity": v.get('relevance_score', 0)
-            }
-            for v in verses
-        ],
-        "commentary": commentary,
-        "commentary_mode": commentary_mode,
-        "model_info": model_info
-    }
-    
-    try:
-        with open(log_file, 'a', encoding='utf-8') as f:
-            f.write(json.dumps(log_entry) + '\n')
-    except Exception as e:
-        logger.warning(f"Failed to write commentary log: {e}")
 
 
 @app.get("/commentary/status")
@@ -391,15 +459,71 @@ async def get_chapter(book: str, chapter: int):
     Returns:
         List of all verses in the chapter
     """
-    chapter_verses = search_keyword.search_by_reference(verses, book, chapter)
+    import time
+    start_time = time.time()
     
-    if not chapter_verses:
-        raise HTTPException(
-            status_code=404, 
-            detail=f"Chapter not found: {book} {chapter}"
+    try:
+        chapter_verses = search_keyword.search_by_reference(verses, book, chapter)
+        
+        if not chapter_verses:
+            raise HTTPException(
+                status_code=404, 
+                detail=f"Chapter not found: {book} {chapter}"
+            )
+        
+        response_time = time.time() - start_time
+        app_logger.log_chapter(
+            book=book,
+            chapter=chapter,
+            verses_count=len(chapter_verses),
+            response_time=response_time,
+            status='success'
         )
+        
+        return chapter_verses
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        response_time = time.time() - start_time
+        app_logger.log_error(
+            error_type='chapter_error',
+            error_message=str(e),
+            context={'book': book, 'chapter': chapter}
+        )
+        raise
+
+
+# Frontend logging endpoint
+class FrontendLogRequest(BaseModel):
+    action: str
+    context: dict
+    session_id: Optional[str] = None
+
+
+@app.post("/log")
+async def log_frontend_action(request: FrontendLogRequest):
+    """
+    Log frontend user actions for analytics.
     
-    return chapter_verses
+    Args:
+        action: Action type (e.g., 'search_submitted', 'commentary_displayed')
+        context: Additional context data
+        session_id: Optional session identifier
+    
+    Returns:
+        Status confirmation
+    """
+    try:
+        app_logger.log_frontend_action(
+            action=request.action,
+            context=request.context,
+            session_id=request.session_id
+        )
+        return {"status": "logged"}
+    except Exception as e:
+        logger.error(f"Frontend logging error: {e}")
+        return {"status": "error", "message": str(e)}
 
 
 if __name__ == "__main__":

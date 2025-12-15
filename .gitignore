@@ -44,6 +44,10 @@ Thumbs.db
 # Docker
 *.log
 
+# Logs directory
+logs/
+*.jsonl
+
 # Temporary files
 *.txt.txt
 notes.txt.txt

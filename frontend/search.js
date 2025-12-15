@@ -137,6 +137,11 @@ const KeywordSearch = {
 
             const verses = await response.json();
             
+            // Log search action
+            if (window.frontendLogger) {
+                frontendLogger.logSearch(query, 'semantic', verses.length);
+            }
+            
             UI.hideStatus();
             this.displayResults(verses);
             
@@ -147,6 +152,12 @@ const KeywordSearch = {
 
         } catch (error) {
             console.error('Search error:', error);
+            
+            // Log error
+            if (window.frontendLogger) {
+                frontendLogger.logError('search_error', error.message, { query });
+            }
+            
             UI.showStatus(`Error: ${error.message}`, 'error');
             this.elements.resultsSection.classList.remove('visible');
         } finally {

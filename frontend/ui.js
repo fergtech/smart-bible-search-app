@@ -77,6 +77,11 @@ const UI = {
     async viewChapter(book, chapter, highlightVerse) {
         if (!this.elements.modal) return;
 
+        // Log chapter view
+        if (window.frontendLogger) {
+            frontendLogger.logChapterView(book, chapter, highlightVerse);
+        }
+
         // Show modal with loading state
         this.elements.modalTitle.textContent = `${book} ${chapter}`;
         this.elements.modalBody.innerHTML = `

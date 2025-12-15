@@ -10,6 +10,7 @@ services:
     volumes:
       - ./kjv_chunks.jsonl:/app/kjv_chunks.jsonl:ro
       - ./cache:/app/cache  # Mount cache directory for embeddings and models
+      - ./logs:/app/logs  # Mount logs directory for persistent logging
       - huggingface_cache:/root/.cache/huggingface  # Persist downloaded models
     environment:
       - PYTHONUNBUFFERED=1

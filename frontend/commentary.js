@@ -80,6 +80,15 @@ class CommentaryManager {
     displayCommentary(data) {
         const { commentary, metadata } = data;
         
+        // Log commentary display
+        if (window.frontendLogger) {
+            frontendLogger.logCommentary(
+                this.currentQuery,
+                commentary.length,
+                metadata?.verses_used || 0
+            );
+        }
+        
         // Format commentary with verse references emphasized
         const formattedCommentary = this.formatCommentary(commentary);
         
@@ -132,6 +141,11 @@ class CommentaryManager {
      * Display error message
      */
     displayError(message) {
+        // Log error
+        if (window.frontendLogger) {
+            frontendLogger.logError('commentary_error', message, { query: this.currentQuery });
+        }
+        
         this.elements.content.innerHTML = `
             <div style="text-align: center; color: var(--text-tertiary); padding: var(--space-xl);">
                 <p>⚠️ Unable to generate commentary</p>
@@ -166,6 +180,11 @@ class CommentaryManager {
      */
     toggleCollapse() {
         this.isCollapsed = !this.isCollapsed;
+        
+        // Log toggle action
+        if (window.frontendLogger) {
+            frontendLogger.logToggle('commentary', this.isCollapsed ? 'collapsed' : 'expanded');
+        }
         
         if (this.isCollapsed) {
             this.elements.content.classList.add('collapsed');
