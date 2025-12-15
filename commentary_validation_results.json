@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-12-12T08:28:31.787881",
+  "summary": {
+    "total_queries": 7,
+    "passed": 7,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "results": [
+    {
+      "query": "forgiveness",
+      "result": {
+        "success": true,
+        "commentary": "The Bible teaches us that we should forgive others, even as God for Christ\u2019s sake hath forgiven us. We should be kind one to another, tenderhearted, forgiving one another.",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": false
+        },
+        "elapsed": 9.225961208343506,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "true sabbath day",
+      "result": {
+        "success": true,
+        "commentary": "The sabbath day is the seventh day of the month. It is when Jesus made the clay, and opened his eyes. Luke 23:54: \"And that day was the preparation,",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": true
+        },
+        "elapsed": 4.487672567367554,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "how to beat addictions",
+      "result": {
+        "success": true,
+        "commentary": "The end of all things is at hand: be ye therefore sober, and watch unto prayer. Proverbs 4:5: \"Offer the sacrifices of righteousness, and put your trust in the LORD.\" 1 Chronicles 16:11: \"Seek the LORD and his strength, seek his face continually.\"",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": true
+        },
+        "elapsed": 5.822572708129883,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "faith without works",
+      "result": {
+        "success": true,
+        "commentary": "Faith is the substance of things hoped for, the evidence of things not seen. The righteousness of God revealed from faith to faith. To him that worketh not, but believeth on him that justifieth the ungodly, his faith is counted for righteousness.",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": false
+        },
+        "elapsed": 5.377524375915527,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "love your enemies",
+      "result": {
+        "success": true,
+        "commentary": "Love your enemies, do good to them which hate you. Psalms 59:1: \"Deliver me from mine enemies, O my God: defend me from them that rise up against me.\"",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": true
+        },
+        "elapsed": 4.363431215286255,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "do not worry about tomorrow",
+      "result": {
+        "success": true,
+        "commentary": "In the last days perilous times shall come. Take heed, watch and pray: for ye know not when the time is. Psalms 56:3: \"What time I am afraid, I will trust in thee.\"",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": true
+        },
+        "elapsed": 4.990508079528809,
+        "verses_count": 10
+      }
+    },
+    {
+      "query": "what is the kingdom of heaven",
+      "result": {
+        "success": true,
+        "commentary": "The kingdom of heaven is likened to a certain king, which would take account of his servants. Daniel 2:44 describes the kingdom that shall never be destroyed.",
+        "commentary_mode": "full",
+        "checks": {
+          "commentary_exists": true,
+          "commentary_length": true,
+          "verses_returned": true,
+          "verses_used_correct": true,
+          "mode_is_full": true,
+          "references_verses": false
+        },
+        "elapsed": 5.337038040161133,
+        "verses_count": 10
+      }
+    }
+  ]
+}

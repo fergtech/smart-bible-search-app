@@ -9,9 +9,19 @@ services:
       - "8000:8000"
     volumes:
       - ./kjv_chunks.jsonl:/app/kjv_chunks.jsonl:ro
-      - ./cache:/app/cache  # Mount cache directory for embeddings
+      - ./cache:/app/cache  # Mount cache directory for embeddings and models
+      - huggingface_cache:/root/.cache/huggingface  # Persist downloaded models
     environment:
       - PYTHONUNBUFFERED=1
+      - HF_HOME=/root/.cache/huggingface  # Hugging Face cache location
+    # Uncomment below for GPU support (requires nvidia-docker on Linux/WSL2)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]
       interval: 30s
@@ -36,3 +46,6 @@ services:
 networks:
   default:
     driver: bridge
+
+volumes:
+  huggingface_cache:  # Persistent volume for Hugging Face models

@@ -3,6 +3,7 @@ FROM nginx:alpine
 
 # Copy the static files
 COPY index.html /usr/share/nginx/html/
+COPY *.css /usr/share/nginx/html/
 COPY *.js /usr/share/nginx/html/
 
 # Expose port 80

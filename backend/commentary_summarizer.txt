@@ -1,0 +1,275 @@
+"""
+Commentary Summarizer - GPU-accelerated Bible verse synthesis
+Generates natural language commentary from semantic search results.
+
+Model: google/flan-t5-large (780M params - optimized for 8GB VRAM)
+Approach: Few-shot instruction-based generation with verse grounding
+"""
+
+import json
+import hashlib
+from typing import List, Dict, Optional
+from pathlib import Path
+import logging
+
+# Lazy imports for optional dependencies
+_model = None
+_tokenizer = None
+_device = None
+
+logger = logging.getLogger(__name__)
+
+
+def _get_torch():
+    """Lazy import PyTorch"""
+    try:
+        import torch
+        return torch
+    except ImportError:
+        raise ImportError(
+            "PyTorch not installed. Run: pip install torch"
+        )
+
+
+def _load_model():
+    """Lazy load the summarization model (GPU-accelerated)"""
+    global _model, _tokenizer, _device
+    
+    if _model is not None:
+        return _model, _tokenizer, _device
+    
+    try:
+        from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+        import torch
+        
+        model_name = "google/flan-t5-large"  # 780M params, fits in 8GB VRAM
+        
+        logger.info(f"Loading commentary model: {model_name}")
+        
+        # Check GPU availability
+        _device = "cuda" if torch.cuda.is_available() else "cpu"
+        logger.info(f"Using device: {_device}")
+        
+        if _device == "cpu":
+            logger.warning("GPU not available! Commentary generation will be slower.")
+        
+        # Load model with GPU optimization
+        _tokenizer = AutoTokenizer.from_pretrained(model_name)
+        _model = AutoModelForSeq2SeqLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float16 if _device == "cuda" else torch.float32,
+            device_map="auto" if _device == "cuda" else None
+        )
+        
+        if _device == "cpu":
+            _model = _model.to(_device)
+        
+        logger.info(f"Model loaded successfully on {_device}")
+        
+        return _model, _tokenizer, _device
+        
+    except ImportError as e:
+        logger.error(f"Missing dependencies: {e}")
+        raise ImportError(
+            "transformers not installed. Run: pip install transformers accelerate"
+        )
+
+
+def _create_cache_key(query: str, verse_ids: List[str]) -> str:
+    """Create cache key from query and verse IDs"""
+    content = f"{query}|{'|'.join(sorted(verse_ids))}"
+    return hashlib.md5(content.encode()).hexdigest()
+
+
+def _load_cache(cache_key: str, cache_dir: Path) -> Optional[str]:
+    """Load cached commentary if available"""
+    cache_file = cache_dir / f"{cache_key}.json"
+    
+    if cache_file.exists():
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                logger.info(f"Cache hit for query: {data.get('query', 'unknown')}")
+                return data.get('commentary')
+        except Exception as e:
+            logger.warning(f"Cache read error: {e}")
+    
+    return None
+
+
+def _save_cache(cache_key: str, query: str, commentary: str, cache_dir: Path):
+    """Save commentary to cache"""
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file = cache_dir / f"{cache_key}.json"
+    
+    try:
+        with open(cache_file, 'w', encoding='utf-8') as f:
+            json.dump({
+                'query': query,
+                'commentary': commentary,
+                'cached_at': str(Path(__file__).stat().st_mtime)
+            }, f, indent=2)
+        logger.info(f"Cached commentary for: {query}")
+    except Exception as e:
+        logger.warning(f"Cache write error: {e}")
+
+
+def _build_prompt(query: str, verses: List[Dict]) -> str:
+    """Build instruction prompt for the model"""
+    
+    # Format verses with references
+    verse_context = "\n\n".join([
+        f"{v['reference']}: {v['text']}"
+        for v in verses[:10]  # Limit to top 10 for context length
+    ])
+    
+    # Instruction-based prompt for FLAN-T5
+    prompt = f"""Synthesize these Bible verses into a concise commentary that answers the question: "{query}"
+
+Verses:
+{verse_context}
+
+Write a natural, flowing 2-3 sentence commentary that:
+1. Directly addresses the question
+2. References specific verses naturally (e.g., "as seen in Romans 12:2")
+3. Stays grounded in the scripture text
+4. Uses clear, accessible language
+
+Commentary:"""
+    
+    return prompt
+
+
+def generate_commentary(
+    query: str,
+    verses: List[Dict],
+    cache_dir: Optional[Path] = None,
+    use_cache: bool = True
+) -> Dict:
+    """
+    Generate natural language commentary from verse search results.
+    
+    Args:
+        query: User's search query
+        verses: List of verse dicts with 'reference', 'text', 'relevance_score'
+        cache_dir: Directory for caching results
+        use_cache: Whether to use cached results
+    
+    Returns:
+        Dict with 'commentary', 'verses_used', 'model_info'
+    """
+    
+    if not verses:
+        return {
+            'commentary': "No verses found to generate commentary.",
+            'verses_used': 0,
+            'model_info': None
+        }
+    
+    # Setup cache
+    if cache_dir is None:
+        cache_dir = Path(__file__).parent.parent / "cache" / "commentary"
+    
+    # Check cache
+    verse_ids = [v['reference'] for v in verses[:10]]
+    cache_key = _create_cache_key(query, verse_ids)
+    
+    if use_cache:
+        cached = _load_cache(cache_key, cache_dir)
+        if cached:
+            return {
+                'commentary': cached,
+                'verses_used': len(verse_ids),
+                'model_info': {'source': 'cache'}
+            }
+    
+    # Load model
+    model, tokenizer, device = _load_model()
+    torch = _get_torch()
+    
+    # Build prompt
+    prompt = _build_prompt(query, verses)
+    
+    logger.info(f"Generating commentary for query: {query}")
+    logger.debug(f"Prompt length: {len(prompt)} chars")
+    
+    try:
+        # Tokenize
+        inputs = tokenizer(
+            prompt,
+            return_tensors="pt",
+            max_length=1024,
+            truncation=True
+        ).to(device)
+        
+        # Generate with optimized parameters
+        with torch.no_grad():
+            outputs = model.generate(
+                **inputs,
+                max_length=150,  # 2-3 sentences
+                min_length=40,
+                temperature=0.7,
+                top_p=0.9,
+                do_sample=True,
+                num_beams=1,  # Faster for real-time use
+                repetition_penalty=1.2
+            )
+        
+        # Decode
+        commentary = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        
+        logger.info(f"Generated commentary: {len(commentary)} chars")
+        
+        # Cache result
+        if use_cache:
+            _save_cache(cache_key, query, commentary, cache_dir)
+        
+        return {
+            'commentary': commentary.strip(),
+            'verses_used': len(verse_ids),
+            'model_info': {
+                'model': 'google/flan-t5-large',
+                'device': device,
+                'verses_referenced': len(verse_ids)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Commentary generation error: {e}")
+        
+        # Fallback: Simple verse concatenation
+        fallback = f"The Bible addresses '{query}' in several passages. "
+        fallback += f"Key verses include {verses[0]['reference']}"
+        if len(verses) > 1:
+            fallback += f", {verses[1]['reference']}"
+        if len(verses) > 2:
+            fallback += f", and {verses[2]['reference']}"
+        fallback += "."
+        
+        return {
+            'commentary': fallback,
+            'verses_used': len(verse_ids),
+            'model_info': {'source': 'fallback', 'error': str(e)}
+        }
+
+
+def get_model_status() -> Dict:
+    """Get current model status and GPU info"""
+    torch = _get_torch()
+    
+    status = {
+        'model_loaded': _model is not None,
+        'device': str(_device) if _device else 'not_loaded',
+        'gpu_available': torch.cuda.is_available()
+    }
+    
+    if torch.cuda.is_available():
+        status['gpu_name'] = torch.cuda.get_device_name(0)
+        status['gpu_memory_allocated_gb'] = round(
+            torch.cuda.memory_allocated(0) / 1024**3, 2
+        )
+        status['gpu_memory_reserved_gb'] = round(
+            torch.cuda.memory_reserved(0) / 1024**3, 2
+        )
+    
+    return status

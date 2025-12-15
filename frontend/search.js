@@ -1,5 +1,5 @@
 /**
- * Keyword Search - Traditional text-based verse search
+ * Search Module - Semantic search integration with modern UI
  */
 
 const KeywordSearch = {
@@ -13,18 +13,26 @@ const KeywordSearch = {
             queryInput: document.getElementById('queryInput'),
             searchBtn: document.getElementById('searchBtn'),
             maxResults: document.getElementById('maxResults'),
-            results: document.getElementById('results'),
+            resultsSection: document.getElementById('resultsSection'),
             resultsCount: document.getElementById('resultsCount'),
             resultsList: document.getElementById('resultsList')
         };
 
-        // Event listeners
+        this.setupEventListeners();
+    },
+
+    /**
+     * Setup event listeners
+     */
+    setupEventListeners() {
+        // Search on Enter key
         this.elements.queryInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.performSearch();
             }
         });
 
+        // Search button click
         this.elements.searchBtn.addEventListener('click', () => {
             this.performSearch();
         });
@@ -45,41 +53,45 @@ const KeywordSearch = {
     },
 
     /**
-     * Display search results
+     * Display search results in modern card layout
      */
     displayResults(verses) {
-        if (verses.length === 0) {
+        if (!verses || verses.length === 0) {
             this.elements.resultsList.innerHTML = `
                 <div class="no-results">
                     <div class="no-results-icon">🔍</div>
-                    <div class="no-results-text">No verses found matching your search.</div>
+                    <div class="no-results-text">No verses found. Try a different query.</div>
                 </div>
             `;
-        } else {
-            this.elements.resultsList.innerHTML = verses.map((verse, index) => `
-                <div class="verse-card" id="verse-${index}">
-                    <div class="verse-header">
-                        <div>
-                            <span class="verse-reference">${verse.reference}</span>
-                            ${verse.relevance_score ? `<span class="verse-score">${(verse.relevance_score * 100).toFixed(0)}% match</span>` : ''}
-                        </div>
-                        <div class="verse-actions">
-                            <button class="btn-small" onclick="toggleVerse(${index})">
-                                <span id="toggle-btn-${index}">Expand</span>
-                            </button>
-                            <button class="btn-small secondary" onclick="viewChapter('${verse.book}', ${verse.chapter}, ${verse.verse})">
-                                View Chapter
-                            </button>
-                        </div>
-                    </div>
-                    <div class="verse-preview">${this.highlightQuery(verse.text)}</div>
-                    <div class="verse-text">${this.highlightQuery(verse.text)}</div>
-                </div>
-            `).join('');
+            return;
         }
 
+        this.elements.resultsList.innerHTML = verses.map((verse, index) => `
+            <article class="verse-card" role="listitem">
+                <div class="verse-header">
+                    <div class="verse-meta">
+                        <h3 class="verse-reference">${verse.reference}</h3>
+                        ${verse.relevance_score ? `
+                            <span class="verse-score" title="Semantic similarity score">
+                                ${Math.round(verse.relevance_score * 100)}% match
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="verse-actions">
+                        <button 
+                            class="btn btn-secondary" 
+                            onclick="viewChapter('${verse.book}', ${verse.chapter}, ${verse.verse})"
+                            aria-label="View full chapter">
+                            View Chapter
+                        </button>
+                    </div>
+                </div>
+                <div class="verse-text">${this.highlightQuery(verse.text)}</div>
+            </article>
+        `).join('');
+
         this.elements.resultsCount.textContent = `${verses.length} result${verses.length !== 1 ? 's' : ''}`;
-        this.elements.results.classList.remove('hidden');
+        this.elements.resultsSection.classList.add('visible');
     },
 
     /**
@@ -95,11 +107,16 @@ const KeywordSearch = {
 
         const maxResults = parseInt(this.elements.maxResults.value) || 10;
 
+        // Clear previous results and commentary
+        this.elements.resultsSection.classList.remove('visible');
+        if (window.commentaryManager) {
+            commentaryManager.clear();
+        }
+
         // Disable button and show loading
         this.elements.searchBtn.disabled = true;
         this.elements.searchBtn.textContent = 'Searching...';
-        UI.showStatus('Searching with AI...', 'loading');
-        this.elements.results.classList.add('hidden');
+        UI.showStatus('Searching with AI...', 'info');
 
         try {
             const response = await fetch(`${window.API_URL}/semantic_search`, {
@@ -122,11 +139,16 @@ const KeywordSearch = {
             
             UI.hideStatus();
             this.displayResults(verses);
+            
+            // Generate commentary if available
+            if (window.commentaryManager && verses.length > 0) {
+                commentaryManager.generateCommentary(query, maxResults);
+            }
 
         } catch (error) {
             console.error('Search error:', error);
             UI.showStatus(`Error: ${error.message}`, 'error');
-            this.elements.results.classList.add('hidden');
+            this.elements.resultsSection.classList.remove('visible');
         } finally {
             this.elements.searchBtn.disabled = false;
             this.elements.searchBtn.textContent = 'Search';

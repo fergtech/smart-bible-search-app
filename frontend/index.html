@@ -1,504 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bible Query System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .search-box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-        }
-
-        .search-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        #queryInput {
-            flex: 1;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        #queryInput:focus {
-            border-color: #667eea;
-        }
-
-        #searchBtn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        #searchBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        #searchBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .options {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #666;
-        }
-
-        .options label {
-            font-size: 0.95rem;
-        }
-
-        .options input[type="number"] {
-            width: 70px;
-            padding: 5px 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-        }
-
-        .status {
-            text-align: center;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            display: none;
-        }
-
-        .status.loading {
-            display: block;
-            background: #fff9e6;
-            color: #997404;
-        }
-
-        .status.error {
-            display: block;
-            background: #ffe6e6;
-            color: #cc0000;
-        }
-
-        .status.success {
-            display: block;
-            background: #e6f7e6;
-            color: #006600;
-        }
-
-        .results {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        .results-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 30px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .results-list {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .verse-card {
-            padding: 20px 25px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s;
-            cursor: pointer;
-        }
-
-        .verse-card:hover {
-            background: #f8f9ff;
-        }
-
-        .verse-card:last-child {
-            border-bottom: none;
-        }
-
-        .verse-card.expanded {
-            background: #f8f9ff;
-            padding: 25px 30px;
-        }
-
-        .verse-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .verse-reference {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 1rem;
-        }
-
-        .verse-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-small {
-            padding: 5px 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-small:hover {
-            background: #5568d3;
-            transform: translateY(-1px);
-        }
-
-        .btn-small.secondary {
-            background: #6c757d;
-        }
-
-        .btn-small.secondary:hover {
-            background: #5a6268;
-        }
-
-        .verse-preview {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #333;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .verse-text {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #333;
-            display: none;
-            margin-top: 10px;
-        }
-
-        .verse-card.expanded .verse-preview {
-            display: none;
-        }
-
-        .verse-card.expanded .verse-text {
-            display: block;
-        }
-
-        .verse-score {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 2px 8px;
-            background: #e6f0ff;
-            color: #0066cc;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            max-width: 900px;
-            max-height: 80vh;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            animation: slideIn 0.3s;
-        }
-
-        .modal-header {
-            padding: 25px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-body {
-            padding: 30px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .chapter-verse {
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            border-left: 3px solid #e0e0e0;
-            transition: all 0.2s;
-        }
-
-        .chapter-verse:hover {
-            background: #f8f9ff;
-            border-left-color: #667eea;
-        }
-
-        .chapter-verse.highlighted {
-            background: #fff3cd;
-            border-left-color: #ffc107;
-            font-weight: 500;
-        }
-
-        .chapter-verse-num {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-right: 10px;
-        }
-
-        .chapter-verse.highlighted .chapter-verse-num {
-            background: #ffc107;
-            color: #000;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .search-box {
-                padding: 20px;
-            }
-
-            .search-input-group {
-                flex-direction: column;
-            }
-
-            #searchBtn {
-                width: 100%;
-            }
-
-            .modal-content {
-                width: 95%;
-                max-height: 90vh;
-            }
-
-            .modal-header {
-                padding: 20px;
-            }
-
-            .modal-title {
-                font-size: 1.2rem;
-            }
-
-            .modal-body {
-                padding: 20px;
-            }
-
-            .verse-card {
-                padding: 15px 20px;
-            }
-
-            .verse-actions {
-                flex-direction: column;
-                width: 100%;
-                gap: 5px;
-            }
-
-            .btn-small {
-                width: 100%;
-                text-align: center;
-            }
-        }
-
-        .no-results {
-            padding: 60px 30px;
-            text-align: center;
-            color: #999;
-        }
-
-        .no-results-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .no-results-text {
-            font-size: 1.1rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+    <meta name="description" content="AI-powered semantic search across 31,102 KJV Bible verses. Ask questions in natural language and find relevant scriptures instantly.">
+    <meta name="theme-color" content="#10a37f">
+    <title>Smart Bible Search | AI-Powered Scripture Discovery</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📖 Bible Query System</h1>
-            <p class="subtitle">Search through 30,000+ KJV verses</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <span class="logo-icon">📖</span>
+                    <span>Smart Bible Search</span>
+                </a>
+                <div class="header-actions">
+                    <button 
+                        id="themeToggle" 
+                        class="theme-toggle" 
+                        aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </div>
         </header>
 
-        <div class="search-box">
-            <div class="search-input-group">
-                <input 
-                    type="text" 
-                    id="queryInput" 
-                    placeholder="Enter search terms or phrase (e.g., 'love', 'faith and hope')"
-                    autocomplete="off"
-                >
-                <button id="searchBtn">Search</button>
-            </div>
-            <div class="options">
-                <label>
-                    Max results:
-                    <input type="number" id="maxResults" value="10" min="1" max="100">
-                </label>
-            </div>
-        </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="hero-title">Ask the Bible Anything</h1>
+                <p class="hero-subtitle">Advanced search across 31,102+ KJV verses</p>
+            </section>
 
-        <div id="status" class="status"></div>
-
-        <div id="results" class="results hidden">
-            <div class="results-header">
-                <span id="resultsCount">0 results</span>
-            </div>
-            <div id="resultsList" class="results-list"></div>
-        </div>
-
-        <!-- Chapter Context Modal -->
-        <div id="chapterModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="modalTitle">Chapter Context</h2>
-                    <button class="modal-close" onclick="closeChapterModal()">&times;</button>
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input 
+                            type="text" 
+                            id="queryInput" 
+                            class="search-input"
+                            placeholder="What are the fruits of the spirit?"
+                            aria-label="Search query"
+                            autocomplete="off">
+                        <button 
+                            id="searchBtn" 
+                            class="search-button"
+                            aria-label="Search">
+                            Search
+                        </button>
+                    </div>
+                    <div class="search-options">
+                        <div class="option-group">
+                            <label for="maxResults">Results:</label>
+                            <input 
+                                type="number" 
+                                id="maxResults" 
+                                class="option-input"
+                                value="10" 
+                                min="1" 
+                                max="50"
+                                aria-label="Maximum results">
+                        </div>
+                        <div class="option-group">
+                            <span id="searchMode">Semantic Search</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body" id="modalBody">
-                    <!-- Chapter verses will be loaded here -->
+
+                <!-- Status Message -->
+                <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
+            </section>
+
+            <!-- Commentary Section (NEW) -->
+            <section id="commentarySection" class="commentary-section hidden" aria-live="polite">
+                <div class="commentary-card">
+                    <div class="commentary-header">
+                        <h3 class="commentary-title">
+                            
+                            Biblical Commentary
+                        </h3>
+                        <button id="commentaryToggle" class="commentary-toggle" aria-label="Toggle commentary">
+                            <span>−</span>
+                        </button>
+                    </div>
+                    <div id="commentaryContent" class="commentary-content">
+                        <div class="commentary-loading">
+                            <div class="spinner"></div>
+                            <p>Generating commentary...</p>
+                        </div>
+                    </div>
+                    <div class="commentary-footer">
+                        <small class="commentary-badge">
+                            
+                            Generated from top search results
+                        </small>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section">
+                <div class="results-header">
+                    <h2 id="resultsCount" class="results-count">0 results</h2>
+                </div>
+                <div id="resultsList" class="results-list" role="list"></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                Powered by AI semantic search · 
+                <a href="https://github.com/fergtech/smart-bible-search-app" target="_blank" rel="noopener noreferrer">
+                    View on GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Chapter View Modal -->
+    <div id="chapterModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title">Chapter</h2>
+                <button 
+                    id="closeModal" 
+                    class="modal-close" 
+                    aria-label="Close modal">
+                    ×
+                </button>
             </div>
+            <div id="chapterContent" class="modal-body"></div>
         </div>
     </div>
 
+    <!-- API Configuration -->
     <script>
-        // Global configuration
-        window.API_URL = 'http://localhost:8000';
+        // Set API URL based on environment
+        window.API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:8000'
+            : `${window.location.protocol}//${window.location.hostname}:8000`;
+        
+        // Alias for commentary module
+        window.API_BASE_URL = window.API_URL;
     </script>
-    
-    <!-- Modular JavaScript -->
+
+    <!-- Load JavaScript Modules -->
     <script src="ui.js"></script>
     <script src="search.js"></script>
     <script src="semantic.js"></script>
+    <script src="commentary.js"></script>
+    
+    <script>
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize UI module
+            UI.init();
+            
+            // Initialize search
+            KeywordSearch.init();
+            
+            // Initialize theme
+            ThemeManager.init();
+        });
+    </script>
 </body>
 </html>

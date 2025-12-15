@@ -1,0 +1,1182 @@
+{
+  "timestamp": "2025-12-12T09:03:15.752436",
+  "stats": {
+    "total": 65,
+    "success": 64,
+    "failed": 1,
+    "timeout": 0,
+    "full_mode": 59,
+    "fallback_mode": 0,
+    "missing_mode": 0,
+    "quality_passed": 59,
+    "by_category": {
+      "Modern Slang": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Controversial": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Personal Situations": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Nonsense/Gibberish": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Non-Biblical": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Typos/Misspellings": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Long Rambling": {
+        "total": 2,
+        "success": 2,
+        "failed": 0
+      },
+      "Empty/Minimal": {
+        "total": 5,
+        "success": 4,
+        "failed": 1
+      },
+      "Paradoxes": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Pop Culture": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Multiple Questions": {
+        "total": 4,
+        "success": 4,
+        "failed": 0
+      },
+      "Non-English": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Theological Complex": {
+        "total": 5,
+        "success": 5,
+        "failed": 0
+      },
+      "Boundary Testing": {
+        "total": 4,
+        "success": 4,
+        "failed": 0
+      }
+    }
+  },
+  "results": [
+    {
+      "category": "Modern Slang",
+      "query": "how do i stop being toxic in relationships",
+      "success": true,
+      "commentary": "The Bible teaches us to stop being toxic in relationships. In Job 19:19, \"All my inward friends abhorred me; and they whom I loved are turned against me.\" In Philippians 2:3, \"Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.\" In Proverbs 22:24, \"Make no friendship with an angry man; and with a furious man thou shalt not go:\"",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 12.779634714126587,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Modern Slang",
+      "query": "dealing with FOMO and social media addiction",
+      "success": true,
+      "commentary": "No relevant verses found for this query.",
+      "commentary_mode": "unknown",
+      "verses_count": 0,
+      "elapsed": 0.13514184951782227,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": false,
+        "mode_valid": false,
+        "reasonable_time": true
+      },
+      "all_checks_passed": false
+    },
+    {
+      "category": "Modern Slang",
+      "query": "is it ok to ghost someone who hurt me",
+      "success": true,
+      "commentary": "Job 13:19: \"Who is he that will plead with me? for now, if I hold my tongue, I shall give up the ghost.\" Lamentations 1:19: \"I called for my lovers, but they deceived me: my priests and mine elders gave up the Ghost in the city, while they sought their meat to relieve their souls.\" Luke 12:12: \"For the Holy Ghost shall teach you in the same hour what ye ought to say.\"",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 7.38414454460144,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Modern Slang",
+      "query": "my crush doesn't like me back what do i do",
+      "success": true,
+      "commentary": "He that is not with me is against me; and he that gathereth not with Me scattereth abroad.\" Luke 11:23.",
+      "commentary_mode": "full",
+      "verses_count": 5,
+      "elapsed": 5.6382527351379395,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Modern Slang",
+      "query": "fighting with my parents all the time",
+      "success": true,
+      "commentary": "The Bible teaches that children should obey their parents in the Lord, for this is right. Children should not fight with their parents all the time.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.5287423133850098,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Controversial",
+      "query": "what does the bible say about abortion",
+      "success": true,
+      "commentary": "When a woman does the office of a midwife to the Hebrew women, and sees them upon the stools; if it be a son, then ye shall kill him: but if she is a daughter, then she shall live. Luke 1:31: And, behold, thou shalt conceive in thy womb, and bring forth a Son, and shall call his name JESUS.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 8.349965333938599,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Controversial",
+      "query": "is being gay a sin",
+      "success": true,
+      "commentary": "The Bible teaches that being gay is not a sin. It does not mean that it is wrong to be gay. In fact, the Bible says that people who are born of God do not commit sin.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.778933048248291,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Controversial",
+      "query": "should i divorce my abusive spouse",
+      "success": true,
+      "commentary": "The Bible teaches that it is wrong to divorce an abusive spouse. It also teaches the importance of giving your spouse due benevolence.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.472135305404663,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Controversial",
+      "query": "women in ministry leadership",
+      "success": true,
+      "commentary": "Women in ministry leadership are commanded to be under obedience as also saith the law. The Bible teaches that women should keep silence in the churches, because it is not permitted for them to speak.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.2133967876434326,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Controversial",
+      "query": "death penalty biblical perspective",
+      "success": true,
+      "commentary": "Ezra 7:26 states that whoever does not do the law of his God, and the rule of the king, shall be executed speedily upon him, whether it be unto death, or to banishment.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.9587321281433105,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Personal Situations",
+      "query": "my best friend betrayed me and i want revenge",
+      "success": true,
+      "commentary": "The Bible teaches that people who betray their friends will cause them to be put to death, and some of them will die as a result.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.789724349975586,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Personal Situations",
+      "query": "i lost my job and feel like god abandoned me",
+      "success": true,
+      "commentary": "Job 42:17: \"So Job died, being old and full of days. The Book of Psalms Genesis 31:7: \"And your father hath deceived me, and changed my wages ten times; but God suffered him not to hurt me.\"",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 8.489343643188477,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Personal Situations",
+      "query": "my teenager is doing drugs what should i do",
+      "success": true,
+      "commentary": "Proverbs 22:6: \"Train up a child in the way he should go: and when he is old, he will not depart from it.\"",
+      "commentary_mode": "full",
+      "verses_count": 1,
+      "elapsed": 2.570700168609619,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Personal Situations",
+      "query": "struggling with depression and suicidal thoughts",
+      "success": true,
+      "commentary": "The Bible teaches that people with depression and suicidal thoughts are perplexed, but not in despair. Job 17:11 says, \"My days are past, my purposes are broken off, even the thoughts of my heart.\"",
+      "commentary_mode": "full",
+      "verses_count": 5,
+      "elapsed": 3.5249483585357666,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Personal Situations",
+      "query": "my spouse is cheating on me",
+      "success": true,
+      "commentary": "The law of jealousies states that a wife who goes aside to another instead of her husband is defiled. Ephesians 5:33 says that every one of you in particular should love his wife even as himself.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.662714958190918,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Nonsense/Gibberish",
+      "query": "asdfghjkl",
+      "success": true,
+      "commentary": "The word \"asdfghjkl\" in the Bible refers to a sower who sows the word.",
+      "commentary_mode": "full",
+      "verses_count": 2,
+      "elapsed": 2.113429069519043,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Nonsense/Gibberish",
+      "query": "42",
+      "success": true,
+      "commentary": "Leviticus 27:3: \"And thy estimation shall be of the male from twenty years old even unto sixty years old, even thou estimest shall be fifty shekels of silver, after the shekel of the sanctuary.\" Nehemiah 7:28: The men of Bethazmaveth, forty and two. Ezekiel 40:15: And from the face of the gate of the entrance unto the face",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 7.012914419174194,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Nonsense/Gibberish",
+      "query": "potato salad recipe",
+      "success": true,
+      "commentary": "No relevant verses found for this query.",
+      "commentary_mode": "unknown",
+      "verses_count": 0,
+      "elapsed": 0.14080262184143066,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": false,
+        "mode_valid": false,
+        "reasonable_time": true
+      },
+      "all_checks_passed": false
+    },
+    {
+      "category": "Nonsense/Gibberish",
+      "query": "xyzzy plugh",
+      "success": true,
+      "commentary": "The word \"xyzzy\" in the Bible refers to a person's roaring or sighing before eating.",
+      "commentary_mode": "full",
+      "verses_count": 3,
+      "elapsed": 3.5487165451049805,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Nonsense/Gibberish",
+      "query": "beep boop robot noises",
+      "success": true,
+      "commentary": "Ezekiel 3:13: \"I heard also the noise of the wings of the living creatures that touched one another, and the sound of the wheels over against them, and a noise of a great rushing.\" Psalms 102:5: \"By reason of the voice of my groaning my bones cleave to my skin.\"",
+      "commentary_mode": "full",
+      "verses_count": 3,
+      "elapsed": 5.459954261779785,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-Biblical",
+      "query": "how to invest in cryptocurrency",
+      "success": true,
+      "commentary": "The Bible teaches that people should offer sacrifices of righteousness, and put their trust in the LORD. Jeremiah 10:8 says they are altogether brutish and foolish: the stock is a doctrine of vanities.",
+      "commentary_mode": "full",
+      "verses_count": 4,
+      "elapsed": 4.957895517349243,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-Biblical",
+      "query": "best workout routine for muscle gain",
+      "success": true,
+      "commentary": "No relevant verses found for this query.",
+      "commentary_mode": "unknown",
+      "verses_count": 0,
+      "elapsed": 0.2517876625061035,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": false,
+        "mode_valid": false,
+        "reasonable_time": true
+      },
+      "all_checks_passed": false
+    },
+    {
+      "category": "Non-Biblical",
+      "query": "quantum physics and god",
+      "success": true,
+      "commentary": "The Bible teaches that God is all-knowing, all-powerful, and all-wise. He created the heavens and the earth.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.8537724018096924,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-Biblical",
+      "query": "climate change solutions",
+      "success": true,
+      "commentary": "The Bible teaches that drought and heat consume the snow waters, so those who have sinned will be gravely punished for their sins.",
+      "commentary_mode": "full",
+      "verses_count": 3,
+      "elapsed": 2.1826248168945312,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-Biblical",
+      "query": "artificial intelligence ethics",
+      "success": true,
+      "commentary": "The Bible teaches that artificial intelligence should be used for good, not evil. It is important to understand the difference between good and evil in the Bible.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.8051838874816895,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Typos/Misspellings",
+      "query": "forgivness and mersy",
+      "success": true,
+      "commentary": "The Bible teaches that forgiveness and mercy can be found in God, the Father of our Lord Jesus Christ. In 2 Corinthians 1:3: \"Blessed be God, even the Father\" (Psalms 44:26).",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 4.075838088989258,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Typos/Misspellings",
+      "query": "how to no gods will",
+      "success": true,
+      "commentary": "The Bible teaches that no gods can make the heavens and the earth, but they can destroy them from the earth and under these heavens.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.897219657897949,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Typos/Misspellings",
+      "query": "jeasus techings",
+      "success": true,
+      "commentary": "The sons of Japheth were Gomer, and Magog, and Madai, and Javan, and Tubal, and Meshech, and Tiras.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.2099788188934326,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Typos/Misspellings",
+      "query": "prairs for helth",
+      "success": true,
+      "commentary": "The Bible teaches that \"prairs for helth\" are to be offered at the tabernacle of the congregation.",
+      "commentary_mode": "full",
+      "verses_count": 9,
+      "elapsed": 2.6537511348724365,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Typos/Misspellings",
+      "query": "salvashun throgh fath",
+      "success": true,
+      "commentary": "Salvashun throgh fath is a phrase used in the Bible to describe a person who is proud and stirreth up strife.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.5269131660461426,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Long Rambling",
+      "query": "i've been struggling with depression for years and my family doesn't understand and i feel so alone and i don't know if god even hears my prayers anymore and everything feels hopeless",
+      "success": true,
+      "commentary": "The Bible teaches that God is with us. When we are troubled, our heart is faint in us. Psalms 38:6: \"I am troubled; I am bowed down greatly; I go mourning all the day long.\"",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 6.3273396492004395,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Long Rambling",
+      "query": "my life is falling apart my job my marriage my health everything is going wrong and i keep praying but nothing changes and i'm starting to lose faith",
+      "success": true,
+      "commentary": "The Bible teaches that praying without ceasing is the most effective way to increase one's faith and to be saved. It also tells us that when we pray, God hears our prayers and responds to them.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.4960412979125977,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Empty/Minimal",
+      "query": "",
+      "error": "HTTP 400",
+      "success": false,
+      "elapsed": 0.004267215728759766
+    },
+    {
+      "category": "Empty/Minimal",
+      "query": "?",
+      "success": true,
+      "commentary": "No relevant verses found for this query.",
+      "commentary_mode": "unknown",
+      "verses_count": 0,
+      "elapsed": 0.1290268898010254,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": false,
+        "mode_valid": false,
+        "reasonable_time": true
+      },
+      "all_checks_passed": false
+    },
+    {
+      "category": "Empty/Minimal",
+      "query": "help",
+      "success": true,
+      "commentary": "The Bible teaches that there is no one to help when trouble is near, because there is nothing to help in the world. Psalms 22:11 says, \"Be not far from me; for trouble is close; for there is none to help.\"",
+      "commentary_mode": "full",
+      "verses_count": 1,
+      "elapsed": 3.447442054748535,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Empty/Minimal",
+      "query": "god",
+      "success": true,
+      "commentary": "The Bible teaches that God is love. Love is the only thing that can bring people together and make them whole. In Psalms 72:18, \"Blessed be the LORD God, the God of Israel, who only doeth wondrous things.\"",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 6.041479110717773,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Empty/Minimal",
+      "query": "a",
+      "success": true,
+      "commentary": "The word \"a\" in the Bible refers to a person or group of people. It is also used to describe a man or woman.",
+      "commentary_mode": "full",
+      "verses_count": 1,
+      "elapsed": 2.325594186782837,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Paradoxes",
+      "query": "why does a loving god allow suffering",
+      "success": true,
+      "commentary": "The Bible teaches that suffering is better for good doing than for evil doing. It is better to suffer according to the will of God than to do evil.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.871047019958496,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Paradoxes",
+      "query": "can god create a stone he cannot lift",
+      "success": true,
+      "commentary": "The Bible teaches that God cannot create a stone that is too heavy for him to lift. He can only provide bread and flesh for his people through faith in Jesus Christ.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.9064483642578125,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Paradoxes",
+      "query": "if god knows the future do we have free will",
+      "success": true,
+      "commentary": "The Bible teaches that God does not know the future. Therefore, we have free will to do whatever we want with God's permission.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.9248437881469727,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Paradoxes",
+      "query": "problem of evil explained",
+      "success": true,
+      "commentary": "The Bible teaches that when one would do good, evil is present with them. Evil pursues sinners, but to the righteous good shall be repayed.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.96828556060791,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Paradoxes",
+      "query": "predestination vs free will",
+      "success": true,
+      "commentary": "The Bible teaches that predestination and free will are mutually exclusive concepts. Predestination refers to the fact that God has chosen you for a specific purpose in life.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.7158284187316895,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Pop Culture",
+      "query": "what would jesus do about thanos",
+      "success": true,
+      "commentary": "The Bible teaches that Jesus would make reconciliation for the sins of the people by being like unto his brethren, so that he might be a merciful and faithful high priest in things pertaining to God.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 4.078358173370361,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Pop Culture",
+      "query": "is the force from star wars the holy spirit",
+      "success": true,
+      "commentary": "There is no man that hath power over the spirit to retain the spirit, nor does wickedness deliver those that are given to it.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.258120536804199,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Pop Culture",
+      "query": "batman vs superman who is more christ-like",
+      "success": true,
+      "commentary": "Ecclesiastes 4:3: \"Yea, better is he than both they, which hath not yet been, who has not seen the evil work that is done under the sun.\" 1 John 3:13: Marvel not, my brethren, if the world hate you. Acts 9:22: \"But Saul increased the more in strength, and confounded the Jews which dwelt at Damascus, proving that this is very Christ.\" 1 Thessalonians 2:15: \"Who",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 8.484659194946289,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Pop Culture",
+      "query": "lord of the rings christian symbolism",
+      "success": true,
+      "commentary": "The Lord of the Rings is a character in the bible. He is symbolized by rings, nose jewels, and other religious symbols.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.7045583724975586,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Pop Culture",
+      "query": "harry potter witchcraft controversy",
+      "success": true,
+      "commentary": "Idolatry, witchcraft, hatred, variance, emulations, wrath, strife, seditions, heresies.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.456017255783081,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Multiple Questions",
+      "query": "what is love and faith and hope and how do they work together",
+      "success": true,
+      "commentary": "Faith is the substance of things hoped for, the evidence of things not seen. The righteousness of God is revealed from faith to faith: as it is written, The just shall live by faith.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.1180121898651123,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Multiple Questions",
+      "query": "forgiveness OR revenge? mercy OR justice?",
+      "success": true,
+      "commentary": "The Bible teaches that God is merciful and gracious, slow to anger, and plenteous in mercy. If you do not forgive, your Father which is in heaven will not forgive you.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.3719534873962402,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Multiple Questions",
+      "query": "is god real and if so why doesn't he show himself",
+      "success": true,
+      "commentary": "The Bible teaches that God is not seen by the human eye. He is only known to those who love one another and his love is perfected in them.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.7671003341674805,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Multiple Questions",
+      "query": "heaven hell purgatory which is real",
+      "success": true,
+      "commentary": "The Bible teaches that there is a place called hell. It is as high as heaven, but it is deeper than hell and can only be known by the ungodly.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.0111520290374756,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-English",
+      "query": "perdón y gracia",
+      "success": true,
+      "commentary": "The Bible teaches that \"perdón y gracia\" means to give thanks and be thankful for the blessings of life.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.6570699214935303,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-English",
+      "query": "αγάπη",
+      "success": true,
+      "commentary": "Alpha and Omega are the first and the last letters in the Greek alphabet. They are also the beginning and the end of a word that means \"beginning\" or \"end\".",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.110564947128296,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-English",
+      "query": "שלום",
+      "success": true,
+      "commentary": "The Hebrew word \"\" is derived from the root of the name Shem, Arphaxad, and Shelah.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.9308383464813232,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-English",
+      "query": "信仰",
+      "success": true,
+      "commentary": "The name \"\" is derived from the Hebrew word \"\", which means \"the son of Ahlai.\" It is also used to refer to Uriah, Zabad, and Azzur.",
+      "commentary_mode": "full",
+      "verses_count": 4,
+      "elapsed": 3.2984983921051025,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Non-English",
+      "query": "любовь",
+      "success": true,
+      "commentary": "The Bible teaches that \"love\" is a feeling, not a matter of physical appearance. In the Song of Solomon 7:12: \"Let us get up early to the vineyards; let us see if the vine flourish, whether the tender grape appear, and the pomegranates bud forth: there will I give thee my loves.\" Nehemiah 10:27: \"Malluch, Harim, Baanah.\"",
+      "commentary_mode": "full",
+      "verses_count": 2,
+      "elapsed": 6.356588125228882,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Theological Complex",
+      "query": "hypostatic union explained",
+      "success": true,
+      "commentary": "The word \"hypostatic union\" is used in the Bible to describe a relationship between two people that cannot be sundered.",
+      "commentary_mode": "full",
+      "verses_count": 8,
+      "elapsed": 2.4649510383605957,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Theological Complex",
+      "query": "penal substitutionary atonement vs christus victor",
+      "success": true,
+      "commentary": "The priest shall offer the sin offering, and make an atonement for him that is to be cleansed from his uncleanness; and afterward he shall kill the burnt offering:",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 4.9567484855651855,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Theological Complex",
+      "query": "cessationism vs continuationism",
+      "success": true,
+      "commentary": "The Bible teaches that there is an end and that expectation should not be cut off. It also says that the seller shall not return to that which is sold, although they were yet alive: for the vision is touching the whole multitude thereof, which shall not Return.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 4.0915117263793945,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Theological Complex",
+      "query": "amillennialism premillennialism postmillennialism",
+      "success": true,
+      "commentary": "The Bible teaches that Abraham lived for many days in the land of the Philistines, and that Eber lived four and thirty years, and begat Peleg.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.700206756591797,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Theological Complex",
+      "query": "monergism vs synergism",
+      "success": true,
+      "commentary": "No relevant verses found for this query.",
+      "commentary_mode": "unknown",
+      "verses_count": 0,
+      "elapsed": 0.13933515548706055,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": false,
+        "mode_valid": false,
+        "reasonable_time": true
+      },
+      "all_checks_passed": false
+    },
+    {
+      "category": "Boundary Testing",
+      "query": "why is god such a jerk",
+      "success": true,
+      "commentary": "The Bible teaches that the misery of man is great upon him because of every purpose there is time and judgment, therefore the misfortunes of man are great.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.816129207611084,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Boundary Testing",
+      "query": "religion is a scam prove me wrong",
+      "success": true,
+      "commentary": "The Bible teaches that the love of money is the root of all evil, which while some coveted after, they have erred from the faith, and pierced themselves through with many sorrows.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 3.5996580123901367,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Boundary Testing",
+      "query": "the bible contradicts itself everywhere",
+      "success": true,
+      "commentary": "The Bible teaches that all the inhabitants of the earth are reputed as nothing, and that God does what he will in the army of heaven, and among the inhabitants.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.877575159072876,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    },
+    {
+      "category": "Boundary Testing",
+      "query": "jesus was just a man not god",
+      "success": true,
+      "commentary": "The Bible teaches that there is one God, and one mediator between God and men, the man Christ Jesus. He is also known as the Son of God.",
+      "commentary_mode": "full",
+      "verses_count": 10,
+      "elapsed": 2.6129984855651855,
+      "quality_checks": {
+        "has_content": true,
+        "not_too_long": true,
+        "has_verses": true,
+        "mode_valid": true,
+        "reasonable_time": true
+      },
+      "all_checks_passed": true
+    }
+  ]
+}

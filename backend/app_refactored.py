@@ -3,6 +3,10 @@ Bible Query System - Backend API
 Modular FastAPI service for keyword and semantic search across KJV verses.
 """
 
+import json
+import logging
+from datetime import datetime
+from pathlib import Path
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +17,14 @@ import data_loader
 import search_keyword
 import search_semantic
 import explain
+import commentary_summarizer
+
+# Setup structured logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI
 app = FastAPI(title=config.API_TITLE, version=config.API_VERSION)
@@ -48,6 +60,12 @@ class ExplainRequest(BaseModel):
     max_results: Optional[int] = config.DEFAULT_MAX_RESULTS
     max_verses: Optional[int] = 5
     semantic: Optional[bool] = False
+
+
+class CommentaryRequest(BaseModel):
+    query: str
+    max_results: Optional[int] = 10
+    use_cache: Optional[bool] = True
 
 
 class Verse(BaseModel):
@@ -235,6 +253,130 @@ async def explain_search(request: ExplainRequest):
         "explanation": explanation,
         "verses": results[:request.max_verses]
     }
+
+
+@app.post("/commentary")
+async def generate_commentary(request: CommentaryRequest):
+    """
+    Generate AI-powered commentary from semantic search results.
+    
+    Uses GPU-accelerated language model (FLAN-T5-large) to synthesize 
+    top search results into a natural language commentary.
+    
+    Args:
+        query: User's question or search query
+        max_results: Number of verses to use for commentary (default: 10)
+        use_cache: Whether to use cached results (default: true)
+    
+    Returns:
+        Commentary text, verses used, and model metadata
+    """
+    if not request.query or not request.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+    
+    # Check if semantic search is available
+    embedding_stats = search_semantic.get_embedding_stats()
+    if not embedding_stats['index_exists']:
+        raise HTTPException(
+            status_code=503,
+            detail="Semantic search not available. Run generate_embeddings.py first."
+        )
+    
+    try:
+        # Get top verses via semantic search
+        logger.info(f"Commentary request: {request.query}")
+        
+        results = search_semantic.search_semantic(
+            verses,
+            request.query,
+            request.max_results,
+            min_similarity=0.3  # Filter low-quality matches
+        )
+        
+        if not results:
+            return {
+                "query": request.query,
+                "commentary": "No relevant verses found for this query.",
+                "verses": [],
+                "metadata": {"verses_used": 0}
+            }
+        
+        # Generate commentary
+        commentary_result = commentary_summarizer.generate_commentary(
+            query=request.query,
+            verses=results,
+            use_cache=request.use_cache
+        )
+        
+        # Log the interaction
+        _log_commentary_request(
+            query=request.query,
+            verses=results[:10],
+            commentary=commentary_result['commentary'],
+            commentary_mode=commentary_result.get('commentary_mode', 'full'),
+            model_info=commentary_result.get('model_info', {})
+        )
+        
+        return {
+            "query": request.query,
+            "commentary": commentary_result['commentary'],
+            "commentary_mode": commentary_result.get('commentary_mode', 'full'),
+            "verses": results[:10],
+            "metadata": {
+                "verses_used": commentary_result['verses_used'],
+                "model_info": commentary_result.get('model_info'),
+                "total_results": len(results)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Commentary generation error: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Commentary generation failed: {str(e)}"
+        )
+
+
+def _log_commentary_request(query: str, verses: List, commentary: str, commentary_mode: str, model_info: dict):
+    """Log commentary request to structured JSON log"""
+    log_dir = Path(__file__).parent.parent / "logs"
+    log_dir.mkdir(exist_ok=True)
+    
+    log_file = log_dir / "commentary_log.jsonl"
+    
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "query": query,
+        "verses_retrieved": [
+            {
+                "reference": v['reference'],
+                "similarity": v.get('relevance_score', 0)
+            }
+            for v in verses
+        ],
+        "commentary": commentary,
+        "commentary_mode": commentary_mode,
+        "model_info": model_info
+    }
+    
+    try:
+        with open(log_file, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(log_entry) + '\n')
+    except Exception as e:
+        logger.warning(f"Failed to write commentary log: {e}")
+
+
+@app.get("/commentary/status")
+async def commentary_status():
+    """Get commentary model status and GPU info"""
+    try:
+        status = commentary_summarizer.get_model_status()
+        return status
+    except Exception as e:
+        return {
+            "model_loaded": False,
+            "error": str(e)
+        }
 
 
 @app.get("/chapter/{book}/{chapter}", response_model=List[Verse])
