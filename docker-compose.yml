@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: book-intel-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: .
@@ -15,6 +28,11 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - HF_HOME=/root/.cache/huggingface  # Hugging Face cache location
+      - OLLAMA_BASE_URL=http://ollama:11434  # Connect to Ollama container
+      - OLLAMA_MODEL=llama3.2:3b  # Fast model: 2-5 second response time
+    depends_on:
+      ollama:
+        condition: service_healthy
     # Uncomment below for GPU support (requires nvidia-docker on Linux/WSL2)
     # deploy:
     #   resources:
@@ -50,3 +68,4 @@ networks:
 
 volumes:
   huggingface_cache:  # Persistent volume for Hugging Face models
+  ollama_data:  # Persistent volume for Ollama models

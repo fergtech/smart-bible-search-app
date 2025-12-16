@@ -17,7 +17,7 @@ import data_loader
 import search_keyword
 import search_semantic
 import explain
-import commentary_summarizer
+import commentary_summarizer_openai as commentary_summarizer
 import logger as structured_logger
 
 # Setup structured logging

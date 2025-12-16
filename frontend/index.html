@@ -6,12 +6,18 @@
     <meta name="description" content="AI-powered semantic search across 31,102 KJV Bible verses. Ask questions in natural language and find relevant scriptures instantly.">
     <meta name="theme-color" content="#10a37f">
     <title>Smart Bible Search | AI-Powered Scripture Discovery</title>
+    
+    <!-- Classic Bible Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
         <!-- Header -->
-        <header class="header">
+        <header class="header" style="display: none;">
             <div class="header-content">
                 <a href="/" class="logo">
                     <span class="logo-icon">📖</span>
@@ -30,32 +36,43 @@
         </header>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content centered-layout">
             <!-- Hero Section -->
             <section class="hero">
-                <h1 class="hero-title">Ask the Bible Anything</h1>
-                <p class="hero-subtitle">Advanced search across 31,102+ KJV verses</p>
+                <h1 class="hero-title">Holy Bible</h1>
             </section>
 
             <!-- Search Section -->
             <section class="search-section">
                 <div class="search-container">
                     <div class="search-input-wrapper">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
                         <input 
                             type="text" 
                             id="queryInput" 
                             class="search-input"
-                            placeholder="What are the fruits of the spirit?"
+                            placeholder="Search the scriptures..."
                             aria-label="Search query"
                             autocomplete="off">
+                    </div>
+                    <div class="button-group">
                         <button 
                             id="searchBtn" 
-                            class="search-button"
-                            aria-label="Search">
-                            Search
+                            class="search-button primary-button"
+                            aria-label="Search Scripture">
+                            Search Scripture
+                        </button>
+                        <button 
+                            id="feelingHolyBtn" 
+                            class="search-button secondary-button"
+                            aria-label="I'm Feeling Blessed">
+                            I'm Feeling Blessed
                         </button>
                     </div>
-                    <div class="search-options">
+                    <div class="search-options" style="display: none;">
                         <div class="option-group">
                             <label for="maxResults">Results:</label>
                             <input 
@@ -114,7 +131,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="footer">
+        <footer class="footer" style="display: none;">
             <p>
                 Powered by AI semantic search · 
                 <a href="https://github.com/fergtech/smart-bible-search-app" target="_blank" rel="noopener noreferrer">
@@ -123,6 +140,20 @@
             </p>
         </footer>
     </div>
+
+    <!-- Back to Top Button (just scrolls) -->
+    <button id="backToTop" class="back-to-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <!-- New Search Button (resets to hero) -->
+    <button id="newSearch" class="new-search-btn" aria-label="New search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+    </button>
 
     <!-- Chapter View Modal -->
     <div id="chapterModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">

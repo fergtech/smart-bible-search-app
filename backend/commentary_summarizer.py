@@ -169,18 +169,31 @@ def _build_prompt(query: str, verses: List[Dict]) -> str:
         if avg_score < 0.6 or len(verses) < 3:
             return f"""The query "{query}" doesn't appear to be a biblical topic. Politely explain this is a Bible search tool and suggest reformulating the question in biblical terms."""
     
-    # Robust prompt that demands explanation, not parroting
-    prompt = f"""Explain what the Bible teaches about "{query}" using these verses. Write 2-3 sentences that EXPLAIN the meaning, not just quote the verses.
+    # Build a natural, conversational prompt that encourages concise direct answers
+    # Detect if this is a simple factual question vs. deeper theological topic
+    question_words = ['who', 'what', 'when', 'where', 'which', 'name']
+    is_simple_question = any(word in query_lower for word in question_words)
+    
+    if is_simple_question:
+        # For factual questions: direct answer with verse citation
+        prompt = f"""Question: {query}
 
+Biblical Evidence:
 {verse_context}
 
-Requirements:
-- Explain WHAT this means in plain language
-- Include verse references like "Matthew 6:14 teaches..." 
-- Don't just repeat the verse words - explain the principle
-- Be accurate - if verses say "seventh day" don't change it to "seventh month"
+Task: Answer the question in 2-3 sentences using ONLY what these Bible verses say. You MUST cite specific verses (e.g., "According to John 3:16" or "In Matthew 5:9"). Base your answer strictly on the verses provided.
 
-Explanation:"""
+Biblical Answer:"""
+    else:
+        # For theological/thematic questions: biblical summary with citations
+        prompt = f"""Topic: {query}
+
+Biblical Evidence:
+{verse_context}
+
+Task: Explain what these specific Bible verses teach about this topic in 2-4 sentences. You MUST reference the specific verses (e.g., "Romans 12:1 teaches..." or "As stated in Psalm 23:1"). Only use what is directly stated in the verses provided.
+
+Biblical Summary:"""
     
     return prompt
 
@@ -247,18 +260,19 @@ def generate_commentary(
             truncation=True
         ).to(device)
         
-        # Generate with optimized parameters
+        # Generate with parameters optimized for biblically-grounded responses
         with torch.no_grad():
             outputs = model.generate(
                 **inputs,
-                max_length=120,  # Shorter for concise output
-                min_length=30,
-                temperature=0.3,  # Lower for more focused output
-                top_p=0.85,
+                max_length=120,  # Longer to allow verse citations
+                min_length=30,  # Ensure substantial response with references
+                temperature=0.3,  # Lower for more factual, grounded responses
+                top_p=0.8,  # More restrictive for biblical accuracy
                 do_sample=True,
-                num_beams=4,  # Beam search for better quality
-                repetition_penalty=2.5,  # Strong penalty against repetition
-                no_repeat_ngram_size=3,  # Prevent 3-gram repetition
+                num_beams=3,  # Better quality for citation generation
+                repetition_penalty=1.8,  # Moderate to allow verse references
+                no_repeat_ngram_size=3,
+                length_penalty=1.0,  # Neutral length preference
                 early_stopping=True
             )
         
@@ -267,6 +281,7 @@ def generate_commentary(
         
         # Post-process: Clean up formatting and validate
         import re
+        
         # Remove leading numbers like "1.", "2.", etc.
         commentary = re.sub(r'^\d+\.\s*', '', commentary)
         commentary = re.sub(r'\s+\d+\.\s+', ' ', commentary)
@@ -277,10 +292,25 @@ def generate_commentary(
             r'Requirements:.*',
             r'Don\'t just repeat.*',
             r'Include verse references.*',
-            r'WHAT this means.*'
+            r'WHAT this means.*',
+            r'Task:.*',
+            r'Question:.*',
+            r'Topic:.*',
+            r'Verses:.*'
         ]
         for pattern in instruction_patterns:
             commentary = re.sub(pattern, '', commentary, flags=re.IGNORECASE)
+        
+        # If output is just listing verses, truncate to first meaningful sentence
+        if commentary.count(':') > 3:  # Too many verse citations
+            # Take only first 2 sentences
+            sentences = re.split(r'[.!?]', commentary)
+            commentary = '. '.join(sentences[:2]).strip() + '.'
+        
+        # Enforce maximum length (approximately 5 sentences)
+        sentences = re.split(r'(?<=[.!?])\s+', commentary)
+        if len(sentences) > 5:
+            commentary = ' '.join(sentences[:5])
         
         commentary = commentary.strip()
         

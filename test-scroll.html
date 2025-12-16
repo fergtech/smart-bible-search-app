@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scroll Test</title>
+    <link rel="stylesheet" href="frontend/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="main-content centered-layout">
+            <section class="hero">
+                <h1 class="hero-title">Holy Bible</h1>
+            </section>
+            
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" placeholder="Search the scriptures...">
+                    </div>
+                    <button onclick="showResults()">Test Results</button>
+                </div>
+            </section>
+
+            <section id="resultsSection" class="results-section">
+                <div class="results-header">
+                    <h2 class="results-count">Test Results</h2>
+                </div>
+                <div class="results-list">
+                    <!-- Simulate 20 result cards -->
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 1</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 2</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 3</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 4</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 5</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 6</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 7</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 8</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 9</div>
+                    <div class="verse-card" style="padding: 2rem; background: white; margin: 1rem 0;">Result 10</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function showResults() {
+            document.getElementById('resultsSection').classList.add('visible');
+        }
+    </script>
+</body>
+</html>

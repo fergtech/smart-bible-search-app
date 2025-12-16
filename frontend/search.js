@@ -15,10 +15,14 @@ const KeywordSearch = {
             maxResults: document.getElementById('maxResults'),
             resultsSection: document.getElementById('resultsSection'),
             resultsCount: document.getElementById('resultsCount'),
-            resultsList: document.getElementById('resultsList')
+            resultsList: document.getElementById('resultsList'),
+            mainContent: document.querySelector('.main-content'),
+            backToTop: document.getElementById('backToTop'),
+            newSearch: document.getElementById('newSearch')
         };
 
         this.setupEventListeners();
+        this.setupScrollButtons();
     },
 
     /**
@@ -36,6 +40,56 @@ const KeywordSearch = {
         this.elements.searchBtn.addEventListener('click', () => {
             this.performSearch();
         });
+    },
+
+    /**
+     * Setup scroll and reset buttons
+     */
+    setupScrollButtons() {
+        // Show/hide buttons on scroll
+        window.addEventListener('scroll', () => {
+            const hasResults = this.elements.mainContent.classList.contains('has-results');
+            
+            if (hasResults && window.scrollY > 300) {
+                this.elements.backToTop.classList.add('visible');
+                this.elements.newSearch.classList.add('visible');
+            } else {
+                this.elements.backToTop.classList.remove('visible');
+                this.elements.newSearch.classList.remove('visible');
+            }
+        });
+
+        // Back to top - just scrolls to top of results
+        this.elements.backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // New search - resets to empty state
+        this.elements.newSearch.addEventListener('click', () => {
+            this.resetToEmptyState();
+        });
+    },
+
+    /**
+     * Reset to empty/centered state
+     */
+    resetToEmptyState() {
+        // Hide results and commentary
+        this.elements.resultsSection.classList.remove('visible');
+        document.getElementById('commentarySection').classList.remove('visible');
+        
+        // Remove has-results class to return to centered state
+        this.elements.mainContent.classList.remove('has-results');
+        
+        // Clear query
+        this.elements.queryInput.value = '';
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Hide buttons
+        this.elements.backToTop.classList.remove('visible');
+        this.elements.newSearch.classList.remove('visible');
     },
 
     /**
@@ -92,6 +146,9 @@ const KeywordSearch = {
 
         this.elements.resultsCount.textContent = `${verses.length} result${verses.length !== 1 ? 's' : ''}`;
         this.elements.resultsSection.classList.add('visible');
+        
+        // Activate results state
+        this.elements.mainContent.classList.add('has-results');
     },
 
     /**

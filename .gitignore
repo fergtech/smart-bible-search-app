@@ -9,6 +9,9 @@ venv/
 ENV/
 env/
 
+# Environment variables
+.env*
+
 # Data files (large source files)
 pg10.txt
 pg10_cleaned.txt
