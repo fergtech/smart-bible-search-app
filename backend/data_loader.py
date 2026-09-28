@@ -87,6 +87,39 @@ def load_lexicon_metadata(data_file: Optional[str] = None) -> Dict:
     return lexicon
 
 
+def get_book_list(verses: List[Dict]) -> List[Dict]:
+    """
+    Canonical-order book list (Genesis...Revelation) with a per-book chapter
+    count and testament, for Bible Reading Mode's navigation sidebar.
+
+    Deliberately NOT reusing reference_lookup.get_book_names() (sorted by
+    name length, for regex matching - wrong order for display) or this
+    file's own get_verse_stats() (alphabetical). The in-memory verses list
+    is already in true canonical order as loaded from kjv_chunks.jsonl, so
+    first-appearance order over it is the canonical order for free.
+    """
+    from lexicon_lookup import _NT_BOOKS
+
+    order = []
+    seen = set()
+    chapters_by_book = {}
+    for v in verses:
+        book = v["book"]
+        if book not in seen:
+            seen.add(book)
+            order.append(book)
+        chapters_by_book.setdefault(book, set()).add(v["chapter"])
+
+    return [
+        {
+            "name": book,
+            "chapter_count": len(chapters_by_book[book]),
+            "testament": "NT" if book in _NT_BOOKS else "OT"
+        }
+        for book in order
+    ]
+
+
 def get_verse_stats(verses: List[Dict]) -> Dict:
     """
     Calculate statistics about the verse collection.

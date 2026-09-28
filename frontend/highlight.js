@@ -277,12 +277,17 @@ class HighlightManager {
         
         // Build contextual query
         const query = this.buildContextualQuery();
-        
-        // Add to history (before hiding tooltip)
-        if (window.historyManager) {
-            historyManager.addQuery(query, 'highlight');
-        }
-        
+
+        // Not recorded to history here - historyManager.addQuery() was a
+        // pre-existing dead reference (that method no longer exists on
+        // HistoryManager, only addInteraction/startNewSession), which threw
+        // and aborted this whole handler before ever reaching
+        // performSearch() below. Recording already happens the normal way:
+        // performSearch() -> generateCommentary() calls
+        // historyManager.addInteraction() once the response comes back,
+        // regardless of whether the query originated from typing or from
+        // this highlight-to-ask flow.
+
         // Hide tooltip and clear selection
         this.hideTooltip();
         window.getSelection().removeAllRanges();

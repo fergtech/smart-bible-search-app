@@ -1,47 +1,53 @@
 /**
- * Workspace Layout - top bar controls, side-panel toggling, and the
- * one-way landing -> workspace transition.
+ * Workspace Layout - Study workspace's history sidebar + the "New
+ * conversation"/landing-history-icon actions. Screen-visibility (what used
+ * to be this object's enterWorkspace()/backToLanding()) now lives in
+ * ModeManager (modes.js), which generalizes the old binary landing/
+ * workspace toggle into three modes. Sidebar open/close/backdrop behavior
+ * now lives in SidePanel (sidepanel.js), which Bible Reading Mode's book
+ * navigation sidebar also instantiates - this object just owns ONE
+ * SidePanel instance instead of hardcoding the toggle logic itself.
  */
 const WorkspaceLayout = {
     elements: null,
-    isMobile() {
-        return window.innerWidth <= 900;
-    },
+    historyPanel: null,
 
     init() {
         this.elements = {
-            landing: document.getElementById('landingScreen'),
-            workspace: document.getElementById('workspace'),
             sidebarToggle: document.getElementById('sidebarToggle'),
             sidebar: document.getElementById('historySidebar'),
             sidebarBackdrop: document.getElementById('sidebarBackdrop'),
-            referencePanel: document.getElementById('referencePanel'),
             newConversationBtn: document.getElementById('newConversationBtn'),
-            landingHistoryBtn: document.getElementById('landingHistoryBtn')
+            landingHistoryBtn: document.getElementById('landingHistoryBtn'),
+            goHomeFromStudy: document.getElementById('goHomeFromStudy')
         };
 
-        // Sidebar open by default on desktop, collapsed by default on
-        // mobile (an always-open overlay on first load would just block
-        // the conversation on a phone). The reference panel isn't part of
-        // this anymore - it's a permanent fixed column on desktop with no
-        // collapsed state, and hidden outright on mobile via CSS (see
-        // style.css) until that gets its own design pass.
-        if (this.isMobile()) {
-            this.elements.sidebar.classList.add('collapsed');
-        }
-
-        this.elements.sidebarToggle.addEventListener('click', () => this.toggleSidebar());
-        this.elements.sidebarBackdrop.addEventListener('click', () => this.closeSidebar());
+        this.historyPanel = new SidePanel({
+            panelEl: this.elements.sidebar,
+            toggleEl: this.elements.sidebarToggle,
+            backdropEl: this.elements.sidebarBackdrop
+        });
 
         this.elements.newConversationBtn.addEventListener('click', () => {
             if (window.commentaryManager) window.commentaryManager.clear();
             if (window.historyManager) window.historyManager.endCurrentSession();
             if (window.frontendLogger) frontendLogger.logAction('new_conversation');
-            this.backToLanding();
+            ModeManager.show('home');
+            const queryInput = window.KeywordSearch?.elements?.queryInput;
+            if (queryInput) queryInput.focus();
         });
 
         if (this.elements.landingHistoryBtn) {
             this.elements.landingHistoryBtn.addEventListener('click', () => this.openHistoryFromLanding());
+        }
+
+        // Unlike "New conversation", just navigating Home from Study
+        // leaves the current conversation exactly as it is - it's still
+        // there when the user comes back via the Study icon. (The "Read"
+        // icon here is wired in reading.js alongside the landing screen's
+        // own Read icon, since Reading owns entry into its own mode.)
+        if (this.elements.goHomeFromStudy) {
+            this.elements.goHomeFromStudy.addEventListener('click', () => ModeManager.show('home'));
         }
 
         this.resumeInProgressSession();
@@ -56,9 +62,8 @@ const WorkspaceLayout = {
      * workspace with the history drawer already pulled out.
      */
     openHistoryFromLanding() {
-        this.enterWorkspace();
-        this.elements.sidebar.classList.remove('collapsed');
-        this.updateBackdrop();
+        ModeManager.show('study');
+        this.historyPanel.open();
     },
 
     /**
@@ -78,57 +83,23 @@ const WorkspaceLayout = {
         const session = window.historyManager?.currentSession;
         if (!session || !session.interactions || session.interactions.length === 0) return;
 
-        this.enterWorkspace();
+        ModeManager.show('study');
         if (window.commentaryManager) {
             window.commentaryManager.loadThread(session.interactions);
         }
     },
 
-    /** One-way transition from the leather landing screen into the
-     * persistent conversation shell - a search never bounces the user back
-     * to the landing screen mid-session. The one deliberate exception is
-     * "New conversation" in the topbar (see backToLanding()), which is
-     * explicitly a request to start over from that landing moment. */
-    enterWorkspace() {
-        if (!this.elements.workspace.classList.contains('hidden')) return;
-        this.elements.landing.classList.add('hidden');
-        this.elements.workspace.classList.remove('hidden');
-        document.body.classList.add('workspace-active');
-    },
-
     /**
-     * The "New conversation" exception to the one-way landing->workspace
-     * rule above: rather than just clearing the thread and leaving the
-     * user in an empty workspace, this returns them to the landing screen
-     * (restoring the leather background too, via workspace-active coming
-     * off) with the search box focused, ready to type immediately.
+     * Backward-compatible wrappers - history.js's loadSession() calls
+     * these directly. Kept as thin delegates rather than editing
+     * history.js, which has no reason to know about ModeManager/SidePanel.
      */
-    backToLanding() {
-        this.elements.workspace.classList.add('hidden');
-        this.elements.landing.classList.remove('hidden');
-        document.body.classList.remove('workspace-active');
-
-        const queryInput = window.KeywordSearch?.elements?.queryInput;
-        if (queryInput) queryInput.focus();
-    },
-
-    toggleSidebar() {
-        this.elements.sidebar.classList.toggle('collapsed');
-        this.updateBackdrop();
+    enterWorkspace() {
+        ModeManager.show('study');
     },
 
     closeSidebar() {
-        this.elements.sidebar.classList.add('collapsed');
-        this.updateBackdrop();
-    },
-
-    updateBackdrop() {
-        if (!this.isMobile()) {
-            this.elements.sidebarBackdrop.classList.remove('visible');
-            return;
-        }
-        const sidebarOpen = !this.elements.sidebar.classList.contains('collapsed');
-        this.elements.sidebarBackdrop.classList.toggle('visible', sidebarOpen);
+        this.historyPanel.close();
     }
 };
 
@@ -191,7 +162,7 @@ const KeywordSearch = {
         const query = (queryOverride ?? this.elements.queryInput.value).trim();
         if (!query) return;
 
-        WorkspaceLayout.enterWorkspace();
+        ModeManager.show('study');
 
         if (window.historyManager && !window.historyManager.currentSession) {
             window.historyManager.startNewSession(query);

@@ -25,6 +25,8 @@ import lexicon_lookup
 import grounding_check
 import memory_store
 import logger as structured_logger
+import search_commentary_corpus
+import search_concept_documents
 
 # Setup structured logging
 logging.basicConfig(
@@ -742,6 +744,57 @@ async def get_chapter(book: str, chapter: int):
             context={'book': book, 'chapter': chapter}
         )
         raise
+
+
+# Cached lazily on first /books request - the canonical book/chapter-count
+# list is static for the life of the process, same reasoning as
+# reference_lookup's own cached book-names list.
+_book_list_cache: Optional[List[dict]] = None
+
+
+@app.get("/books")
+async def get_books():
+    """
+    Canonical-order (Genesis...Revelation) book list with chapter counts and
+    testament, for Bible Reading Mode's navigation sidebar.
+    """
+    global _book_list_cache
+    if _book_list_cache is None:
+        _book_list_cache = data_loader.get_book_list(verses)
+    return _book_list_cache
+
+
+def _get_chapter_or_404(book: str, chapter: int) -> List[dict]:
+    """Shared by /chapter and /chapter/.../study so the two routes can't
+    drift on what counts as a valid chapter."""
+    chapter_verses = search_keyword.search_by_reference(verses, book, chapter)
+    if not chapter_verses:
+        raise HTTPException(status_code=404, detail=f"Chapter not found: {book} {chapter}")
+    return chapter_verses
+
+
+@app.get("/chapter/{book}/{chapter}/study")
+async def get_chapter_study(book: str, chapter: int):
+    """
+    Study Tools for Bible Reading Mode's right rail: Strong's word studies
+    plus related commentary/concept excerpts for a whole chapter. No LLM
+    call anywhere in this path - word studies are a local lookup, and the
+    corpus searches are the same free semantic search the /commentary
+    pipeline uses internally, just called directly here.
+    """
+    chapter_verses = _get_chapter_or_404(book, chapter)
+
+    word_studies = lexicon_lookup.get_word_studies(chapter_verses, max_terms=8)
+
+    query = " ".join(v["text"] for v in chapter_verses)
+    commentary = search_commentary_corpus.search_commentary_corpus(query, max_results=3, min_similarity=0.58)
+    concepts = search_concept_documents.search_concepts(query, max_results=2, min_similarity=0.45)
+
+    return {
+        "word_studies": word_studies,
+        "commentary": commentary,
+        "concepts": concepts
+    }
 
 
 @app.get("/strongs/{number}")

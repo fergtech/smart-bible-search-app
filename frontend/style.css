@@ -1549,6 +1549,41 @@ body.workspace-active::after {
   flex: 1;
 }
 
+/* Chapter verse list - shared by the chapter modal AND Bible Reading
+   Mode's center reading pane (see UI.renderChapterVersesHTML in ui.js).
+   Used to be injected at runtime via ui.js's addChapterStyles() when there
+   was only one call site; promoted here now that there are two. */
+.chapter-verses {
+  line-height: 1.8;
+}
+
+.chapter-verse {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  margin-bottom: 0.25rem;
+}
+
+.chapter-verse:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.chapter-verse.highlighted {
+  background-color: rgba(215, 194, 168, 0.1);
+}
+
+.chapter-verse-num {
+  display: inline-block;
+  width: 2.5rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+.chapter-verse-text {
+  color: var(--text-primary);
+}
+
 .blessing-share-row {
   display: flex;
   gap: var(--space-sm);
@@ -1788,6 +1823,139 @@ body.workspace-active::after {
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   font-weight: 500;
+}
+
+/* ============================================
+   BIBLE READING MODE
+   The book-nav sidebar and study rail deliberately reuse
+   .history-sidebar-panel/.sidebar-handle/.panel-backdrop and
+   .reference-panel/.reference-list/.verse-card verbatim (see reading.js) -
+   only the reading pane itself needs new rules.
+   ============================================ */
+
+.reading-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) 0;
+  flex-shrink: 0;
+}
+
+.reading-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 12rem;
+  text-align: center;
+}
+
+/* Comfortable reading line-length (same 46rem convention as .message in
+   the Study conversation, which is also why the study rail can reuse the
+   evidence rail's exact positioning formula unmodified - both columns are
+   the same content width). Overrides .conversation-thread's
+   padding-bottom:6rem, which exists there to clear the floating input
+   pill that Reading Mode doesn't have. */
+.chapter-reading-view {
+  padding-bottom: var(--space-xl);
+}
+
+.chapter-reading-view .chapter-verses {
+  max-width: 46rem;
+  margin: 0 auto;
+  font-size: var(--font-size-lg);
+}
+
+/* Book navigation drill-down: a book row (reusing .history-item) followed
+   by its collapsed chapter grid, one book expanded at a time. */
+.chapter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 var(--space-md) var(--space-sm);
+}
+
+.chapter-grid-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chapter-grid-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* Interactive words in the reading text - a dictionary-lookup affordance
+   (dotted underline, like Kindle/Blue Letter Bible) rather than a
+   persistent "select a word" prompt in the rail. This is the discovery
+   mechanism: the rail itself stays hidden until one of these is clicked
+   (see Reading.showWordStudy in reading.js). */
+.study-word {
+  cursor: pointer;
+  border-bottom: 1px dotted var(--accent-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.study-word:hover {
+  background-color: rgba(215, 194, 168, 0.15);
+}
+
+.study-word.active {
+  background-color: rgba(215, 194, 168, 0.25);
+  border-bottom-style: solid;
+}
+
+/* Study rail chips are actionable, not static - clicking a Strong's sense
+   expands its full entry in place; clicking a commentary/concept chip
+   expands past its 2-line clamp. */
+.study-sense {
+  cursor: pointer;
+}
+
+.study-sense-detail:empty {
+  display: none;
+}
+
+.study-sense-detail.open {
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--border-color);
+}
+
+.study-detail-row {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.study-detail-row:first-child {
+  margin-top: 0;
+}
+
+.study-detail-loading {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.reference-list .verse-card.expandable-chip {
+  cursor: pointer;
+}
+
+.reference-list .verse-card.expandable-chip.expanded .verse-text {
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
 }
 
 /* ============================================

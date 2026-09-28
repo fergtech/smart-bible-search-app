@@ -100,22 +100,9 @@ const UI = {
             }
 
             const verses = await response.json();
-            
-            // Display chapter verses
-            this.elements.modalBody.innerHTML = `
-                <div class="chapter-verses">
-                    ${verses.map(v => `
-                        <div class="chapter-verse ${v.verse === highlightVerse ? 'highlighted' : ''}" 
-                             id="chapter-verse-${v.verse}">
-                            <span class="chapter-verse-num">${v.verse}</span>
-                            <span class="chapter-verse-text">${v.text}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
 
-            // Add chapter verse styles dynamically
-            this.addChapterStyles();
+            // Display chapter verses
+            this.elements.modalBody.innerHTML = this.renderChapterVersesHTML(verses, highlightVerse);
 
             // Scroll to highlighted verse
             setTimeout(() => {
@@ -141,41 +128,28 @@ const UI = {
     },
 
     /**
-     * Add chapter verse styles
+     * Builds the verse-list markup shared by the chapter modal AND Bible
+     * Reading Mode's center reading pane - same classes in both places
+     * (.chapter-verse / .chapter-verse-num / .chapter-verse-text /
+     * .highlighted / id="chapter-verse-{n}"), which is what lets
+     * highlight.js's existing text-selection "Ask" flow work against
+     * either one unmodified. CSS for these classes lives in style.css
+     * (used to be injected at runtime here via addChapterStyles() when
+     * there was only one call site - now there are two, so it's a
+     * permanent shared class family instead).
      */
-    addChapterStyles() {
-        if (document.getElementById('chapter-styles')) return;
-
-        const style = document.createElement('style');
-        style.id = 'chapter-styles';
-        style.textContent = `
-            .chapter-verses {
-                line-height: 1.8;
-            }
-            .chapter-verse {
-                padding: 0.75rem 1rem;
-                border-radius: 0.5rem;
-                transition: background-color 0.2s;
-                margin-bottom: 0.25rem;
-            }
-            .chapter-verse:hover {
-                background-color: var(--bg-tertiary);
-            }
-            .chapter-verse.highlighted {
-                background-color: rgba(215, 194, 168, 0.1);
-            }
-            .chapter-verse-num {
-                display: inline-block;
-                width: 2.5rem;
-                font-weight: 600;
-                color: var(--text-tertiary);
-                font-size: 0.875rem;
-            }
-            .chapter-verse-text {
-                color: var(--text-primary);
-            }
+    renderChapterVersesHTML(verses, highlightVerse) {
+        return `
+            <div class="chapter-verses">
+                ${verses.map(v => `
+                    <div class="chapter-verse ${v.verse === highlightVerse ? 'highlighted' : ''}"
+                         id="chapter-verse-${v.verse}">
+                        <span class="chapter-verse-num">${v.verse}</span>
+                        <span class="chapter-verse-text">${v.text}</span>
+                    </div>
+                `).join('')}
+            </div>
         `;
-        document.head.appendChild(style);
     },
 
     /**
