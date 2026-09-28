@@ -18,6 +18,7 @@ class CommentaryManager {
             thread: document.getElementById('conversationThread'),
             followupInput: document.getElementById('followupInput'),
             followupBtn: document.getElementById('followupBtn'),
+            referencePanel: document.getElementById('referencePanel'),
             referenceList: document.getElementById('referenceList'),
             referenceSubtitle: document.getElementById('referenceSubtitle')
         };
@@ -237,34 +238,41 @@ class CommentaryManager {
 
         const turn = this.turns[turnIndex];
         if (turn) {
+            // The evidence rail is a permanent fixed column on desktop now
+            // (no open/closed state to manage) and hidden outright on
+            // mobile until that gets its own design pass, so this just
+            // updates its content - nothing needs to "show" it anymore.
             this.updateReferencePanel(turn, turnIndex);
-        }
-
-        // On mobile, jumping straight to the references makes sense - open
-        // the panel automatically when a turn is selected.
-        if (window.WorkspaceLayout) {
-            window.WorkspaceLayout.showReferences();
         }
     }
 
+    /**
+     * Conditionally RENDERED, not conditionally populated - with no verses
+     * for this turn, the rail itself (background, border, shadow) is
+     * hidden entirely rather than showing an empty "no sources" card. An
+     * evidence rail with nothing to show isn't a smaller version of the
+     * rail; it's the absence of one, same as ChatGPT/Perplexity never
+     * showing a citations panel when an answer cites nothing.
+     */
     updateReferencePanel(turn, turnIndex) {
         const verses = turn.data.verses || [];
-        // "Response N" ties this panel back to a specific answer bubble
-        // (which carries the same label) rather than reading as an
-        // independent search-results list keyed to a query string - the
-        // panel is evidence FOR that answer, not a parallel second output.
-        const label = turnIndex !== undefined ? `Response ${turnIndex + 1} · ` : '';
-        this.elements.referenceSubtitle.textContent = label + this.truncate(turn.query, 60);
 
         if (verses.length === 0) {
-            this.elements.referenceList.innerHTML = `
-                <div class="no-results">
-                    <div class="no-results-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></div>
-                    <div class="no-results-text">No specific sources for this answer.</div>
-                </div>
-            `;
+            this.elements.referencePanel.classList.add('hidden');
+            this.elements.referenceList.innerHTML = '';
+            this.elements.referenceSubtitle.textContent = '';
             return;
         }
+
+        this.elements.referencePanel.classList.remove('hidden');
+
+        // "Sources for Response N" (not "Sources" + a query string) is the
+        // whole header now - it reads as evidence attached to a specific
+        // answer, not a global search-results list you happen to be
+        // looking at alongside the conversation.
+        this.elements.referenceSubtitle.textContent = turnIndex !== undefined
+            ? `Sources for Response ${turnIndex + 1}`
+            : 'Sources';
 
         // Verses arrive pre-sorted by relevance (search_semantic.py), so the
         // first one is reliably the strongest match - split it out as a
@@ -279,25 +287,23 @@ class CommentaryManager {
         this.elements.referenceList.innerHTML = html;
     }
 
+    /**
+     * A citation chip, not a content card - reference + a couple lines of
+     * preview text, the whole thing clickable (no separate button, no
+     * score badge cluttering the view). The match score isn't gone, just
+     * de-emphasized into a hover tooltip - this is a design change, not a
+     * data change. Guards against firing navigation when the click is
+     * really the end of a text selection (see highlight.js's "Ask about
+     * this" flow, which needs to select text inside these chips).
+     */
     renderVerseCard(v) {
+        const score = (v.relevance_score !== null && v.relevance_score !== undefined)
+            ? `${Math.round(v.relevance_score * 100)}% match`
+            : '';
         return `
-            <article class="verse-card" role="listitem">
-                <div class="verse-header">
-                    <div class="verse-meta">
-                        <h3 class="verse-reference">${v.reference}</h3>
-                        ${v.relevance_score !== null && v.relevance_score !== undefined ? `
-                            <span class="verse-score" title="Semantic similarity score">
-                                ${Math.round(v.relevance_score * 100)}% match
-                            </span>
-                        ` : ''}
-                    </div>
-                </div>
+            <article class="verse-card" role="listitem" title="${score}" onclick="if (!window.getSelection().toString()) UI.viewChapter('${v.book}', ${v.chapter}, ${v.verse})">
+                <h3 class="verse-reference">${v.reference}</h3>
                 <div class="verse-text">${this.escapeHtml(v.text)}</div>
-                <div class="verse-actions" style="margin-top: var(--space-sm);">
-                    <button class="btn btn-secondary" onclick="UI.viewChapter('${v.book}', ${v.chapter}, ${v.verse})">
-                        View Chapter
-                    </button>
-                </div>
             </article>
         `;
     }
@@ -336,6 +342,7 @@ class CommentaryManager {
         this.turns = [];
         this.activeTurnIndex = -1;
         this.elements.thread.innerHTML = '';
+        this.elements.referencePanel.classList.add('hidden');
         this.elements.referenceList.innerHTML = '';
         this.elements.referenceSubtitle.textContent = '';
         this.renderEmptyThread();

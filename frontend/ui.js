@@ -252,3 +252,48 @@ const ThemeManager = {
 // Expose functions globally for inline handlers if needed
 window.UI = UI;
 window.viewChapter = (book, chapter, verse) => UI.viewChapter(book, chapter, verse);
+
+/* ============================================================
+   TEMPORARY DEBUG LOGGING - mobile scroll investigation.
+   DELETE THIS BLOCK once the mobile scrolling issue is confirmed
+   fixed (or root-caused further) on a real device. Not meant to
+   ship long-term - it exists only so scroll events can be read
+   from a real phone's remote-debugging console (Safari Web
+   Inspector over USB for iOS, chrome://inspect for Android) to see
+   which container (if any) is actually receiving touch-scroll
+   events, since this can't be verified from here.
+
+   Each listener is passive (won't itself affect scroll performance
+   or block the browser's own gesture handling) and throttled to
+   roughly once every 300ms per element so a long scroll doesn't
+   flood the console.
+   ============================================================ */
+(function setupMobileScrollDebugLogging() {
+    const targets = [
+        { label: 'document/body', el: document },
+        { label: 'conversation-thread', el: document.getElementById('conversationThread') },
+        { label: 'reference-list (evidence rail)', el: document.getElementById('referenceList') },
+        { label: 'history-list', el: document.getElementById('historyList') }
+    ];
+
+    targets.forEach(({ label, el }) => {
+        if (!el) {
+            console.log(`[SCROLL-DEBUG] ${label}: element not found in DOM at setup time`);
+            return;
+        }
+
+        let lastLogged = 0;
+        el.addEventListener('scroll', () => {
+            const now = Date.now();
+            if (now - lastLogged < 300) return;
+            lastLogged = now;
+
+            const scrollTop = el.scrollTop ?? window.scrollY;
+            const scrollHeight = el.scrollHeight ?? document.documentElement.scrollHeight;
+            const clientHeight = el.clientHeight ?? window.innerHeight;
+            console.log(`[SCROLL-DEBUG] ${label}: scrollTop=${scrollTop} scrollHeight=${scrollHeight} clientHeight=${clientHeight}`);
+        }, { passive: true });
+    });
+
+    console.log('[SCROLL-DEBUG] Mobile scroll debug logging active. Watching:', targets.map(t => t.label).join(', '));
+})();

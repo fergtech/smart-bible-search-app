@@ -15,25 +15,23 @@ const WorkspaceLayout = {
             sidebarToggle: document.getElementById('sidebarToggle'),
             sidebar: document.getElementById('historySidebar'),
             sidebarBackdrop: document.getElementById('sidebarBackdrop'),
-            referenceToggle: document.getElementById('referenceToggle'),
             referencePanel: document.getElementById('referencePanel'),
-            referenceBackdrop: document.getElementById('referenceBackdrop'),
             newConversationBtn: document.getElementById('newConversationBtn'),
             landingHistoryBtn: document.getElementById('landingHistoryBtn')
         };
 
         // Sidebar open by default on desktop, collapsed by default on
         // mobile (an always-open overlay on first load would just block
-        // the conversation on a phone).
+        // the conversation on a phone). The reference panel isn't part of
+        // this anymore - it's a permanent fixed column on desktop with no
+        // collapsed state, and hidden outright on mobile via CSS (see
+        // style.css) until that gets its own design pass.
         if (this.isMobile()) {
             this.elements.sidebar.classList.add('collapsed');
-            this.elements.referencePanel.classList.add('collapsed');
         }
 
         this.elements.sidebarToggle.addEventListener('click', () => this.toggleSidebar());
-        this.elements.referenceToggle.addEventListener('click', () => this.toggleReferences());
         this.elements.sidebarBackdrop.addEventListener('click', () => this.closeSidebar());
-        this.elements.referenceBackdrop.addEventListener('click', () => this.closeReferences());
 
         this.elements.newConversationBtn.addEventListener('click', () => {
             if (window.commentaryManager) window.commentaryManager.clear();
@@ -59,7 +57,6 @@ const WorkspaceLayout = {
      */
     openHistoryFromLanding() {
         this.enterWorkspace();
-        if (this.isMobile()) this.elements.referencePanel.classList.add('collapsed');
         this.elements.sidebar.classList.remove('collapsed');
         this.updateBackdrop();
     },
@@ -115,22 +112,7 @@ const WorkspaceLayout = {
         if (queryInput) queryInput.focus();
     },
 
-    /**
-     * On mobile, the two drawers are wide enough (280px/320px) to overlap
-     * each other on top of a phone-width viewport if both were open at
-     * once, not just overlap the conversation - so only one may be open at
-     * a time there. On desktop there's room for both side by side (an
-     * already-established, tested layout), so this is a no-op there.
-     */
-    closeOtherPanelOnMobile(keepOpenEl) {
-        if (!this.isMobile()) return;
-        const other = keepOpenEl === this.elements.sidebar ? this.elements.referencePanel : this.elements.sidebar;
-        other.classList.add('collapsed');
-    },
-
     toggleSidebar() {
-        const opening = this.elements.sidebar.classList.contains('collapsed');
-        if (opening) this.closeOtherPanelOnMobile(this.elements.sidebar);
         this.elements.sidebar.classList.toggle('collapsed');
         this.updateBackdrop();
     },
@@ -140,38 +122,13 @@ const WorkspaceLayout = {
         this.updateBackdrop();
     },
 
-    toggleReferences() {
-        const opening = this.elements.referencePanel.classList.contains('collapsed');
-        if (opening) this.closeOtherPanelOnMobile(this.elements.referencePanel);
-        this.elements.referencePanel.classList.toggle('collapsed');
-        this.updateBackdrop();
-    },
-
-    closeReferences() {
-        this.elements.referencePanel.classList.add('collapsed');
-        this.updateBackdrop();
-    },
-
-    /** Auto-open the reference drawer when a message is selected - it's a
-     * collapsible overlay at every screen size now (see style.css), so this
-     * used to be needed only on mobile but now also matters on desktop if
-     * the user had closed it. */
-    showReferences() {
-        this.closeOtherPanelOnMobile(this.elements.referencePanel);
-        this.elements.referencePanel.classList.remove('collapsed');
-        this.updateBackdrop();
-    },
-
     updateBackdrop() {
         if (!this.isMobile()) {
             this.elements.sidebarBackdrop.classList.remove('visible');
-            this.elements.referenceBackdrop.classList.remove('visible');
             return;
         }
         const sidebarOpen = !this.elements.sidebar.classList.contains('collapsed');
-        const referencesOpen = !this.elements.referencePanel.classList.contains('collapsed');
         this.elements.sidebarBackdrop.classList.toggle('visible', sidebarOpen);
-        this.elements.referenceBackdrop.classList.toggle('visible', referencesOpen);
     }
 };
 

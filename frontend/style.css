@@ -147,7 +147,8 @@ body {
   color: var(--text-primary);
   background-color: var(--bg-primary);
   transition: background-color var(--transition-base), color var(--transition-base);
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without dvh support */
+  height: 100dvh;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -309,13 +310,25 @@ body::after {
   }
 }
 
+/* Root cause of the mobile wrapping bug: the old clamp(4rem, 10vw, 5rem)
+   had a 4rem (64px) FLOOR that never relaxed - at any viewport narrower
+   than ~800px, 10vw already undershoots 4rem, so the min bound wins and
+   pins the title at 64px regardless of how narrow the screen gets. "Holy
+   Bible" at 64px cannot fit a 375px-wide screen, so it wrapped to two
+   lines every time. The floor here is now genuinely small (2rem = 32px),
+   so the fluid 11vw term actually gets to do its job on phones instead of
+   being clipped by an oversized minimum; nowrap is a hard guarantee on
+   top of that for any viewport this sizing doesn't already fit close to
+   350px wide, comfortably covers ~360-375px test devices with room to
+   spare), same visible ~5rem size on any normal desktop window. */
 .hero-title {
   font-family: Georgia, serif;
-  font-size: clamp(4rem, 10vw, 5rem);
+  font-size: clamp(2rem, 11vw, 5rem);
   font-weight: 400;
   color: #fef9e7;
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  white-space: nowrap;
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   -webkit-text-stroke: 0;
   padding: 0 1rem;
@@ -361,11 +374,11 @@ body::after {
 
 .search-icon {
   position: absolute;
-  left: 1rem;
+  left: clamp(0.75rem, 3vw, 1rem);
   top: 50%;
   transform: translateY(-50%);
-  width: 1.25rem;
-  height: 1.25rem;
+  width: clamp(1rem, 4vw, 1.25rem);
+  height: clamp(1rem, 4vw, 1.25rem);
   color: #57534e;
   pointer-events: none;
   z-index: 1;
@@ -373,7 +386,12 @@ body::after {
 
 .search-input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
+  /* Vertical padding and left clearance (for the icon) scale down on
+     narrow screens so the pill isn't oversized on a phone. Font-size is
+     deliberately NOT scaled below 1rem/16px - iOS Safari auto-zooms the
+     page when a focused input's font-size is under 16px, which would be a
+     worse mobile experience than a slightly taller input. */
+  padding: clamp(0.75rem, 2.5vw, 1rem) clamp(0.85rem, 3vw, 1rem) clamp(0.75rem, 2.5vw, 1rem) clamp(2.25rem, 9vw, 3rem);
   font-size: 1rem;
   font-family: var(--font-sans);
   color: #2d2d2d;
@@ -425,14 +443,21 @@ body::after {
 /* Button Group (exact Figma) */
 .button-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: clamp(1.25rem, 4vw, 2rem);
 }
 
 .search-button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  /* Scales down on narrow screens instead of staying pinned at a fixed
+     desktop size - the old fixed 0.75rem/1.5rem padding + 1rem font made
+     two side-by-side pill buttons crowd or overflow a phone-width screen.
+     Padding still keeps a comfortable >=44px touch target at the small
+     end (font-size floor 0.85rem/13.6px + vertical padding floor
+     0.55rem*2/8.8px*2 + line-height comfortably clears that). */
+  padding: clamp(0.55rem, 2vw, 0.75rem) clamp(1rem, 4vw, 1.5rem);
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
   font-weight: 500;
   color: #2d2d2d;
   background: rgba(254, 252, 232, 0.9);
@@ -443,6 +468,23 @@ body::after {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+/* Below this, two pills side by side get genuinely cramped no matter how
+   much padding/font shrink - stacking them full-width is the standard,
+   cleaner mobile pattern rather than squeezing both into one row. */
+@media (max-width: 480px) {
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .search-button {
+    width: 100%;
+  }
 }
 
 .search-button:hover:not(:disabled) {
@@ -533,7 +575,8 @@ body::after {
 .workspace {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without dvh support */
+  height: 100dvh;
   width: 100%;
   background: var(--bg-primary);
 }
@@ -560,22 +603,32 @@ body.workspace-active::after {
    following --text-primary, which would go near-black in light mode and
    disappear against it. */
 .topbar {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: var(--space-sm) var(--space-lg);
   background: var(--bible-leather-base);
   flex-shrink: 0;
   z-index: 20;
 }
 
+/* Absolutely centered rather than relying on matching-width flex siblings
+   on either side - the history toggle used to live here and balanced the
+   title via space-between, but now it's a handle on the sidebar itself
+   (see .sidebar-handle), not a topbar button, so there's nothing on the
+   left to balance against anymore. */
 .topbar-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: 'Cinzel', Georgia, serif;
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--bible-gold);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .topbar-actions {
@@ -603,10 +656,6 @@ body.workspace-active::after {
   background: rgba(215, 194, 168, 0.15);
   border-color: var(--bible-gold-dark);
   color: var(--bible-gold);
-}
-
-.reference-toggle-mobile {
-  display: flex;
 }
 
 .workspace-body {
@@ -652,13 +701,50 @@ body.workspace-active::after {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* visible, not hidden: the handle (.sidebar-handle) deliberately sticks
+     out past this panel's own right edge, and needs to not be clipped by
+     it. The actual scrolling list (.history-list) has its own overflow-y,
+     so nothing relied on this panel clipping its content. */
+  overflow: visible;
   transform: translateX(0);
   transition: transform var(--transition-base);
 }
 
 .history-sidebar-panel.collapsed {
   transform: translateX(-100%);
+}
+
+/* The drawer handle - physically part of the sidebar (a child element, not
+   a topbar button), so it moves WITH the sidebar's translateX transform
+   above: attached to its right edge whether open or collapsed, the way a
+   drawer pull travels with the drawer. When collapsed, the whole sidebar
+   (including this handle) shifts left by its own width, which leaves the
+   handle sitting right at the screen edge, still visible and clickable to
+   pull the drawer back open - never anchored to the viewport itself. */
+.sidebar-handle {
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+  color: var(--text-secondary);
+  cursor: pointer;
+  z-index: 1;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.sidebar-handle:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .history-panel-header {
@@ -693,6 +779,16 @@ body.workspace-active::after {
 .conversation-thread {
   flex: 1;
   overflow-y: auto;
+  /* Mobile scroll fix (unverified on a real device - see commit notes):
+     -webkit-overflow-scrolling gives iOS Safari real momentum/inertial
+     touch scrolling in a nested overflow:auto container instead of
+     stuttering single-frame drags. overscroll-behavior:contain stops a
+     swipe that reaches the top/bottom of THIS list from "chaining" up to
+     <body>, which is overflow:hidden (see body{} above) - without this,
+     that chained scroll attempt on a non-scrollable body is exactly the
+     kind of thing that reads as "scrolling is broken" on a touchscreen. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   min-height: 0;
   padding: var(--space-xl) var(--space-lg);
   /* Extra bottom clearance so the last message never sits underneath the
@@ -1082,60 +1178,101 @@ body.workspace-active::after {
    panel that happens to sit next to the conversation.
    ============================================ */
 
+/* A permanent contextual evidence rail, not a sidebar: never closable,
+   draggable, dockable, or its own workspace - just supporting evidence for
+   whichever response is active. Two things fall out of that:
+
+   1. It's positioned relative to THIS conversation column (.conversation-
+      panel, which has position:relative), not the viewport - "left" below
+      is measured from the conversation's own center, not the browser
+      edge. That's the opposite of the old layout, where this sat flush
+      against the workspace's right edge: on a wide monitor the centered
+      46rem conversation column and the viewport-edge-anchored rail ended
+      up far apart, reading as three unrelated columns (sidebar |
+      conversation | rail) instead of one conversation with evidence
+      attached to it.
+   2. Because it's now taken OUT of the workspace-body flex row entirely,
+      .conversation-panel is the row's only member and truly spans the
+      full width - so the conversation's own centering is completely
+      unaffected by whether this rail exists at all, on any screen size.
+
+   The math: .message content is a fixed 46rem wide, centered in this
+   panel, so its right edge sits at 50% + 23rem from this panel's own
+   center. Add a 20px gap and that's where the rail should start. The
+   inner min() is a narrow-desktop safety net (not a design goal) - if
+   hugging the conversation would push the rail past the panel's right
+   edge, it falls back to hugging that edge instead of clipping offscreen.
+
+   Visually this is deliberately NOT a sidebar-style panel anymore: no
+   full top-to-bottom height, no opaque background block, no heavy drop
+   shadow, square edges flush with the screen. All of that reads as "a
+   second application region." Instead: a short, rounded, translucent
+   card that stops at whatever height its (2-3 line, shrunk) citation
+   chips need, floating near the top of the conversation rather than
+   spanning it - closer to a Perplexity/Gemini source-preview card than
+   an app panel. */
 .reference-panel {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 30;
-  width: 320px;
-  background: var(--bg-secondary);
-  /* No border - a hard dividing line reads as "two separate columns of
-     content"; the shadow alone gives it depth as an attached surface
-     instead, matching the same --bg-secondary tint used on the active
-     message bubble to visually bind the pair together. */
-  box-shadow: var(--shadow-lg);
+  top: 24px;
+  max-height: calc(100% - 48px);
+  left: min(calc(50% + 23rem + 20px), calc(100% - 280px - 24px));
+  width: 280px;
+  z-index: 25;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: translateX(0);
-  transition: transform var(--transition-base);
 }
 
-.reference-panel.collapsed {
-  transform: translateX(100%);
+[data-theme="dark"] .reference-panel {
+  background: rgba(24, 24, 24, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Conditionally RENDERED, not conditionally populated - with no active
+   response, or an active response with no sources, this has zero visual
+   presence: no background, no border, no shadow, no reserved space. It
+   used to always render its (empty) chrome regardless of content, which
+   showed as a ghost placeholder bar in the upper-right corner before any
+   question was ever asked. */
+.reference-panel.hidden {
+  display: none;
+}
+
+/* No padded header "band" with its own border - that reads as a distinct
+   app-section title bar. Just one small label line, same weight as the
+   tier labels below it. */
 .reference-panel-header {
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: 1px solid var(--border-color);
-  white-space: nowrap;
-}
-
-.reference-panel-header h3 {
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  color: var(--text-primary);
+  padding: var(--space-sm) var(--space-md) 0;
 }
 
 .reference-subtitle {
   display: block;
   font-size: var(--font-size-xs);
+  font-weight: 600;
   color: var(--text-tertiary);
-  margin-top: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .reference-list {
-  flex: 1;
   overflow-y: auto;
+  /* Same mobile scroll fix as .conversation-thread. This panel is hidden
+     outright below 900px for now, but kept consistent for touch-capable
+     wider viewports (e.g. tablets) that don't hit that breakpoint. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   min-height: 0;
-  padding: var(--space-md);
+  padding: var(--space-xs) var(--space-sm) var(--space-sm);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 2px;
 }
 
 .reference-tier-label {
@@ -1238,27 +1375,38 @@ body.workspace-active::after {
 /* Same flat-list treatment as .history-item: no persistent border/box,
    just a clean hover highlight - not the bordered card look .verse-card
    has elsewhere (e.g. it still applies to /chapter search results). */
+/* Citation chip, not a content card - this is the single biggest visual
+   difference from a "search results" feel: reference + 2-line preview,
+   no border, no background by default, no score badge, no button. The
+   whole chip is the click target (see the onclick guard in
+   commentary.js's renderVerseCard, which skips navigation if the click
+   is really the end of a text selection). */
 .reference-list .verse-card {
-  padding: var(--space-md);
+  padding: 6px var(--space-sm);
   background: transparent;
   border: none;
+  border-radius: var(--radius-md);
 }
 
 .reference-list .verse-card:hover {
-  background: var(--bg-tertiary);
+  background: rgba(127, 127, 127, 0.12);
   border-color: transparent;
   box-shadow: none;
   transform: none;
 }
 
 .reference-list .verse-reference {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: 1px;
 }
 
 .reference-list .verse-text {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1541,6 +1689,9 @@ body.workspace-active::after {
 .history-list {
   flex: 1;
   overflow-y: auto;
+  /* See .conversation-thread's comment above - same mobile scroll fix. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   min-height: 0;
   padding: var(--space-md);
 }
@@ -1644,10 +1795,16 @@ body.workspace-active::after {
    ============================================ */
 
 @media (max-width: 900px) {
-  /* Both side panels are off-canvas overlay drawers at every screen size
-     now (see the base .history-sidebar-panel / .reference-panel rules) -
-     this breakpoint only needs to keep long lines from stretching edge to
-     edge on a narrow viewport. */
+  /* The history sidebar is still an off-canvas overlay drawer at this
+     width (see .history-sidebar-panel). The evidence rail is different:
+     it's a permanent fixed column on desktop now with no collapsed state
+     (see .reference-panel), and a 320px fixed column has nowhere to go on
+     a phone-width screen - hidden outright here until mobile gets its own
+     design pass for it, per explicit instruction not to design that yet. */
+  .reference-panel {
+    display: none;
+  }
+
   .message {
     max-width: 100%;
   }

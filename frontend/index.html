@@ -78,16 +78,10 @@
          ============================================ -->
     <div id="workspace" class="workspace hidden">
         <header class="topbar">
-            <button id="sidebarToggle" class="topbar-icon-btn" aria-label="Toggle history sidebar" title="Toggle history">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
             <h1 class="topbar-title">Holy Bible</h1>
             <div class="topbar-actions">
                 <button id="newConversationBtn" class="topbar-icon-btn" aria-label="New conversation" title="New conversation">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </button>
-                <button id="referenceToggle" class="topbar-icon-btn reference-toggle-mobile" aria-label="Toggle references" title="Toggle references">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </button>
                 <button id="themeToggle" class="topbar-icon-btn theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle theme">
                     <span id="themeIcon" class="theme-icon-target"></span>
@@ -98,6 +92,14 @@
         <div class="workspace-body">
             <!-- Left: history -->
             <aside id="historySidebar" class="history-sidebar-panel">
+                <!-- The drawer's own handle, not a navbar button: physically
+                     attached to the sidebar's right edge, so it travels
+                     with the sidebar's open/close transform instead of
+                     staying fixed to the topbar. A clock icon reads as
+                     "conversation history", not "main menu". -->
+                <button id="sidebarToggle" class="sidebar-handle" aria-label="Toggle history sidebar" title="Toggle history">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </button>
                 <div class="history-panel-header">
                     <h3>Search History</h3>
                     <button id="clearHistory" class="history-clear-btn" title="Clear all history" aria-label="Clear all history">
@@ -125,17 +127,20 @@
                         </button>
                     </div>
                 </div>
-            </main>
 
-            <!-- Right: references for the selected message -->
-            <aside id="referencePanel" class="reference-panel">
-                <div class="reference-panel-header">
-                    <h3>Sources</h3>
-                    <span id="referenceSubtitle" class="reference-subtitle"></span>
-                </div>
-                <div id="referenceList" class="reference-list"></div>
-            </aside>
-            <div id="referenceBackdrop" class="panel-backdrop"></div>
+                <!-- Evidence rail: positioned relative to THIS column (see
+                     .reference-panel in style.css), not the viewport, so it
+                     hugs the conversation's edge instead of anchoring to
+                     the browser edge. It's not a sidebar - never closable,
+                     draggable, or its own workspace, just supporting
+                     evidence for whichever response is currently active. -->
+                <aside id="referencePanel" class="reference-panel hidden">
+                    <div class="reference-panel-header">
+                        <span id="referenceSubtitle" class="reference-subtitle"></span>
+                    </div>
+                    <div id="referenceList" class="reference-list"></div>
+                </aside>
+            </main>
         </div>
     </div>
 
