@@ -4,165 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI-powered semantic search across 31,102 KJV Bible verses. Ask questions in natural language and find relevant scriptures instantly.">
-    <meta name="theme-color" content="#10a37f">
+    <meta name="theme-color" content="#d7c2a8">
     <title>Smart Bible Search | AI-Powered Scripture Discovery</title>
-    
+
     <!-- Classic Bible Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="header" style="display: none;">
-            <div class="header-content">
-                <a href="/" class="logo">
-                    <span class="logo-icon">📖</span>
-                    <span>Smart Bible Search</span>
-                </a>
-                <div class="header-actions">
-                    <button 
-                        id="themeToggle" 
-                        class="theme-toggle" 
-                        aria-label="Toggle dark mode"
-                        title="Toggle theme">
-                        <span id="themeIcon">🌙</span>
+    <!-- ============================================
+         LANDING SCREEN - leather/gold Bible branding,
+         shown once per session until the first search
+         ============================================ -->
+    <div id="landingScreen" class="landing-screen">
+        <div class="landing-topbar">
+            <button id="landingHistoryBtn" class="landing-icon-btn" aria-label="View search history" title="Search history">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </button>
+            <button id="landingThemeToggle" class="landing-icon-btn theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle theme">
+                <span id="landingThemeIcon" class="theme-icon-target"></span>
+            </button>
+        </div>
+
+        <section class="hero">
+            <h1 class="hero-title">Holy Bible</h1>
+        </section>
+
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <input
+                        type="text"
+                        id="queryInput"
+                        class="search-input"
+                        placeholder="Search the scriptures..."
+                        aria-label="Search query"
+                        autocomplete="off">
+                </div>
+                <div class="button-group">
+                    <button
+                        id="searchBtn"
+                        class="search-button primary-button"
+                        aria-label="Search Scripture">
+                        Search Scripture
+                    </button>
+                    <button
+                        id="feelingHolyBtn"
+                        class="search-button secondary-button"
+                        aria-label="I'm Feeling Blessed">
+                        I'm Feeling Blessed
                     </button>
                 </div>
             </div>
-        </header>
 
-        <!-- Main Content -->
-        <main class="main-content centered-layout">
-            <!-- Hero Section -->
-            <section class="hero">
-                <h1 class="hero-title">Holy Bible</h1>
-            </section>
-
-            <!-- Search Section -->
-            <section class="search-section">
-                <div class="search-container">
-                    <div class="search-input-wrapper">
-                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </svg>
-                        <input 
-                            type="text" 
-                            id="queryInput" 
-                            class="search-input"
-                            placeholder="Search the scriptures..."
-                            aria-label="Search query"
-                            autocomplete="off">
-                    </div>
-                    <div class="button-group">
-                        <button 
-                            id="searchBtn" 
-                            class="search-button primary-button"
-                            aria-label="Search Scripture">
-                            Search Scripture
-                        </button>
-                        <button 
-                            id="feelingHolyBtn" 
-                            class="search-button secondary-button"
-                            aria-label="I'm Feeling Blessed">
-                            I'm Feeling Blessed
-                        </button>
-                    </div>
-                    <div class="search-options" style="display: none;">
-                        <div class="option-group">
-                            <label for="maxResults">Results:</label>
-                            <input 
-                                type="number" 
-                                id="maxResults" 
-                                class="option-input"
-                                value="10" 
-                                min="1" 
-                                max="50"
-                                aria-label="Maximum results">
-                        </div>
-                        <div class="option-group">
-                            <span id="searchMode">Semantic Search</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Status Message -->
-                <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
-            </section>
-
-            <!-- Commentary Section (NEW) -->
-            <section id="commentarySection" class="commentary-section hidden" aria-live="polite">
-                <div class="commentary-card">
-                    <div class="commentary-header">
-                        <h3 class="commentary-title">
-                            
-                            Biblical Commentary
-                        </h3>
-                        <button id="commentaryToggle" class="commentary-toggle" aria-label="Toggle commentary">
-                            <span>−</span>
-                        </button>
-                    </div>
-                    <div id="commentaryContent" class="commentary-content">
-                        <div class="commentary-loading">
-                            <div class="spinner"></div>
-                            <p>Generating commentary...</p>
-                        </div>
-                    </div>
-                    <div class="commentary-footer">
-                        <small class="commentary-badge">
-                            
-                            Generated from top search results
-                        </small>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Results Section -->
-            <section id="resultsSection" class="results-section">
-                <div class="results-header">
-                    <h2 id="resultsCount" class="results-count">0 results</h2>
-                </div>
-                <div id="resultsList" class="results-list" role="list"></div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer" style="display: none;">
-            <p>
-                Powered by AI semantic search · 
-                <a href="https://github.com/fergtech/smart-bible-search-app" target="_blank" rel="noopener noreferrer">
-                    View on GitHub
-                </a>
-            </p>
-        </footer>
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
+        </section>
     </div>
 
-    <!-- Back to Top Button (just scrolls) -->
-    <button id="backToTop" class="back-to-top" aria-label="Scroll to top">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
+    <!-- ============================================
+         WORKSPACE - the persistent-conversation shell.
+         Hidden until the first query is submitted; once
+         shown, it's a one-way transition for the session.
+         ============================================ -->
+    <div id="workspace" class="workspace hidden">
+        <header class="topbar">
+            <button id="sidebarToggle" class="topbar-icon-btn" aria-label="Toggle history sidebar" title="Toggle history">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <h1 class="topbar-title">Holy Bible</h1>
+            <div class="topbar-actions">
+                <button id="newConversationBtn" class="topbar-icon-btn" aria-label="New conversation" title="New conversation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <button id="referenceToggle" class="topbar-icon-btn reference-toggle-mobile" aria-label="Toggle references" title="Toggle references">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </button>
+                <button id="themeToggle" class="topbar-icon-btn theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle theme">
+                    <span id="themeIcon" class="theme-icon-target"></span>
+                </button>
+            </div>
+        </header>
 
-    <!-- New Search Button (resets to hero) -->
-    <button id="newSearch" class="new-search-btn" aria-label="New search">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-    </button>
+        <div class="workspace-body">
+            <!-- Left: history -->
+            <aside id="historySidebar" class="history-sidebar-panel">
+                <div class="history-panel-header">
+                    <h3>Search History</h3>
+                    <button id="clearHistory" class="history-clear-btn" title="Clear all history" aria-label="Clear all history">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </div>
+                <div id="historyList" class="history-list"></div>
+            </aside>
+            <div id="sidebarBackdrop" class="panel-backdrop"></div>
+
+            <!-- Center: conversation -->
+            <main class="conversation-panel">
+                <div id="conversationThread" class="conversation-thread"></div>
+
+                <div class="conversation-input-bar">
+                    <div class="input-pill">
+                        <input
+                            type="text"
+                            id="followupInput"
+                            class="followup-input"
+                            placeholder="Ask a follow-up question..."
+                            aria-label="Follow-up question">
+                        <button id="followupBtn" class="followup-button" aria-label="Send">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right: references for the selected message -->
+            <aside id="referencePanel" class="reference-panel">
+                <div class="reference-panel-header">
+                    <h3>Sources</h3>
+                    <span id="referenceSubtitle" class="reference-subtitle"></span>
+                </div>
+                <div id="referenceList" class="reference-list"></div>
+            </aside>
+            <div id="referenceBackdrop" class="panel-backdrop"></div>
+        </div>
+    </div>
 
     <!-- Chapter View Modal -->
     <div id="chapterModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle" class="modal-title">Chapter</h2>
-                <button 
-                    id="closeModal" 
-                    class="modal-close" 
+                <button
+                    id="closeModal"
+                    class="modal-close"
                     aria-label="Close modal">
                     ×
                 </button>
@@ -171,13 +155,41 @@
         </div>
     </div>
 
+    <!-- Today's Blessing Modal -->
+    <div id="blessingModal" class="modal" role="dialog" aria-labelledby="blessingModalTitle" aria-modal="true">
+        <div class="modal-content blessing-modal-content">
+            <div class="modal-header">
+                <h2 id="blessingModalTitle" class="modal-title">Today's Blessing</h2>
+                <button
+                    id="closeBlessingModal"
+                    class="modal-close"
+                    aria-label="Close modal">
+                    ×
+                </button>
+            </div>
+            <div id="blessingContent" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Highlight Tooltip - Appears when text is selected -->
+    <div id="highlightTooltip" class="highlight-tooltip" role="tooltip" aria-hidden="true">
+        <button id="askHighlight" class="tooltip-button" aria-label="Ask about highlighted text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Ask</span>
+        </button>
+    </div>
+
     <!-- API Configuration -->
     <script>
         // Set API URL based on environment
         window.API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://localhost:8000'
             : `${window.location.protocol}//${window.location.hostname}:8000`;
-        
+
         // Alias for commentary module
         window.API_BASE_URL = window.API_URL;
     </script>
@@ -185,20 +197,16 @@
     <!-- Load JavaScript Modules -->
     <script src="logger.js"></script>
     <script src="ui.js"></script>
-    <script src="search.js"></script>
-    <script src="semantic.js"></script>
+    <script src="history.js"></script>
     <script src="commentary.js"></script>
-    
+    <script src="search.js"></script>
+    <script src="highlight.js"></script>
+
     <script>
         // Initialize application
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize UI module
             UI.init();
-            
-            // Initialize search
             KeywordSearch.init();
-            
-            // Initialize theme
             ThemeManager.init();
         });
     </script>

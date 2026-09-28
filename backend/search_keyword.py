@@ -6,6 +6,19 @@ Implements traditional text matching with relevance scoring.
 import re
 from typing import List, Dict
 
+# Without this filter, a query like "fruits of the spirit" let "of" and
+# "the" alone rack up term-frequency bonus points against ANY long,
+# repetitive verse (confirmed live: Ezekiel 43:11, containing neither
+# "fruits" nor "spirit", scored higher than Galatians 5:22 purely from
+# repeated "of"/"the"/"all" - and since search.js prefers keyword results
+# over semantic ones whenever any verse scores above 0.3, this silently
+# replaced the actually-relevant semantic results with irrelevant ones).
+_STOP_WORDS = {
+    'a', 'an', 'the', 'of', 'and', 'or', 'but', 'to', 'in', 'on', 'at', 'by',
+    'for', 'with', 'as', 'is', 'was', 'are', 'were', 'be', 'been', 'it',
+    'that', 'this', 'these', 'those', 'from', 'not', 'so', 'if', 'then',
+}
+
 
 def search_keyword(verses: List[Dict], query: str, max_results: int = 10) -> List[Dict]:
     """
@@ -23,8 +36,9 @@ def search_keyword(verses: List[Dict], query: str, max_results: int = 10) -> Lis
         return []
     
     query_lower = query.lower().strip()
-    query_terms = re.findall(r'\w+', query_lower)
-    
+    all_terms = re.findall(r'\w+', query_lower)
+    query_terms = [t for t in all_terms if t not in _STOP_WORDS] or all_terms
+
     results = []
     
     for verse in verses:
@@ -46,14 +60,30 @@ def search_keyword(verses: List[Dict], query: str, max_results: int = 10) -> Lis
                 len(verse["text"])
             )
             
+            # The raw score above is an unbounded heuristic (word-frequency
+            # and position bonuses stack with no ceiling) - fine for
+            # internal ranking, but it was being returned as-is and the
+            # frontend displays it directly as "{score}% match", which is
+            # how a verse scored 1.05 rendered as "105% match". 12.0 is
+            # calibrated to a strong exact-phrase match (+10 base, plus
+            # some term-frequency bonus), so a real match approaches 1.0
+            # and a thin one-word incidental match stays well below it.
+            normalized_score = max(0.0, min(score / 12.0, 1.0))
+
             results.append({
                 **verse,
-                "relevance_score": round(score, 2)
+                "relevance_score": round(normalized_score, 2),
+                "_sort_score": score,
             })
-    
-    # Sort by relevance score (highest first)
-    results.sort(key=lambda x: x["relevance_score"], reverse=True)
-    
+
+    # Sort by the raw (unbounded) score, not the normalized display score,
+    # so ranking still distinguishes strong matches that both happened to
+    # clip to 1.0 after normalization.
+    results.sort(key=lambda x: x["_sort_score"], reverse=True)
+
+    for r in results:
+        del r["_sort_score"]
+
     return results[:max_results]
 
 
@@ -87,22 +117,34 @@ def _calculate_relevance_score(
         # Count how many times the exact phrase appears
         score += text_lower.count(query_lower) * 2.0
     
-    # 2. Individual term frequency
+    # 2. Exact word boundary match (for names like "Zuriel")
+    # This catches single words that match exactly, not as substrings
+    query_words = query_lower.split()
+    if len(query_words) == 1:
+        word_pattern = r'\b' + re.escape(query_lower) + r'\b'
+        if re.search(word_pattern, text_lower):
+            score += 15.0  # High bonus for exact word match (biblical names)
+    
+    # 3. Individual term frequency
     for term in query_terms:
         score += text_lower.count(term) * 1.5
+        # Bonus for whole word matches
+        word_pattern = r'\b' + re.escape(term) + r'\b'
+        if re.search(word_pattern, text_lower):
+            score += 3.0
     
-    # 3. Term coverage (what % of query terms matched)
+    # 4. Term coverage (what % of query terms matched)
     coverage = matching_terms / len(query_terms)
     score += coverage * 5.0
     
-    # 4. Position bonus (earlier matches score higher)
+    # 5. Position bonus (earlier matches score higher)
     if exact_match:
         position = text_lower.find(query_lower)
         # Bonus if match is in first 50 characters
         if position < 50:
             score += 3.0 - (position / 50 * 2.0)
     
-    # 5. Verse length penalty (prefer concise matches)
+    # 6. Verse length penalty (prefer concise matches)
     length_penalty = text_length / 500
     score -= length_penalty
     

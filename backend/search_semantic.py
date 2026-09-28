@@ -84,6 +84,12 @@ def _load_index():
     return _faiss_index, _verse_ids
 
 
+def get_shared_model():
+    """Expose the lazily-loaded embedding model for other search modules
+    (e.g. search_commentary_corpus) so it isn't loaded into memory twice."""
+    return _load_model()
+
+
 def search_semantic(
     verses: List[Dict], 
     query: str, 

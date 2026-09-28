@@ -178,22 +178,22 @@ def _build_prompt(query: str, verses: List[Dict]) -> str:
         # For factual questions: direct answer with verse citation
         prompt = f"""Question: {query}
 
-Biblical Evidence:
+Biblical Verses:
 {verse_context}
 
-Task: Answer the question in 2-3 sentences using ONLY what these Bible verses say. You MUST cite specific verses (e.g., "According to John 3:16" or "In Matthew 5:9"). Base your answer strictly on the verses provided.
+Instructions: Write a concise 2-3 sentence answer using ONLY what these exact verses state. Do NOT make connections to similar-sounding names or assume different people are the same person. Do NOT use conversational phrases like "Hello", "Let's talk about", "I'm happy to help", "I think", or "Interesting". Start directly with the biblical information. ALWAYS cite specific verse references (e.g., "According to Numbers 3:35" or "Genesis 1:1 states"). If the query name appears in only one verse, describe ONLY what that specific verse says about that specific person - do not bring in other similar names.
 
-Biblical Answer:"""
+Answer:"""
     else:
         # For theological/thematic questions: biblical summary with citations
         prompt = f"""Topic: {query}
 
-Biblical Evidence:
+Biblical Verses:
 {verse_context}
 
-Task: Explain what these specific Bible verses teach about this topic in 2-4 sentences. You MUST reference the specific verses (e.g., "Romans 12:1 teaches..." or "As stated in Psalm 23:1"). Only use what is directly stated in the verses provided.
+Instructions: Write a concise 2-4 sentence explanation using ONLY what these verses teach. Do NOT use conversational phrases like "Hello", "Let's discuss", "I think", or "Hmm". Start directly with the biblical teaching. ALWAYS reference specific verses (e.g., "Romans 12:1 teaches" or "Psalm 23:1 states"). Only use what is directly stated in these verses.
 
-Biblical Summary:"""
+Summary:"""
     
     return prompt
 
@@ -245,6 +245,30 @@ def generate_commentary(
     model, tokenizer, device = _load_model()
     torch = _get_torch()
     
+    # SIMPLE FAILSAFE: For single-verse queries with exact name match, just use the verse directly
+    # Avoids AI hallucination and confusion
+    if len(verses) == 1:
+        verse = verses[0]
+        query_lower = query.lower().strip()
+        verse_text_lower = verse['text'].lower()
+        
+        # Check if query is a single word (likely a name) and appears in the verse
+        if len(query_lower.split()) == 1 and query_lower in verse_text_lower:
+            # Direct paraphrase: "According to [reference], [simplified verse text]"
+            simple_commentary = f"According to {verse['reference']}, {verse['text']}"
+            
+            logger.info(f"Using simple direct approach for single-verse name query: {query}")
+            
+            if use_cache:
+                _save_cache(cache_key, query, simple_commentary, cache_dir)
+            
+            return {
+                'commentary': simple_commentary,
+                'verses_used': 1,
+                'commentary_mode': 'direct',
+                'model_info': {'approach': 'direct_verse_citation'}
+            }
+    
     # Build prompt
     prompt = _build_prompt(query, verses)
     
@@ -282,21 +306,52 @@ def generate_commentary(
         # Post-process: Clean up formatting and validate
         import re
         
+        # Remove conversational/filler phrases (STRICT)
+        conversational_phrases = [
+            r'^Hello[!,.\s]+',
+            r'^Hi[!,.\s]+',
+            r'^Hey[!,.\s]+',
+            r'^OK[,.\s]+',
+            r'^Okay[,.\s]+',
+            r'^Alright[,.\s]+',
+            r'^Well[,.\s]+',
+            r'^Let\'s\s+(?:talk about|discuss|explore|look at)',
+            r'^I think',
+            r'^I believe',
+            r'^Hmm[,.\s]+',
+            r'^Interesting[!,.\s]+',
+            r'^Great question[!,.\s]+',
+            r'^Good question[!,.\s]+',
+            r'(?:I\'d be happy to|I can) help you understand',
+            r'^(?:In terms of|As for|Regarding)',
+            r'^The Bible (?:doesn\'t actually teach|says nothing about)',  # Remove negative statements
+        ]
+        for pattern in conversational_phrases:
+            commentary = re.sub(pattern, '', commentary, flags=re.IGNORECASE)
+        
         # Remove leading numbers like "1.", "2.", etc.
         commentary = re.sub(r'^\d+\.\s*', '', commentary)
         commentary = re.sub(r'\s+\d+\.\s+', ' ', commentary)
+        
+        # Capitalize first letter after cleaning
+        commentary = commentary.strip()
+        if commentary:
+            commentary = commentary[0].upper() + commentary[1:]
         
         # Remove instruction echoing (if model repeats the prompt)
         instruction_patterns = [
             r'Explain what .*? teaches',
             r'Requirements:.*',
+            r'Instructions:.*',
             r'Don\'t just repeat.*',
             r'Include verse references.*',
             r'WHAT this means.*',
             r'Task:.*',
             r'Question:.*',
             r'Topic:.*',
-            r'Verses:.*'
+            r'Verses:.*',
+            r'Answer:.*?(?=\w)',  # Remove "Answer:" prefix
+            r'Summary:.*?(?=\w)',  # Remove "Summary:" prefix
         ]
         for pattern in instruction_patterns:
             commentary = re.sub(pattern, '', commentary, flags=re.IGNORECASE)

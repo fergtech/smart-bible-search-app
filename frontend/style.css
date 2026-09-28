@@ -13,10 +13,10 @@
   --bible-leather-dark: #3d2817;
   --bible-leather-base: #5c3d2e;
   --bible-leather-light: #6b4423;
-  --bible-gold: #d4af37;
-  --bible-gold-dark: #b8941f;
-  --bible-gold-light: #f0d98f;
-  --bible-cream: #f5f1e8;
+  --bible-gold: #d7c2a8;
+  --bible-gold-dark: #b7a58f;
+  --bible-gold-light: #f3eee6;
+  --bible-cream: #f3eee6;
   
   /* Light Mode Colors */
   --bg-primary: #ffffff;
@@ -26,8 +26,21 @@
   --text-secondary: #565869;
   --text-tertiary: #8e8ea0;
   --border-color: #d9d9e3;
-  --accent-primary: #10a37f;
-  --accent-hover: #0d8a6a;
+  /* Brand-consistency fix: the workspace's accent was a generic teal-green
+     with zero relation to the landing screen's warm leather/gold branding
+     - the two screens read as different apps. Now uses the same gold
+     family as the landing screen's own buttons. --accent-text is the
+     foreground color for text/icons placed ON TOP of an accent-colored
+     background (e.g. the send button) - white-on-gold reads as washed
+     out, so this pairs with a dark, warm brown instead, matching how the
+     landing screen's own gold buttons already use dark text. */
+  --accent-primary: var(--bible-gold-dark);
+  --accent-hover: #9b8c79;
+  --accent-text: #2b1d05;
+  /* Alias used by commentary.js's verse/Strong's links - was previously
+     undefined anywhere in this file, so those links rendered without their
+     intended accent color. */
+  --color-accent: var(--accent-primary);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -65,15 +78,26 @@
 
 /* Dark Mode Colors */
 [data-theme="dark"] {
-  --bg-primary: #212121;
-  --bg-secondary: #2f2f2f;
-  --bg-tertiary: #3f3f3f;
+  /* Dark charcoal base (not true black, not the previous mid-grey
+     #212121) - just a shade darker than the raised surfaces (topbar,
+     side panels), which still step up further from there. Text/accent
+     colors are left as-is (not surface colors); the leather landing-
+     screen texture is untouched, since it isn't driven by these
+     variables at all. */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1e1e1e;
   --text-primary: #ececec;
   --text-secondary: #b4b4b4;
   --text-tertiary: #8e8e8e;
-  --border-color: #4e4e4e;
-  --accent-primary: #19c37d;
-  --accent-hover: #15a068;
+  --border-color: #2a2a2a;
+  /* Same brand-consistency fix as :root, tuned for a dark surface: gold
+     pops well against near-black, and brightens further on hover rather
+     than darkening (darkening an already-bright color on a dark
+     background just loses visibility). */
+  --accent-primary: var(--bible-gold);
+  --accent-hover: var(--bible-gold-light);
+  --accent-text: #1a1200;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
@@ -95,10 +119,26 @@
 
 html {
   font-size: 16px;
+  height: 100%;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Nested-scroll fix: the page itself must never scroll, in EITHER the
+   landing screen or the workspace - only dedicated inner containers
+   (conversation thread, reference list, history list) should, each
+   independently. This was first fixed only for body.workspace-active,
+   which missed that the landing screen has the identical problem: its
+   content can render fractionally taller than the viewport (ordinary
+   100vh/box-model rounding, not a layout bug), which was enough to make
+   the whole page scroll even though there's nothing below the fold worth
+   scrolling to. Confirmed live on both screens: without this, the page
+   scrolled independently of (and in addition to) the inner panels, so
+   e.g. the topbar could scroll out of view and mouse-wheel behavior
+   became unpredictable depending on cursor position - "nested-scroll
+   hell". Landing screen content is short enough that this is safe even
+   on fairly small viewports; scrolling was never doing useful work here. */
 body {
   position: relative;
   font-family: var(--font-sans);
@@ -107,11 +147,10 @@ body {
   color: var(--text-primary);
   background-color: var(--bg-primary);
   transition: background-color var(--transition-base), color var(--transition-base);
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 body::before {
@@ -121,7 +160,14 @@ body::before {
   background-image: url('https://images.unsplash.com/photo-1716295177956-420a647c83ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvbGQlMjBiaWJsZSUyMHRleHR1cmUlMjBsZWF0aGVyfGVufDF8fHx8MTc2NTg5MTM2NHww&ixlib=rb-4.1.0&q=80&w=1080');
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
+  /* Fully opaque (was 0.8): at 0.8, the 20% gap let body's own
+     background-color show through - invisible in light mode (white on
+     white), but in dark mode --bg-primary is near-black, so the leather
+     photo read as if it had a black overlay stacked on it. It never was a
+     deliberate dark-mode treatment, just this image never having its own
+     theme-independent backing. Full opacity removes the leak; the image
+     now looks identical in both themes. */
+  opacity: 1;
   z-index: -2;
 }
 
@@ -195,39 +241,57 @@ body::after {
 }
 
 /* ============================================
-   MAIN CONTENT
+   LANDING SCREEN
    ============================================ */
 
-.main-content {
-  flex: 1 1 auto;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-/* Default: centered for empty state */
-.centered-layout {
+.landing-screen {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
   padding: 2rem 1rem;
-  max-width: 100%;
+  overflow: hidden;
 }
 
-/* After search: align to top, hero hidden */
-.centered-layout.has-results {
-  justify-content: flex-start;
-  min-height: auto;
-  padding-top: 2rem;
+/* Corner utility icons (history, theme) - a floating overlay rather than a
+   topbar strip, so the landing screen keeps its single-focus "book cover"
+   look instead of gaining a workspace-style header bar. */
+.landing-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  z-index: 5;
 }
 
-.centered-layout.has-results .hero {
-  display: none;
+.landing-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(20, 14, 10, 0.35);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(245, 241, 232, 0.2);
+  border-radius: 50%;
+  color: var(--bible-cream);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.centered-layout.has-results .search-section {
+.landing-icon-btn:hover {
+  background: rgba(20, 14, 10, 0.55);
+  border-color: rgba(215, 194, 168, 0.4);
+  color: var(--bible-gold);
+}
+
+.landing-screen.hidden {
   display: none;
 }
 
@@ -247,7 +311,7 @@ body::after {
 
 .hero-title {
   font-family: Georgia, serif;
-  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-size: clamp(4rem, 10vw, 5rem);
   font-weight: 400;
   color: #fef9e7;
   letter-spacing: 0.05em;
@@ -331,6 +395,31 @@ body::after {
 
 .search-input::placeholder {
   color: rgba(45, 45, 45, 0.5);
+}
+
+/* Dark mode's signal is this bar going dark, not the leather background
+   changing - a dark glassmorphism treatment (frosted, brownish, tan
+   accents) instead of the light mode's cream pill. */
+[data-theme="dark"] .search-input {
+  color: var(--bible-cream);
+  background: rgba(20, 14, 10, 0.55);
+  border: 1px solid rgba(215, 194, 168, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .search-input:focus {
+  outline: 2px solid rgba(215, 194, 168, 0.4);
+  outline-offset: 0;
+  border-color: rgba(215, 194, 168, 0.5);
+  box-shadow: 0 0 0 2px rgba(215, 194, 168, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .search-input::placeholder {
+  color: rgba(245, 241, 232, 0.5);
+}
+
+[data-theme="dark"] .search-icon {
+  color: rgba(245, 241, 232, 0.7);
 }
 
 /* Button Group (exact Figma) */
@@ -423,9 +512,9 @@ body::after {
 }
 
 .status-message.info {
-  background-color: rgba(16, 163, 127, 0.1);
+  background-color: rgba(215, 194, 168, 0.1);
   color: var(--accent-primary);
-  border: 1px solid rgba(16, 163, 127, 0.2);
+  border: 1px solid rgba(215, 194, 168, 0.2);
 }
 
 .status-message.error {
@@ -435,101 +524,417 @@ body::after {
 }
 
 /* ============================================
-   COMMENTARY SECTION
+   WORKSPACE SHELL - top bar + 3-column layout
+   Replaces the old single-column search-results-
+   dump layout. Hidden until the first query, then
+   a one-way transition for the rest of the session.
    ============================================ */
 
-.commentary-section {
+.workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  padding: 0 1rem;
+  background: var(--bg-primary);
+}
+
+.workspace.hidden {
   display: none;
 }
 
-.commentary-section.visible {
-  display: block;
+/* Solid background once inside the workspace - no leather texture, no
+   visual distraction during study (the leather image/overlay live on
+   body::before/after and are suppressed via this class on <body>). */
+body.workspace-active::before,
+body.workspace-active::after {
+  display: none;
 }
 
-.commentary-section.visible {
-  display: block;
-  animation: fadeIn 0.4s ease;
-}
-
-.commentary-card {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  transition: all var(--transition-base);
-}
-
-.commentary-card:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-}
-
-.commentary-header {
+/* Visual bridge to the landing screen's leather/gold branding, reusing
+   the same variables the (currently unused) original header defined -
+   otherwise the topbar is plain grey and the transition from landing to
+   workspace reads as two unrelated apps. Colors here are intentionally
+   NOT theme-gated (matching the leather background/text-shadow variables
+   used elsewhere): this bar is always a dark leather strip regardless of
+   light/dark mode, so its own text/icons stay cream/gold rather than
+   following --text-primary, which would go near-black in light mode and
+   disappear against it. */
+.topbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  padding: var(--space-lg);
-  border-bottom: 1px solid var(--border-color);
-  background-color: rgba(16, 163, 127, 0.05);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bible-leather-base);
+  flex-shrink: 0;
+  z-index: 20;
 }
 
-.commentary-title {
+.topbar-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--bible-gold);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03em;
+}
+
+.topbar-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
+  gap: var(--space-xs);
 }
 
-.commentary-icon {
-  font-size: var(--font-size-2xl);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-}
-
-.commentary-toggle {
-  background: none;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  width: 32px;
-  height: 32px;
+.topbar-icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--bible-cream);
   cursor: pointer;
-  font-size: var(--font-size-xl);
-  font-weight: 300;
-  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
   transition: all var(--transition-fast);
 }
 
-.commentary-toggle:hover {
-  background-color: var(--bg-tertiary);
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+.topbar-icon-btn:hover {
+  background: rgba(215, 194, 168, 0.15);
+  border-color: var(--bible-gold-dark);
+  color: var(--bible-gold);
 }
 
-.commentary-content {
-  padding: var(--space-xl);
-  font-size: var(--font-size-lg);
-  line-height: 1.8;
+.reference-toggle-mobile {
+  display: flex;
+}
+
+.workspace-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+
+.panel-backdrop {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 29;
+}
+
+.panel-backdrop.visible {
+  display: block;
+}
+
+/* ============================================
+   LEFT: HISTORY SIDEBAR
+   ============================================
+   Always an off-canvas drawer (absolutely positioned within
+   .workspace-body, which stays below the topbar) rather than an in-flow
+   column - a fixed-width in-flow column meant the conversation's flex
+   share (and so its visual center) shifted depending on whether this
+   panel was open, so the conversation was only ever centered under the
+   "Holy Bible" topbar title in one particular panel state. As an overlay
+   it never takes flex space, so the conversation stays dead center
+   regardless of whether either drawer is open. */
+
+.history-sidebar-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  width: 280px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(0);
+  transition: transform var(--transition-base);
+}
+
+.history-sidebar-panel.collapsed {
+  transform: translateX(-100%);
+}
+
+.history-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.history-panel-header h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
   color: var(--text-primary);
-  min-height: 100px;
 }
 
-.commentary-content p {
+/* ============================================
+   CENTER: CONVERSATION PANEL
+   ============================================ */
+
+.conversation-panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--bg-primary);
+}
+
+.conversation-thread {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: var(--space-xl) var(--space-lg);
+  /* Extra bottom clearance so the last message never sits underneath the
+     floating input pill, which now overlaps this area (see
+     .conversation-input-bar) instead of reserving its own row below it. */
+  padding-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.conversation-empty {
+  margin: auto;
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: var(--space-2xl);
+}
+
+.conversation-empty-icon {
+  display: flex;
+  justify-content: center;
   margin-bottom: var(--space-md);
+  opacity: 0.5;
 }
 
-.commentary-content em {
-  font-style: italic;
+.message {
+  max-width: 46rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.message-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message-user-bubble {
+  /* ChatGPT's user bubble is a neutral grey barely lighter than the page
+     background, never a saturated accent color - the earlier bright
+     green here was the biggest deviation from that visual language. */
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-sm);
+  max-width: 80%;
+  line-height: 1.5;
+}
+
+/* ChatGPT doesn't box assistant replies in a card at all - the text sits
+   directly on the page background, distinguished by spacing rather than a
+   border. */
+.message-assistant {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  transition: background-color var(--transition-base);
+}
+
+/* The "attached at the hip" cue between this answer and the evidence rail
+   currently showing its sources - a soft tint in the SAME surface color as
+   the rail itself (--bg-secondary), not a border, so the two read as one
+   connected unit (answer + its evidence) rather than as a bordered card
+   that happens to be "selected". */
+.message-assistant.active {
+  background: var(--bg-secondary);
+}
+
+.message-assistant.crisis {
+  border-left: 3px solid #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.message-index {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-xs);
+}
+
+.message-text {
+  font-size: var(--font-size-base);
+  line-height: 1.75;
+  color: var(--text-primary);
+  white-space: pre-line;
+}
+
+.commentary-list {
+  margin: 0.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.commentary-list li {
+  margin-bottom: 0.25rem;
+}
+
+.message-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.message-sources-hint {
+  cursor: pointer;
   color: var(--accent-primary);
   font-weight: 500;
+}
+
+.message-sources-hint:hover {
+  text-decoration: underline;
+}
+
+/* Persistent "this one's evidence is the panel currently open" affordance,
+   not just a hover state - underline alone disappears the moment the mouse
+   moves away, losing the visible link to the rail. A filled pill (like a
+   selected tab) rather than plain text reinforces that this is the one
+   active source of the two, not just a link that happens to be hovered. */
+.message-assistant.active .message-sources-hint {
+  background: var(--accent-primary);
+  color: var(--accent-text);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.message-approval {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.message-approval-note {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+}
+
+.approve-memory-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.approve-memory-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--text-tertiary);
+  color: var(--text-primary);
+}
+
+.commentary-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  color: var(--text-tertiary);
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.commentary-loading .spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--bg-tertiary);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Floats OVER the bottom of the scrollable thread (absolute, not a normal
+   flex row below it) so the pill's backdrop-filter actually has scrolled
+   conversation text passing behind it to blur - previously this sat in
+   its own reserved row after the thread ended, so nothing was ever behind
+   it and the "glass" had nothing to frost. pointer-events:none on this
+   outer wrapper (re-enabled on .input-pill itself) keeps the empty side
+   margins from blocking clicks/scroll on the thread underneath. */
+.conversation-input-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+  background: transparent;
+  pointer-events: none;
+}
+
+.conversation-input-bar .input-pill {
+  pointer-events: auto;
+}
+
+/* The actual visible component: a single floating pill holding both the
+   input and the send button, matching the message column's width so the
+   conversation and the input visually align. Genuinely glass now (frosted,
+   translucent, blurring the conversation text scrolling behind it) rather
+   than a flat solid-color box with a border - that read as a hard-edged
+   bordered rectangle sitting on the page, not a floating pill. */
+.input-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 46rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-full);
+  padding: var(--space-xs);
+  padding-left: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+  transition: border-color var(--transition-fast);
+}
+
+[data-theme="dark"] .input-pill {
+  background: rgba(18, 18, 18, 0.65);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.input-pill:focus-within {
+  border-color: var(--accent-primary);
 }
 
 /* Clickable verse references in commentary */
@@ -554,161 +959,198 @@ body::after {
   transform: translateY(1px);
 }
 
-.commentary-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-xl);
-  color: var(--text-tertiary);
+/* Clickable Strong's numbers in commentary */
+.strongs-link {
+  color: var(--color-accent);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 2px dotted var(--color-accent);
+  transition: all 0.2s ease;
+  padding: 0 2px;
+  border-radius: 2px;
 }
 
-.commentary-loading .spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--bg-tertiary);
-  border-top-color: var(--accent-primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.strongs-link:hover {
+  background-color: rgba(0, 255, 127, 0.1);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.strongs-popup {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  padding: var(--space-md, 12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-primary, #eee);
 }
 
-.commentary-footer {
-  padding: var(--space-md) var(--space-lg);
-  background-color: var(--bg-tertiary);
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.strongs-popup-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-tertiary, #999);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
 }
 
-.commentary-badge {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
-  font-weight: 500;
+.strongs-popup-close:hover {
+  color: var(--text-primary, #eee);
 }
 
-.badge-icon {
+.strongs-popup-header {
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+  padding-right: 20px;
+}
+
+.strongs-popup-definition {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.strongs-popup-kjv {
+  font-size: 0.8em;
+  color: var(--text-tertiary, #999);
+  font-style: italic;
+}
+
+.strongs-popup-loading,
+.strongs-popup-error {
+  color: var(--text-tertiary, #999);
+  font-style: italic;
+}
+
+/* Blends into .input-pill rather than being its own boxed field - the
+   pill itself carries the background/border/focus styling now. */
+.followup-input {
+  flex: 1;
+  padding: var(--space-sm) 0;
   font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
-.commentary-content.collapsed {
-  display: none;
+.followup-input:focus {
+  outline: none;
 }
 
-.commentary-toggle.collapsed span::before {
-  content: '+';
+.followup-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Circular icon button living inside the pill, not a separate rectangular
+   button beside it. */
+.followup-button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background-color: var(--accent-primary);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.followup-button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(215, 194, 168, 0.3);
+}
+
+.followup-button:active {
+  transform: translateY(0);
 }
 
 /* ============================================
-   RESULTS SECTION
+   RIGHT: EVIDENCE RAIL - sources for whichever
+   assistant message is currently selected/active.
+   Deliberately not "search results": it's subordinate to and driven by
+   the active message (see .message-assistant.active), not an independent
+   panel that happens to sit next to the conversation.
    ============================================ */
 
-.results-section {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  display: none;
-}
-
-.results-section.visible {
-  display: block;
-}
-
-/* Back to top button (just scrolls) */
-.back-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3.5rem;
-  height: 3.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  transition: all 0.2s ease;
-}
-
-.back-to-top.visible {
+.reference-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 30;
+  width: 320px;
+  background: var(--bg-secondary);
+  /* No border - a hard dividing line reads as "two separate columns of
+     content"; the shadow alone gives it depth as an attached surface
+     instead, matching the same --bg-secondary tint used on the active
+     message bubble to visually bind the pair together. */
+  box-shadow: var(--shadow-lg);
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(0);
+  transition: transform var(--transition-base);
 }
 
-.back-to-top:hover {
-  background: #fff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
+.reference-panel.collapsed {
+  transform: translateX(100%);
 }
 
-.back-to-top svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #333;
-}
-
-/* New search button (resets to hero) */
-.new-search-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 6.5rem;
-  width: 3.5rem;
-  height: 3.5rem;
-  background: rgba(212, 175, 55, 0.95);
-  border: 2px solid rgba(184, 148, 31, 0.3);
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  transition: all 0.2s ease;
-}
-
-.new-search-btn.visible {
-  display: flex;
-}
-
-.new-search-btn:hover {
-  background: rgba(212, 175, 55, 1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-.new-search-btn svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #fff;
-}
-
-.results-header {
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-md);
+.reference-panel-header {
+  padding: var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
 }
 
-.results-count {
-  font-size: var(--font-size-lg);
+.reference-panel-header h3 {
+  font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.results-list {
+.reference-subtitle {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reference-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
 }
+
+.reference-tier-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  padding: 0 var(--space-sm);
+}
+
+.reference-tier-label:not(:first-child) {
+  margin-top: var(--space-sm);
+}
+
 
 .verse-card {
   background-color: var(--bg-secondary);
@@ -765,7 +1207,7 @@ body::after {
 }
 
 .verse-text strong {
-  background-color: rgba(16, 163, 127, 0.15);
+  background-color: rgba(215, 194, 168, 0.15);
   padding: 2px 4px;
   border-radius: var(--radius-sm);
 }
@@ -777,13 +1219,48 @@ body::after {
 }
 
 .no-results-icon {
-  font-size: 3rem;
+  display: flex;
+  justify-content: center;
   margin-bottom: var(--space-md);
   opacity: 0.5;
 }
 
 .no-results-text {
   font-size: var(--font-size-lg);
+}
+
+.inline-icon {
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+/* Compact card variant for the narrower reference panel */
+/* Same flat-list treatment as .history-item: no persistent border/box,
+   just a clean hover highlight - not the bordered card look .verse-card
+   has elsewhere (e.g. it still applies to /chapter search results). */
+.reference-list .verse-card {
+  padding: var(--space-md);
+  background: transparent;
+  border: none;
+}
+
+.reference-list .verse-card:hover {
+  background: var(--bg-tertiary);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.reference-list .verse-reference {
+  font-size: var(--font-size-base);
+}
+
+.reference-list .verse-text {
+  font-size: var(--font-size-sm);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ============================================
@@ -924,6 +1401,20 @@ body::after {
   flex: 1;
 }
 
+.blessing-share-row {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.blessing-share-row .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
 /* ============================================
    FOOTER
    ============================================ */
@@ -949,8 +1440,218 @@ body::after {
 }
 
 /* ============================================
+   HIGHLIGHT TOOLTIP - Ask AI about selected text
+   ============================================ */
+
+.highlight-tooltip {
+  position: absolute;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.highlight-tooltip.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.tooltip-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-hover) 100%);
+  color: var(--accent-text);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(215, 194, 168, 0.3),
+              0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.tooltip-button:hover {
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-primary) 100%);
+  box-shadow: 0 6px 16px rgba(215, 194, 168, 0.4),
+              0 3px 6px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.tooltip-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(215, 194, 168, 0.3);
+}
+
+.tooltip-button svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+}
+
+/* Text selection highlight color */
+::selection {
+  background-color: rgba(215, 194, 168, 0.25);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background-color: rgba(215, 194, 168, 0.25);
+  color: var(--text-primary);
+}
+
+/* Highlighted text in modal/verses */
+.user-highlighted {
+  background-color: rgba(215, 194, 168, 0.15);
+  border-bottom: 2px solid var(--accent-primary);
+  padding: 0.125rem 0;
+  border-radius: 2px;
+}
+
+/* ============================================
+   SEARCH HISTORY SIDEBAR
+   ============================================ */
+
+.history-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.history-clear-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--text-tertiary);
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: var(--space-md);
+}
+
+.history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--space-2xl);
+}
+
+.history-empty svg {
+  opacity: 0.3;
+  margin-bottom: var(--space-lg);
+}
+
+.history-empty p {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--space-sm);
+}
+
+.history-empty small {
+  font-size: var(--font-size-sm);
+  opacity: 0.7;
+}
+
+.history-group {
+  margin-bottom: var(--space-lg);
+}
+
+.history-group-date {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+  padding: 0 var(--space-sm);
+}
+
+/* ChatGPT's sidebar is flat list rows - no border, no persistent box, just
+   a subtle hover highlight - not the bordered/boxed card look this had. */
+.history-item {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.history-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.history-item-content {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.history-item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-item-query {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-item-time {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.history-item-meta {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.history-item-badge {
+  font-size: var(--font-size-xs);
+  color: var(--accent-primary);
+  background: rgba(215, 194, 168, 0.1);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
+
+@media (max-width: 900px) {
+  /* Both side panels are off-canvas overlay drawers at every screen size
+     now (see the base .history-sidebar-panel / .reference-panel rules) -
+     this breakpoint only needs to keep long lines from stretching edge to
+     edge on a narrow viewport. */
+  .message {
+    max-width: 100%;
+  }
+}
 
 @media (max-width: 768px) {
   .main-content {
@@ -982,6 +1683,19 @@ body::after {
 
   .modal-content {
     width: 95%;
+  }
+  
+  /* History sidebar - full width on mobile */
+  .history-sidebar {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .history-toggle-btn {
+    top: 12px;
+    right: 12px;
+    width: 48px;
+    height: 48px;
   }
 }
 

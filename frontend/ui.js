@@ -86,7 +86,7 @@ const UI = {
         this.elements.modalTitle.textContent = `${book} ${chapter}`;
         this.elements.modalBody.innerHTML = `
             <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                <div style="font-size: 2rem; margin-bottom: 1rem;">📖</div>
+                <div style="display: flex; justify-content: center; margin-bottom: 1rem;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
                 <div>Loading chapter...</div>
             </div>
         `;
@@ -129,7 +129,7 @@ const UI = {
             console.error('Error loading chapter:', error);
             this.elements.modalBody.innerHTML = `
                 <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                    <div style="font-size: 2rem; margin-bottom: 1rem; color: #ef4444;">⚠️</div>
+                    <div style="display: flex; justify-content: center; margin-bottom: 1rem; color: #ef4444;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
                     <p style="color: #ef4444; margin-bottom: 1rem;">Error loading chapter</p>
                     <p style="font-size: 0.875rem;">${error.message}</p>
                     <button class="btn btn-secondary" onclick="UI.closeModal()" style="margin-top: 1.5rem;">
@@ -162,8 +162,7 @@ const UI = {
                 background-color: var(--bg-tertiary);
             }
             .chapter-verse.highlighted {
-                background-color: rgba(16, 163, 127, 0.1);
-                border-left: 3px solid var(--accent-primary);
+                background-color: rgba(215, 194, 168, 0.1);
             }
             .chapter-verse-num {
                 display: inline-block;
@@ -193,30 +192,43 @@ const UI = {
  * Theme Manager - Handle dark/light mode toggle
  */
 const ThemeManager = {
+    /**
+     * Theme always tracks the OS/browser's prefers-color-scheme, live -
+     * no persisted override. The previous version wrote the user's choice
+     * to localStorage on every toggle click, which then permanently
+     * disabled system-following forever (a single test click during dev
+     * was enough to leave a real test session stuck on the wrong theme,
+     * with no way back short of manually clearing site data). The toggle
+     * button still works, but only as a same-session preview - it resets
+     * to whatever the system says on the next load, by design.
+     */
     init() {
-        this.themeToggle = document.getElementById('themeToggle');
-        this.themeIcon = document.getElementById('themeIcon');
-        
-        // Load saved theme or use system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-        
-        this.setTheme(initialTheme);
-        
-        // Setup toggle button
-        if (this.themeToggle) {
-            this.themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
+        // Two toggle buttons now (workspace topbar + landing screen), both
+        // sharing these classes so this doesn't need separate wiring for
+        // each new one added later.
+        this.themeToggles = document.querySelectorAll('.theme-toggle-btn');
+        this.themeIcons = document.querySelectorAll('.theme-icon-target');
 
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                this.setTheme(e.matches ? 'dark' : 'light');
-            }
+        // Clean up any theme pinned by the old localStorage-based logic
+        // so previously-affected sessions (including this app's own dev/
+        // test sessions) immediately resume following system preference.
+        localStorage.removeItem('theme');
+
+        this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        this.applySystemTheme();
+
+        this.themeToggles.forEach(btn => {
+            btn.addEventListener('click', () => this.toggleTheme());
         });
+
+        this.mediaQuery.addEventListener('change', () => this.applySystemTheme());
     },
 
+    applySystemTheme() {
+        this.setTheme(this.mediaQuery.matches ? 'dark' : 'light');
+    },
+
+    /** Session-only preview - intentionally not persisted, see init(). */
     toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -225,11 +237,15 @@ const ThemeManager = {
 
     setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        
-        if (this.themeIcon) {
-            this.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
+
+        this.themeIcons.forEach(icon => {
+            icon.innerHTML = theme === 'dark' ? this.icons.sun : this.icons.moon;
+        });
+    },
+
+    icons: {
+        sun: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>',
+        moon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
     }
 };
 

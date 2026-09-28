@@ -16,8 +16,14 @@ import config
 import data_loader
 import search_keyword
 import search_semantic
+import search_hybrid
 import explain
 import commentary_summarizer_openai as commentary_summarizer
+import crisis_detection
+import reference_lookup
+import lexicon_lookup
+import grounding_check
+import memory_store
 import logger as structured_logger
 
 # Setup structured logging
@@ -70,6 +76,14 @@ class CommentaryRequest(BaseModel):
     query: str
     max_results: Optional[int] = 10
     use_cache: Optional[bool] = True
+
+
+class ApproveMemoryRequest(BaseModel):
+    memory_id: str
+
+
+class SessionTitleRequest(BaseModel):
+    query: str
 
 
 class Verse(BaseModel):
@@ -247,6 +261,79 @@ async def semantic_search(request: SemanticSearchRequest):
         raise HTTPException(status_code=500, detail=f"Search error: {str(e)}")
 
 
+@app.post("/hybrid_search", response_model=List[Verse])
+async def hybrid_search(request: SemanticSearchRequest):
+    """
+    Merged keyword + semantic search (see search_hybrid.py).
+
+    Replaces the frontend's old all-or-nothing logic, which used keyword
+    results outright whenever any verse scored above 0.3, hiding semantic
+    results even when they were clearly the better match (confirmed:
+    "fruits of the spirit" never surfaced Galatians 5:22 under that logic,
+    because the KJV's singular "fruit of the Spirit" doesn't word-match the
+    plural query, and other spirit-related verses "won" via keyword mode
+    before semantic search ever got a chance).
+
+    Also applies the same exact-reference guarantee and meta-question
+    rewriting /commentary uses (see reference_lookup.py), so the results
+    list and the commentary panel converge on the same answer for the same
+    query without needing to couple the two calls together - confirmed
+    live that without this, "give me the exact text of John 14:27" showed
+    a clean verbatim answer in the commentary panel while the results list
+    below it showed 20 unrelated verses, and "what does John 3:16 mean"
+    didn't even surface John 3:16 in its own results list.
+    """
+    import time
+    start_time = time.time()
+
+    if not request.query or not request.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+
+    embedding_stats = search_semantic.get_embedding_stats()
+    if not embedding_stats['index_exists']:
+        raise HTTPException(
+            status_code=503,
+            detail="Semantic search not available. Run generate_embeddings.py first."
+        )
+
+    try:
+        book_names = reference_lookup.get_book_names(verses)
+        ref = reference_lookup.extract_reference(request.query, book_names)
+        exact_verses = reference_lookup.lookup_reference(verses, ref) if ref else []
+
+        search_query = reference_lookup.extract_topic_for_search(request.query)
+        results = search_hybrid.hybrid_search(verses, search_query, request.max_results)
+
+        if exact_verses:
+            existing_keys = {(v['book'], v['chapter'], v['verse']) for v in exact_verses}
+            results = exact_verses + [
+                r for r in results
+                if (r['book'], r['chapter'], r['verse']) not in existing_keys
+            ]
+            results = results[:request.max_results]
+
+        response_time = time.time() - start_time
+        app_logger.log_search(
+            query=request.query,
+            query_type='hybrid',
+            module='search_hybrid',
+            verses_retrieved=results,
+            response_time=response_time,
+            status='success'
+        )
+
+        return results
+
+    except Exception as e:
+        response_time = time.time() - start_time
+        app_logger.log_error(
+            error_type='hybrid_search_error',
+            error_message=str(e),
+            context={'query': request.query, 'module': 'search_hybrid'}
+        )
+        raise HTTPException(status_code=500, detail=f"Search error: {str(e)}")
+
+
 @app.post("/explain")
 async def explain_search(request: ExplainRequest):
     """
@@ -345,10 +432,74 @@ async def generate_commentary(request: CommentaryRequest):
     """
     import time
     start_time = time.time()
-    
+
     if not request.query or not request.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty")
-    
+
+    # CRISIS CHECK: runs before any retrieval or LLM call, so a crisis
+    # resource is guaranteed regardless of what verses would have matched
+    # or how a model would have responded. See crisis_detection.py.
+    if crisis_detection.detect_crisis(request.query):
+        response_time = time.time() - start_time
+        crisis_response = crisis_detection.build_crisis_response(request.query)
+
+        logger.warning(f"Crisis language detected in commentary request")
+        app_logger.log_event('crisis_detected', {
+            'query': request.query,
+            'response_time': response_time,
+        })
+
+        return {
+            "query": request.query,
+            "commentary": crisis_response['commentary'],
+            "commentary_mode": crisis_response['commentary_mode'],
+            "verses": crisis_response['verses'],
+            "metadata": {
+                "verses_used": crisis_response['verses_used'],
+                "model_info": crisis_response['model_info'],
+                "total_results": len(crisis_response['verses'])
+            }
+        }
+
+    # EXACT REFERENCE CHECK: if the query names a specific book:chapter:verse,
+    # look it up directly rather than relying on semantic search, which is
+    # the wrong tool for a deterministic reference lookup (confirmed: "give
+    # me the exact text of John 14:27" failed retrieval entirely despite the
+    # word-perfect verse being stored and instantly retrievable via
+    # /chapter). See reference_lookup.py.
+    book_names = reference_lookup.get_book_names(verses)
+    ref = reference_lookup.extract_reference(request.query, book_names)
+    exact_verses = reference_lookup.lookup_reference(verses, ref) if ref else []
+
+    if exact_verses and reference_lookup.wants_exact_text(request.query):
+        response_time = time.time() - start_time
+        if len(exact_verses) == 1:
+            commentary = f"{exact_verses[0]['reference']}: \"{exact_verses[0]['text']}\""
+        else:
+            commentary = "\n".join(f"{v['reference']}: \"{v['text']}\"" for v in exact_verses)
+
+        app_logger.log_commentary(
+            query=request.query,
+            verses_used=exact_verses,
+            commentary=commentary,
+            commentary_mode='exact_reference',
+            response_time=response_time,
+            model_info={'source': 'direct_lookup', 'model': None},
+            status='success'
+        )
+
+        return {
+            "query": request.query,
+            "commentary": commentary,
+            "commentary_mode": "exact_reference",
+            "verses": exact_verses,
+            "metadata": {
+                "verses_used": len(exact_verses),
+                "model_info": {'source': 'direct_lookup', 'model': None},
+                "total_results": len(exact_verses)
+            }
+        }
+
     # Check if semantic search is available
     embedding_stats = search_semantic.get_embedding_stats()
     if not embedding_stats['index_exists']:
@@ -356,16 +507,47 @@ async def generate_commentary(request: CommentaryRequest):
             status_code=503,
             detail="Semantic search not available. Run generate_embeddings.py first."
         )
-    
+
     try:
-        # Get top verses via semantic search
+        # COMMENTARY SEARCH STRATEGY:
+        # Use broad semantic search to find ALL potentially relevant verses
+        # No arbitrary "top N" limit - use relevance threshold instead
+        # AI reads everything above threshold to find the actual answer
+
         logger.info(f"Commentary request: {request.query}")
-        
+
+        # Meta-questions like "where does Paul discuss the armor of God"
+        # embed toward the named person, not the actual topic, and can miss
+        # the passage entirely (confirmed: this exact query failed to
+        # retrieve Ephesians 6 even though "armor of God" alone finds it at
+        # 0.62 similarity). Strip that framing for the embedding call only -
+        # the LLM prompt still sees the user's original question.
+        search_query = reference_lookup.extract_topic_for_search(request.query)
+
+        # Cast wide net: semantic search with low threshold, high limit
+        # This ensures we don't miss verses like Luke 3:23 that might rank #147
+        # but contain the exact answer to "jesus age"
         results = search_semantic.search_semantic(
             verses,
-            request.query,
-            request.max_results,
-            min_similarity=0.3  # Filter low-quality matches
+            search_query,
+            max_results=500,  # High limit to capture everything relevant
+            min_similarity=0.12  # Low threshold to cast wide net
+        )
+
+        # If the query named a specific verse but wasn't asking for the
+        # literal text (e.g. "what does John 3:16 mean"), guarantee that
+        # verse is present for the commentary LLM instead of leaving it to
+        # semantic search chance.
+        if exact_verses:
+            existing_keys = {(v['book'], v['chapter'], v['verse']) for v in exact_verses}
+            results = exact_verses + [
+                r for r in results
+                if (r['book'], r['chapter'], r['verse']) not in existing_keys
+            ]
+
+        logger.info(
+            f"Commentary semantic search: {len(results)} verses above 0.12 similarity "
+            f"(search query: '{search_query}')"
         )
         
         if not results:
@@ -394,7 +576,7 @@ async def generate_commentary(request: CommentaryRequest):
         )
         
         response_time = time.time() - start_time
-        
+
         # Log the commentary request with structured logger
         app_logger.log_commentary(
             query=request.query,
@@ -405,7 +587,40 @@ async def generate_commentary(request: CommentaryRequest):
             model_info=commentary_result.get('model_info', {}),
             status='success'
         )
-        
+
+        # Record the memory-search outcome BEFORE this query is itself
+        # stored below (otherwise it would just match itself). This is the
+        # concrete data a later concept-document pass reads to find
+        # recurring topics that keep landing near, but under, the match
+        # threshold - seeing this logged was the whole point of adding
+        # get_best_match_debug(), not just theorizing about it.
+        memory_debug = memory_store.get_best_match_debug(request.query)
+        app_logger.log_event('memory_search', {
+            'query': request.query,
+            'best_match_query': memory_debug['query'] if memory_debug else None,
+            'similarity': memory_debug['similarity'] if memory_debug else None,
+            'matched': memory_debug['matched'] if memory_debug else False,
+        })
+
+        # MEMORY: classify the query, run the deterministic grounding check,
+        # and store the answer. Factual answers that pass grounding are
+        # promoted automatically; interpretive answers are stored pending a
+        # human thumbs-up via /commentary/approve (see memory_store.py for
+        # why these two gates are different - there's no automated way to
+        # verify a theological interpretation the way there is a citation).
+        complexity = commentary_summarizer.assess_query_complexity(request.query, results)
+        grounding = grounding_check.check_grounding(
+            commentary_result['commentary'], results[:10], book_names
+        )
+        memory_entry = memory_store.add_entry(
+            query=request.query,
+            commentary=commentary_result['commentary'],
+            verses_used=results[:10],
+            query_type=complexity['query_type'],
+            grounded=grounding['grounded'],
+            model_info=commentary_result.get('model_info'),
+        )
+
         return {
             "query": request.query,
             "commentary": commentary_result['commentary'],
@@ -414,7 +629,11 @@ async def generate_commentary(request: CommentaryRequest):
             "metadata": {
                 "verses_used": commentary_result['verses_used'],
                 "model_info": commentary_result.get('model_info'),
-                "total_results": len(results)
+                "total_results": len(results),
+                "memory_id": memory_entry['id'],
+                "query_type": complexity['query_type'],
+                "grounded": grounding['grounded'],
+                "pending_review": complexity['query_type'] == 'interpretive' and not memory_entry['promoted']
             }
         }
         
@@ -429,9 +648,40 @@ async def generate_commentary(request: CommentaryRequest):
         )
         
         raise HTTPException(
-            status_code=500, 
+            status_code=500,
             detail=f"Commentary generation failed: {str(e)}"
         )
+
+
+@app.post("/commentary/approve")
+async def approve_commentary(request: ApproveMemoryRequest):
+    """
+    Human thumbs-up on an interpretive commentary answer, promoting it into
+    reusable memory (see memory_store.py). This is the ONLY way an
+    interpretive/theological answer becomes eligible to be surfaced as
+    prior-discussion context for future similar questions - there's no
+    automated confidence score for theological soundness, so a real human
+    judgment call is the gate.
+    """
+    entry = memory_store.approve_entry(request.memory_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail=f"Memory entry not found: {request.memory_id}")
+
+    app_logger.log_event('memory_approved', {'memory_id': request.memory_id})
+
+    return {"memory_id": entry['id'], "promoted": entry['promoted']}
+
+
+@app.post("/session/title")
+async def session_title(request: SessionTitleRequest):
+    """
+    Short auto-generated title for a history entry, called once after a
+    session's first exchange (see history.js). Never blocks the commentary
+    response itself - the frontend fires this separately and patches the
+    title in afterward.
+    """
+    title = commentary_summarizer.generate_session_title(request.query)
+    return {"title": title}
 
 
 @app.get("/commentary/status")
@@ -492,6 +742,38 @@ async def get_chapter(book: str, chapter: int):
             context={'book': book, 'chapter': chapter}
         )
         raise
+
+
+@app.get("/strongs/{number}")
+async def get_strongs_definition(number: str):
+    """
+    Look up a Strong's number directly (e.g. "G25", "H2580") for the
+    clickable Strong's number feature in the commentary panel - a plain
+    forward lookup, unrelated to lexicon_lookup.py's English-word reverse
+    index used during commentary generation.
+    """
+    definition = lexicon_lookup.get_definition(number)
+    if definition is None:
+        raise HTTPException(status_code=404, detail=f"Strong's number not found: {number}")
+    return definition
+
+
+@app.get("/blessing")
+async def get_blessing():
+    """
+    'I'm Feeling Blessed' - previously a button with no handler at all
+    anywhere in the frontend JS. Picks a random verse and generates a
+    short reflection + prayer (see commentary_summarizer.generate_blessing).
+    """
+    import random
+    verse = random.choice(verses)
+    blessing = commentary_summarizer.generate_blessing(verse)
+    return {
+        'reference': verse['reference'],
+        'text': verse['text'],
+        'reflection': blessing['reflection'],
+        'prayer': blessing['prayer'],
+    }
 
 
 # Frontend logging endpoint

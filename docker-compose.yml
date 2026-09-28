@@ -22,14 +22,19 @@ services:
       - "8000:8000"
     volumes:
       - ./kjv_chunks.jsonl:/app/kjv_chunks.jsonl:ro
+      - ./commentary_chunks.jsonl:/app/commentary_chunks.jsonl:ro
+      - ./concept_documents.jsonl:/app/concept_documents.jsonl:ro
       - ./cache:/app/cache  # Mount cache directory for embeddings and models
       - ./logs:/app/logs  # Mount logs directory for persistent logging
+      - ./strongs_data:/app/strongs_data:ro  # Strong's Concordance word index (see lexicon_lookup.py)
       - huggingface_cache:/root/.cache/huggingface  # Persist downloaded models
     environment:
       - PYTHONUNBUFFERED=1
       - HF_HOME=/root/.cache/huggingface  # Hugging Face cache location
       - OLLAMA_BASE_URL=http://ollama:11434  # Connect to Ollama container
       - OLLAMA_MODEL=llama3.2:3b  # Fast model: 2-5 second response time
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}  # Cloudflare Workers AI
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}  # Cloudflare API token
     depends_on:
       ollama:
         condition: service_healthy

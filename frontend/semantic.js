@@ -112,7 +112,7 @@ const SemanticSearch = {
                             <div>
                                 <span class="verse-reference">${verse.reference}</span>
                                 <span class="verse-score" style="background: ${relevanceColor}20; color: ${relevanceColor};">
-                                    ${relevanceLabel} (${(similarity * 100).toFixed(1)}%)
+                                    ${relevanceLabel} (${(similarity * 100).toFixed(0)}%)
                                 </span>
                             </div>
                             <div class="verse-actions">
